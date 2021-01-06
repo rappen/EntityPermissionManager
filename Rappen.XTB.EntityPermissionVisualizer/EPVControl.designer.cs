@@ -52,6 +52,9 @@
             this.txtItemParent = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.grdWebroles = new xrmtb.XrmToolBox.Controls.CRMGridView();
+            this.label8 = new System.Windows.Forms.Label();
             this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -59,6 +62,11 @@
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panItem.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -83,6 +91,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.panItem);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Size = new System.Drawing.Size(983, 778);
@@ -148,8 +157,6 @@
             // panItem
             // 
             this.panItem.Controls.Add(this.txtItemPrivileges);
-            this.panItem.Controls.Add(this.btnItemNewChild);
-            this.panItem.Controls.Add(this.btnItemOpen);
             this.panItem.Controls.Add(this.label7);
             this.panItem.Controls.Add(this.txtItemName);
             this.panItem.Controls.Add(this.label2);
@@ -164,13 +171,13 @@
             this.panItem.Dock = System.Windows.Forms.DockStyle.Top;
             this.panItem.Location = new System.Drawing.Point(0, 56);
             this.panItem.Name = "panItem";
-            this.panItem.Size = new System.Drawing.Size(648, 227);
+            this.panItem.Size = new System.Drawing.Size(648, 165);
             this.panItem.TabIndex = 12;
             // 
             // btnItemNewChild
             // 
             this.btnItemNewChild.Enabled = false;
-            this.btnItemNewChild.Location = new System.Drawing.Point(290, 172);
+            this.btnItemNewChild.Location = new System.Drawing.Point(290, 7);
             this.btnItemNewChild.Name = "btnItemNewChild";
             this.btnItemNewChild.Size = new System.Drawing.Size(152, 36);
             this.btnItemNewChild.TabIndex = 13;
@@ -181,7 +188,7 @@
             // btnItemOpen
             // 
             this.btnItemOpen.Enabled = false;
-            this.btnItemOpen.Location = new System.Drawing.Point(132, 172);
+            this.btnItemOpen.Location = new System.Drawing.Point(132, 7);
             this.btnItemOpen.Name = "btnItemOpen";
             this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
             this.btnItemOpen.TabIndex = 12;
@@ -192,7 +199,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 149);
+            this.label7.Location = new System.Drawing.Point(24, 146);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 11;
@@ -207,7 +214,7 @@
             this.txtItemName.Entity = null;
             this.txtItemName.EntityReference = null;
             this.txtItemName.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemName.Location = new System.Drawing.Point(132, 16);
+            this.txtItemName.Location = new System.Drawing.Point(132, 13);
             this.txtItemName.LogicalName = null;
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.OrganizationService = null;
@@ -217,7 +224,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 19);
+            this.label2.Location = new System.Drawing.Point(24, 16);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 1;
@@ -226,7 +233,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 123);
+            this.label6.Location = new System.Drawing.Point(24, 120);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 13);
             this.label6.TabIndex = 9;
@@ -241,7 +248,7 @@
             this.txtItemEntity.Entity = null;
             this.txtItemEntity.EntityReference = null;
             this.txtItemEntity.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemEntity.Location = new System.Drawing.Point(132, 42);
+            this.txtItemEntity.Location = new System.Drawing.Point(132, 39);
             this.txtItemEntity.LogicalName = null;
             this.txtItemEntity.Name = "txtItemEntity";
             this.txtItemEntity.OrganizationService = null;
@@ -257,7 +264,7 @@
             this.txtItemRelationship.Entity = null;
             this.txtItemRelationship.EntityReference = null;
             this.txtItemRelationship.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemRelationship.Location = new System.Drawing.Point(132, 120);
+            this.txtItemRelationship.Location = new System.Drawing.Point(132, 117);
             this.txtItemRelationship.LogicalName = null;
             this.txtItemRelationship.Name = "txtItemRelationship";
             this.txtItemRelationship.OrganizationService = null;
@@ -267,7 +274,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 45);
+            this.label3.Location = new System.Drawing.Point(24, 42);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(33, 13);
             this.label3.TabIndex = 3;
@@ -276,7 +283,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(24, 97);
+            this.label5.Location = new System.Drawing.Point(24, 94);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 13);
             this.label5.TabIndex = 7;
@@ -291,7 +298,7 @@
             this.txtItemScope.Entity = null;
             this.txtItemScope.EntityReference = null;
             this.txtItemScope.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemScope.Location = new System.Drawing.Point(132, 68);
+            this.txtItemScope.Location = new System.Drawing.Point(132, 65);
             this.txtItemScope.LogicalName = null;
             this.txtItemScope.Name = "txtItemScope";
             this.txtItemScope.OrganizationService = null;
@@ -307,7 +314,7 @@
             this.txtItemParent.Entity = null;
             this.txtItemParent.EntityReference = null;
             this.txtItemParent.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemParent.Location = new System.Drawing.Point(132, 94);
+            this.txtItemParent.Location = new System.Drawing.Point(132, 91);
             this.txtItemParent.LogicalName = null;
             this.txtItemParent.Name = "txtItemParent";
             this.txtItemParent.OrganizationService = null;
@@ -317,7 +324,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 71);
+            this.label4.Location = new System.Drawing.Point(24, 68);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 5;
@@ -325,11 +332,61 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnItemOpen);
+            this.panel2.Controls.Add(this.btnItemNewChild);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(648, 56);
             this.panel2.TabIndex = 13;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 221);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.label8);
+            this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
+            this.splitContainer2.Size = new System.Drawing.Size(648, 557);
+            this.splitContainer2.SplitterDistance = 243;
+            this.splitContainer2.SplitterWidth = 8;
+            this.splitContainer2.TabIndex = 14;
+            // 
+            // grdWebroles
+            // 
+            this.grdWebroles.AllowUserToOrderColumns = true;
+            this.grdWebroles.AllowUserToResizeRows = false;
+            this.grdWebroles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grdWebroles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.grdWebroles.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.grdWebroles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdWebroles.ColumnHeadersVisible = false;
+            this.grdWebroles.ColumnOrder = "";
+            this.grdWebroles.FilterColumns = "";
+            this.grdWebroles.Location = new System.Drawing.Point(132, 3);
+            this.grdWebroles.Name = "grdWebroles";
+            this.grdWebroles.OrganizationService = null;
+            this.grdWebroles.RowHeadersVisible = false;
+            this.grdWebroles.ShowFriendlyNames = true;
+            this.grdWebroles.ShowIdColumn = false;
+            this.grdWebroles.ShowIndexColumn = false;
+            this.grdWebroles.Size = new System.Drawing.Size(494, 237);
+            this.grdWebroles.TabIndex = 0;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Webroles";
             // 
             // txtItemPrivileges
             // 
@@ -340,7 +397,7 @@
             this.txtItemPrivileges.Entity = null;
             this.txtItemPrivileges.EntityReference = null;
             this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 146);
+            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
             this.txtItemPrivileges.LogicalName = null;
             this.txtItemPrivileges.Name = "txtItemPrivileges";
             this.txtItemPrivileges.OrganizationService = null;
@@ -365,6 +422,12 @@
             this.panel1.PerformLayout();
             this.panItem.ResumeLayout(false);
             this.panItem.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -394,5 +457,8 @@
         private System.Windows.Forms.Button btnItemOpen;
         private System.Windows.Forms.Button btnItemNewChild;
         private Helpers.Controls.XRMDataTextBox txtItemPrivileges;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private xrmtb.XrmToolBox.Controls.CRMGridView grdWebroles;
+        private System.Windows.Forms.Label label8;
     }
 }

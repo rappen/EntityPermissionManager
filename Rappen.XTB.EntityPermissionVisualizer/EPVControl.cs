@@ -54,6 +54,7 @@ namespace Rappen.XTB.EPV
             txtItemParent.OrganizationService = newService;
             txtItemRelationship.OrganizationService = newService;
             txtItemPrivileges.OrganizationService = newService;
+            grdWebroles.OrganizationService = newService;
             LoadWebsites();
         }
 
@@ -166,7 +167,7 @@ namespace Rappen.XTB.EPV
                 .OrderBy(PermissionOrder)
                 .Select(EntityToNode);
             tvPermissions.Nodes.AddRange(rootnodes.ToArray());
-            tvPermissions.ExpandAll();
+            //tvPermissions.ExpandAll();
         }
 
         private void tvPermissions_AfterSelect(object sender, TreeViewEventArgs e)
@@ -181,6 +182,29 @@ namespace Rappen.XTB.EPV
             panItem.Controls.OfType<XRMDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
             btnItemOpen.Enabled = permissionitem != null;
             btnItemNewChild.Enabled = permissionitem != null;
+            LoadWebroles();
+        }
+
+        private void LoadWebroles()
+        {
+            var permission = txtItemName.Entity;
+            var query = new QueryExpression("adx_webrole");
+            query.ColumnSet.AddColumns("adx_name", "adx_description");
+            query.AddOrder("adx_name", OrderType.Ascending);
+            var mm = query.AddLink("adx_entitypermission_webrole", "adx_webroleid", "adx_webroleid");
+            mm.LinkCriteria.AddCondition("adx_entitypermissionid", ConditionOperator.Equal, permission.Id);
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Loading webroles",
+                Work = (worker, args) =>
+                {
+                    args.Result = Service.RetrieveMultiple(query);
+                },
+                PostWorkCallBack = (args) => HandleWorkAsync<EntityCollection>(args, (webroles) =>
+                {
+                    grdWebroles.DataSource = webroles;
+                })
+            });
         }
 
         private void btnItemOpen_Click(object sender, EventArgs e)
