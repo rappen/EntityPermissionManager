@@ -33,11 +33,13 @@
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tvPermissions = new System.Windows.Forms.TreeView();
+            this.imgScope = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.cmbWebsite = new xrmtb.XrmToolBox.Controls.Controls.CDSDataComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panItem = new System.Windows.Forms.Panel();
-            this.txtItemPrivileges = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
+            this.btnItemNewChild = new System.Windows.Forms.Button();
+            this.btnItemOpen = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.txtItemName = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -50,8 +52,7 @@
             this.txtItemParent = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.imgScope = new System.Windows.Forms.ImageList(this.components);
-            this.btnItemOpen = new System.Windows.Forms.Button();
+            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -101,6 +102,16 @@
             this.tvPermissions.TabIndex = 1;
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
             // 
+            // imgScope
+            // 
+            this.imgScope.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgScope.ImageStream")));
+            this.imgScope.TransparentColor = System.Drawing.Color.Transparent;
+            this.imgScope.Images.SetKeyName(0, "earth.png");
+            this.imgScope.Images.SetKeyName(1, "user2.png");
+            this.imgScope.Images.SetKeyName(2, "folder.png");
+            this.imgScope.Images.SetKeyName(3, "arrow_up_blue.png");
+            this.imgScope.Images.SetKeyName(4, "bullet_ball_glass_red.png");
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.cmbWebsite);
@@ -136,8 +147,9 @@
             // 
             // panItem
             // 
-            this.panItem.Controls.Add(this.btnItemOpen);
             this.panItem.Controls.Add(this.txtItemPrivileges);
+            this.panItem.Controls.Add(this.btnItemNewChild);
+            this.panItem.Controls.Add(this.btnItemOpen);
             this.panItem.Controls.Add(this.label7);
             this.panItem.Controls.Add(this.txtItemName);
             this.panItem.Controls.Add(this.label2);
@@ -155,22 +167,27 @@
             this.panItem.Size = new System.Drawing.Size(648, 227);
             this.panItem.TabIndex = 12;
             // 
-            // txtItemPrivileges
+            // btnItemNewChild
             // 
-            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemPrivileges.DisplayFormat = "R: {{adc_read}} C: {{adc_create}} U: {{adx_write}} D: {{adx_delete}} A: {{adx_app" +
-    "end}} AT: {{adx_appendto}}";
-            this.txtItemPrivileges.Entity = null;
-            this.txtItemPrivileges.EntityReference = null;
-            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 146);
-            this.txtItemPrivileges.LogicalName = null;
-            this.txtItemPrivileges.Name = "txtItemPrivileges";
-            this.txtItemPrivileges.OrganizationService = null;
-            this.txtItemPrivileges.Size = new System.Drawing.Size(494, 20);
-            this.txtItemPrivileges.TabIndex = 10;
+            this.btnItemNewChild.Enabled = false;
+            this.btnItemNewChild.Location = new System.Drawing.Point(290, 172);
+            this.btnItemNewChild.Name = "btnItemNewChild";
+            this.btnItemNewChild.Size = new System.Drawing.Size(152, 36);
+            this.btnItemNewChild.TabIndex = 13;
+            this.btnItemNewChild.Text = "New Child Permission";
+            this.btnItemNewChild.UseVisualStyleBackColor = true;
+            this.btnItemNewChild.Click += new System.EventHandler(this.btnItemNewChild_Click);
+            // 
+            // btnItemOpen
+            // 
+            this.btnItemOpen.Enabled = false;
+            this.btnItemOpen.Location = new System.Drawing.Point(132, 172);
+            this.btnItemOpen.Name = "btnItemOpen";
+            this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
+            this.btnItemOpen.TabIndex = 12;
+            this.btnItemOpen.Text = "Open Entity Permission";
+            this.btnItemOpen.UseVisualStyleBackColor = true;
+            this.btnItemOpen.Click += new System.EventHandler(this.btnItemOpen_Click);
             // 
             // label7
             // 
@@ -314,26 +331,21 @@
             this.panel2.Size = new System.Drawing.Size(648, 56);
             this.panel2.TabIndex = 13;
             // 
-            // imgScope
+            // txtItemPrivileges
             // 
-            this.imgScope.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imgScope.ImageStream")));
-            this.imgScope.TransparentColor = System.Drawing.Color.Transparent;
-            this.imgScope.Images.SetKeyName(0, "earth.png");
-            this.imgScope.Images.SetKeyName(1, "user2.png");
-            this.imgScope.Images.SetKeyName(2, "folder.png");
-            this.imgScope.Images.SetKeyName(3, "arrow_up_blue.png");
-            this.imgScope.Images.SetKeyName(4, "bullet_ball_glass_red.png");
-            // 
-            // btnItemOpen
-            // 
-            this.btnItemOpen.Enabled = false;
-            this.btnItemOpen.Location = new System.Drawing.Point(132, 172);
-            this.btnItemOpen.Name = "btnItemOpen";
-            this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
-            this.btnItemOpen.TabIndex = 12;
-            this.btnItemOpen.Text = "Open Entity Permission";
-            this.btnItemOpen.UseVisualStyleBackColor = true;
-            this.btnItemOpen.Click += new System.EventHandler(this.btnItemOpen_Click);
+            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
+            this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
+            this.txtItemPrivileges.Entity = null;
+            this.txtItemPrivileges.EntityReference = null;
+            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 146);
+            this.txtItemPrivileges.LogicalName = null;
+            this.txtItemPrivileges.Name = "txtItemPrivileges";
+            this.txtItemPrivileges.OrganizationService = null;
+            this.txtItemPrivileges.Size = new System.Drawing.Size(494, 20);
+            this.txtItemPrivileges.TabIndex = 14;
             // 
             // EPVControl
             // 
@@ -366,7 +378,6 @@
         private xrmtb.XrmToolBox.Controls.Controls.CDSDataComboBox cmbWebsite;
         private System.Windows.Forms.TreeView tvPermissions;
         private System.Windows.Forms.Label label7;
-        private xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox txtItemPrivileges;
         private System.Windows.Forms.Label label6;
         private xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox txtItemRelationship;
         private System.Windows.Forms.Label label5;
@@ -381,5 +392,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ImageList imgScope;
         private System.Windows.Forms.Button btnItemOpen;
+        private System.Windows.Forms.Button btnItemNewChild;
+        private Helpers.Controls.XRMDataTextBox txtItemPrivileges;
     }
 }

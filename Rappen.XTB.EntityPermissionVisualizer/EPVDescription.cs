@@ -12,8 +12,8 @@ namespace Rappen.XTB.EPV
     // Do not forget to update version number and author (company attribute) in AssemblyInfo.cs class
     // To generate Base64 string for Images below, you can use https://www.base64-image.de/
     [Export(typeof(IXrmToolBoxPlugin)),
-        ExportMetadata("Name", "Entity Permission Visualizer"),
-        ExportMetadata("Description", "Helps you where others fail you."),
+        ExportMetadata("Name", "Portal Entity Permission Visualizer"),
+        ExportMetadata("Description", "Visualizes the true structure of Power Apps Portals Entity Permissions."),
         // Please specify the base64 content of a 32x32 pixels image
         ExportMetadata("SmallImageBase64", null),
         // Please specify the base64 content of a 80x80 pixels image

@@ -3,19 +3,22 @@ using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 using Rappen.XTB.Helpers;
 using Rappen.XTB.Helpers.ControlItems;
+using Rappen.XTB.Helpers.Controls;
 using Rappen.XTB.Helpers.Interfaces;
 using System;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Web;
 using System.Windows.Forms;
 using xrmtb.XrmToolBox.Controls.Controls;
 using XrmToolBox.Extensibility;
 
 namespace Rappen.XTB.EPV
 {
-    public partial class EPVControl : PluginControlBase, ILogger
+    public partial class EPVControl : PluginControlBase
     {
         private Settings mySettings;
 
@@ -39,11 +42,6 @@ namespace Rappen.XTB.EPV
             {
                 SettingsManager.Instance.Save(GetType(), mySettings);
             }
-        }
-
-        private void tsbClose_Click(object sender, EventArgs e)
-        {
-            CloseTool();
         }
 
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
@@ -127,15 +125,15 @@ namespace Rappen.XTB.EPV
 
         private void PopulatePermissions(EntityCollection permissions)
         {
-            var bag = new GenericBag(Service, this);
+            #region Local methods
             bool ChildOf(Guid parentid, Entity permission)
             {
                 return permission.TryGetAttributeValue("adx_parententitypermission", out EntityReference parent) ? parent.Id.Equals(parentid) : false;
             }
             TreeNode EntityToNode(Entity permission)
             {
-                var item = new EntityItem(permission, string.Empty, Service);
-                var name = permission.Substitute(bag, "{adx_scope} - {adx_entityname}");
+                var item = new EntityItem(permission, Service);
+                var name = permission.Substitute(Service, "{adx_entityname}");
                 var image = permission.TryGetAttributeValue("adx_scope", out OptionSetValue scope) ? scope.Value - 756150000 : -1;
                 var children = permissions.Entities.Where(p => ChildOf(permission.Id, p)).OrderBy(PermissionOrder).Select(EntityToNode).ToArray();
                 var node = new TreeNode(name, image, image, children) { Tag = item };
@@ -162,33 +160,34 @@ namespace Rappen.XTB.EPV
                 }
                 return result;
             }
+            #endregion Local methods
             var rootnodes = permissions.Entities
                 .Where(PermissionIsRoot)
                 .OrderBy(PermissionOrder)
                 .Select(EntityToNode);
             tvPermissions.Nodes.AddRange(rootnodes.ToArray());
+            tvPermissions.ExpandAll();
         }
 
         private void tvPermissions_AfterSelect(object sender, TreeViewEventArgs e)
         {
             var item = e.Node?.Tag as EntityItem;
-            panItem.Controls.OfType<CDSDataTextBox>().ToList().ForEach(c => c.Entity = item?.Entity);
-            btnItemOpen.Enabled = item != null;
+            PermissionSelected(item);
         }
 
-        public void EndSection() { }
-
-        public void Log(string message) { }
-
-        public void Log(Exception ex) { }
-
-        public void StartSection(string name = null) { }
+        private void PermissionSelected(EntityItem permissionitem)
+        {
+            panItem.Controls.OfType<CDSDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
+            panItem.Controls.OfType<XRMDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
+            btnItemOpen.Enabled = permissionitem != null;
+            btnItemNewChild.Enabled = permissionitem != null;
+        }
 
         private void btnItemOpen_Click(object sender, EventArgs e)
         {
             if (txtItemName.Entity != null)
             {
-                string url = GetEntityUrl(txtItemName.Entity);
+                string url = GetEntityUrl(GetFullWebApplicationUrl(ConnectionDetail), txtItemName.Entity);
                 if (!string.IsNullOrEmpty(url))
                 {
                     Process.Start(url);
@@ -196,7 +195,7 @@ namespace Rappen.XTB.EPV
             }
         }
 
-        private string GetEntityUrl(Entity entity)
+        private static string GetEntityUrl(string webappurl, Entity entity)
         {
             var entref = entity.ToEntityReference();
             switch (entref.LogicalName)
@@ -226,31 +225,64 @@ namespace Rappen.XTB.EPV
                     }
                     break;
             }
-            return GetEntityReferenceUrl(entref);
+            return GetDeepLink(webappurl, entref.LogicalName, entref.Id, Guid.Empty, null);
         }
 
-        private string GetEntityReferenceUrl(EntityReference entref)
+        private static string GetDeepLink(string webappurl, string entity, Guid recordid, Guid viewid, NameValueCollection extraqs)
         {
-            if (!string.IsNullOrEmpty(entref.LogicalName) && !entref.Id.Equals(Guid.Empty))
+            if (string.IsNullOrEmpty(entity))
             {
-                var url = GetFullWebApplicationUrl();
-                url = string.Concat(url,
-                    url.EndsWith("/") ? "" : "/",
-                    "main.aspx?etn=",
-                    entref.LogicalName,
-                    "&pagetype=entityrecord&id=",
-                    entref.Id.ToString());
-                return url;
+                return string.Empty;
             }
-            return string.Empty;
+            var uri = new UriBuilder(webappurl);
+            uri.Path = "main.aspx";
+            var query = HttpUtility.ParseQueryString(uri.Query);
+            if (!string.IsNullOrWhiteSpace(entity))
+            {
+                query["etn"] = entity;
+            }
+            if (!viewid.Equals(Guid.Empty))
+            {
+                query["pagetype"] = "entitylist";
+                query["id"] = viewid.ToString();
+            }
+            else
+            {
+                query["pagetype"] = "entityrecord";
+                if (!recordid.Equals(Guid.Empty))
+                {
+                    query["id"] = recordid.ToString();
+                }
+            }
+            if (extraqs != null)
+            {
+                var eq = extraqs.AllKeys.Select(k => k + "=" + Safe(extraqs[k]));
+                var extraquerystring = string.Join("&", eq);
+                query["extraqs"] = extraquerystring;
+            }
+            uri.Query = query.ToString();
+            return uri.ToString();
         }
 
-        public string GetFullWebApplicationUrl()
+        private static string Safe(string unsafestring)
         {
-            var url = ConnectionDetail.WebApplicationUrl;
+            return unsafestring
+                .Replace('å', 'a')
+                .Replace('ä', 'a')
+                .Replace('ö', 'o')
+                .Replace('ü', 'u')
+                .Replace('Å', 'A')
+                .Replace('Ä', 'A')
+                .Replace('Ö', 'O')
+                .Replace('Ü', 'U');
+        }
+
+        public static string GetFullWebApplicationUrl(ConnectionDetail connectionDetail)
+        {
+            var url = connectionDetail.WebApplicationUrl;
             if (string.IsNullOrEmpty(url))
             {
-                url = ConnectionDetail.ServerName;
+                url = connectionDetail.ServerName;
             }
             if (!url.ToLower().StartsWith("http"))
             {
@@ -261,10 +293,28 @@ namespace Rappen.XTB.EPV
             {
                 if (string.IsNullOrEmpty(uri.AbsolutePath.Trim('/')))
                 {
-                    uri = new Uri(uri, ConnectionDetail.Organization);
+                    uri = new Uri(uri, connectionDetail.Organization);
                 }
             }
             return uri.ToString();
+        }
+
+        private void btnItemNewChild_Click(object sender, EventArgs e)
+        {
+            if (!(txtItemName.Entity is Entity permission))
+            {
+                return;
+            }
+            var url = GetDeepLink(GetFullWebApplicationUrl(ConnectionDetail), "adx_entitypermission", Guid.Empty, Guid.Empty,
+                new NameValueCollection {
+                    { "adx_scope", "756150003" },
+                    { "adx_parententitypermission", permission.Id.ToString() },
+                    { "adx_parententitypermissionname", txtItemName.Text }
+                });
+            if (!string.IsNullOrEmpty(url))
+            {
+                Process.Start(url);
+            }
         }
     }
 }
