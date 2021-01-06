@@ -256,25 +256,12 @@ namespace Rappen.XTB.EPV
             }
             if (extraqs != null)
             {
-                var eq = extraqs.AllKeys.Select(k => k + "=" + Safe(extraqs[k]));
+                var eq = extraqs.AllKeys.Select(k => k + "=" + HttpUtility.UrlEncode(extraqs[k]));
                 var extraquerystring = string.Join("&", eq);
                 query["extraqs"] = extraquerystring;
             }
             uri.Query = query.ToString();
             return uri.ToString();
-        }
-
-        private static string Safe(string unsafestring)
-        {
-            return unsafestring
-                .Replace('å', 'a')
-                .Replace('ä', 'a')
-                .Replace('ö', 'o')
-                .Replace('ü', 'u')
-                .Replace('Å', 'A')
-                .Replace('Ä', 'A')
-                .Replace('Ö', 'O')
-                .Replace('Ü', 'U');
         }
 
         public static string GetFullWebApplicationUrl(ConnectionDetail connectionDetail)
