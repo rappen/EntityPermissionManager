@@ -6,13 +6,16 @@ using Rappen.XTB.Helpers.ControlItems;
 using Rappen.XTB.Helpers.Controls;
 using Rappen.XTB.Helpers.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Windows.Forms;
+using xrmtb.XrmToolBox.Controls;
 using xrmtb.XrmToolBox.Controls.Controls;
 using XrmToolBox.Extensibility;
 
@@ -21,6 +24,8 @@ namespace Rappen.XTB.EPV
     public partial class EPVControl : PluginControlBase
     {
         private Settings mySettings;
+        private IEnumerable<Entity> permissions;
+        private Dictionary<string, EntityMetadataItem> entities;
 
         public EPVControl()
         {
@@ -47,6 +52,8 @@ namespace Rappen.XTB.EPV
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
         {
             base.UpdateConnection(newService, detail, actionName, parameter);
+            permissions = null;
+            entities = null;
             cmbWebsite.OrganizationService = newService;
             txtItemName.OrganizationService = newService;
             txtItemEntity.OrganizationService = newService;
@@ -70,7 +77,7 @@ namespace Rappen.XTB.EPV
             }
             else if (args.Result == null)
             {
-                MessageBox.Show("No result from caller", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // MessageBox.Show("No result from caller", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -113,6 +120,14 @@ namespace Rappen.XTB.EPV
             var query = new QueryExpression("adx_entitypermission");
             query.ColumnSet.AddColumns("adx_entityname", "adx_entitylogicalname", "adx_scope", "adx_parententitypermission", "adx_contactrelationship", "adx_accountrelationship", "adx_parentrelationship", "adx_read", "adx_create", "adx_write", "adx_delete", "adx_append", "adx_appendto", "adx_websiteid");
             query.Criteria.AddCondition("adx_websiteid", ConditionOperator.Equal, cmbWebsite.SelectedEntity.Id);
+
+            var webroleid = Guid.Empty; // Prep for filtering/grouping by webrole
+            if (!webroleid.Equals(Guid.Empty))
+            {
+                var wr = query.AddLink("adx_entitypermission_webrole", "adx_entitypermissionid", "adx_entitypermissionid");
+                wr.LinkCriteria.AddCondition("adx_webroleid", ConditionOperator.Equal, webroleid);
+            }
+
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Loading Entity Permissions",
@@ -124,50 +139,42 @@ namespace Rappen.XTB.EPV
             });
         }
 
-        private void PopulatePermissions(EntityCollection permissions)
+        private void PopulatePermissions(EntityCollection newpermissions)
         {
-            #region Local methods
-            bool ChildOf(Guid parentid, Entity permission)
-            {
-                return permission.TryGetAttributeValue("adx_parententitypermission", out EntityReference parent) ? parent.Id.Equals(parentid) : false;
-            }
-            TreeNode EntityToNode(Entity permission)
-            {
-                var item = new EntityItem(permission, Service);
-                var name = permission.Substitute(Service, "{adx_entityname}");
-                var image = permission.TryGetAttributeValue("adx_scope", out OptionSetValue scope) ? scope.Value - 756150000 : -1;
-                var children = permissions.Entities.Where(p => ChildOf(permission.Id, p)).OrderBy(PermissionOrder).Select(EntityToNode).ToArray();
-                var node = new TreeNode(name, image, image, children) { Tag = item };
-                return node;
-            }
-            bool PermissionIsRoot(Entity permission)
-            {
-                return !permission.TryGetAttributeValue("adx_scope", out OptionSetValue scope) ? true : scope.Value != 756150003;
-            }
-            string PermissionOrder(Entity permission)
-            {
-                var result = string.Empty;
-                if (permission.TryGetAttributeValue("adx_scope", out OptionSetValue scope))
-                {
-                    result = scope.Value.ToString("0000000000000");
-                }
-                if (permission.TryGetAttributeValue("adx_entityname", out string name))
-                {
-                    result += name;
-                }
-                else
-                {
-                    result += permission.Id.ToString();
-                }
-                return result;
-            }
-            #endregion Local methods
-            var rootnodes = permissions.Entities
-                .Where(PermissionIsRoot)
-                .OrderBy(PermissionOrder)
-                .Select(EntityToNode);
-            tvPermissions.Nodes.AddRange(rootnodes.ToArray());
+            permissions = newpermissions.Entities;
+            PopulatePermissions();
+        }
+
+        private void PopulatePermissions()
+        {
+            tvPermissions.Nodes.Clear();
+            tvPermissions.Nodes.AddRange(GetChildPermissions(null).ToArray());
+            GetChildNodeDetails(tvPermissions.Nodes);
             //tvPermissions.ExpandAll();
+        }
+
+        private List<TreeNode> GetChildPermissions(TreeNode parentnode)
+        {
+            IEnumerable<Entity> childpermissions = null;
+            if (parentnode == null)
+            {   // All but parental permissions
+                childpermissions = permissions.Where(p => p.TryGetAttributeValue("adx_scope", out OptionSetValue scope) ? scope.Value != 756150003 : true);
+            }
+            else if (parentnode.Tag is EntityItem parentitem)
+            {
+                childpermissions = permissions.Where(p => p.TryGetAttributeValue("adx_parententitypermission", out EntityReference parent) ? parent.Id.Equals(parentitem.Entity.Id) : false);
+            }
+            else
+            {
+                return new List<TreeNode>();
+            }
+            var childitems = childpermissions
+                .Select(e => new PermissionItem(e, rbTreeRels.Checked, Service))
+                .OrderBy(p => p.OrderBy);
+            var childnodes = childitems
+                .Select(p => p.ToNode()).ToList();
+            childnodes.ForEach(c => c.Nodes.AddRange(GetChildPermissions(c).ToArray()));
+            return childnodes;
         }
 
         private void tvPermissions_AfterSelect(object sender, TreeViewEventArgs e)
@@ -182,6 +189,9 @@ namespace Rappen.XTB.EPV
             panItem.Controls.OfType<XRMDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
             btnItemOpen.Enabled = permissionitem != null;
             btnItemNewChild.Enabled = permissionitem != null;
+            txtItemEntityName.Text = permissionitem != null && permissionitem.Entity.TryGetAttributeValue("adx_entitylogicalname", out string itementity)
+                ? GetEntityMetadataItem(itementity).DisplayName
+                : string.Empty;
             LoadWebroles();
         }
 
@@ -325,6 +335,54 @@ namespace Rappen.XTB.EPV
             if (!string.IsNullOrEmpty(url))
             {
                 Process.Start(url);
+            }
+        }
+
+        internal EntityMetadataItem GetEntityMetadataItem(string entityname)
+        {
+            if (entities == null)
+            {
+                entities = new Dictionary<string, EntityMetadataItem>();
+            }
+            if (entities.TryGetValue(entityname, out EntityMetadataItem meta))
+            {
+                return meta;
+            }
+            meta = new EntityMetadataItem(Service.GetEntity(entityname), true);
+            entities.Add(entityname, meta);
+            return meta;
+        }
+
+        private void rbTreeNames_CheckedChanged(object sender, EventArgs e)
+        {
+            PopulatePermissions();
+        }
+
+        private void tvPermissions_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            GetChildNodeDetails(e.Node.Nodes);
+        }
+
+        private void GetChildNodeDetails(TreeNodeCollection nodes)
+        {
+            if (nodes.OfType<TreeNode>().Any(n => n.Tag is PermissionItem item && !item.DetailsLoaded))
+            {
+                WorkAsync(new WorkAsyncInfo
+                {
+                    Message = "Loading details",
+                    Work = (w, args) =>
+                    {
+                        nodes.OfType<TreeNode>()
+                            .Where(n => n.Tag is PermissionItem item && !item.DetailsLoaded)
+                            .Select(n => n.Tag as PermissionItem)
+                            .ToList().ForEach(i => i.LoadDetails());
+                        args.Result = nodes.OfType<TreeNode>();
+                    },
+                    PostWorkCallBack = (args) => HandleWorkAsync<IEnumerable<TreeNode>>(args, (childnodes) =>
+                    {
+                        childnodes.ToList().ForEach(c => c.Text = (c.Tag is PermissionItem item) ? item.TreeNodeText : "?");
+                    })
+                });
             }
         }
     }

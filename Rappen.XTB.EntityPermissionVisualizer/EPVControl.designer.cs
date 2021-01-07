@@ -35,11 +35,16 @@
             this.tvPermissions = new System.Windows.Forms.TreeView();
             this.imgScope = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.rbTreeRels = new System.Windows.Forms.RadioButton();
+            this.rbTreeNames = new System.Windows.Forms.RadioButton();
             this.cmbWebsite = new xrmtb.XrmToolBox.Controls.Controls.CDSDataComboBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.label8 = new System.Windows.Forms.Label();
+            this.grdWebroles = new xrmtb.XrmToolBox.Controls.CRMGridView();
             this.panItem = new System.Windows.Forms.Panel();
-            this.btnItemNewChild = new System.Windows.Forms.Button();
-            this.btnItemOpen = new System.Windows.Forms.Button();
+            this.txtItemEntityName = new System.Windows.Forms.TextBox();
+            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtItemName = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,21 +57,19 @@
             this.txtItemParent = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.grdWebroles = new xrmtb.XrmToolBox.Controls.CRMGridView();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
+            this.btnItemOpen = new System.Windows.Forms.Button();
+            this.btnItemNewChild = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panItem.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
+            this.panItem.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -104,11 +107,12 @@
             this.tvPermissions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tvPermissions.ImageIndex = 0;
             this.tvPermissions.ImageList = this.imgScope;
-            this.tvPermissions.Location = new System.Drawing.Point(0, 56);
+            this.tvPermissions.Location = new System.Drawing.Point(0, 72);
             this.tvPermissions.Name = "tvPermissions";
             this.tvPermissions.SelectedImageIndex = 0;
-            this.tvPermissions.Size = new System.Drawing.Size(327, 722);
+            this.tvPermissions.Size = new System.Drawing.Size(327, 706);
             this.tvPermissions.TabIndex = 1;
+            this.tvPermissions.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvPermissions_BeforeExpand);
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
             // 
             // imgScope
@@ -123,13 +127,39 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.rbTreeRels);
+            this.panel1.Controls.Add(this.rbTreeNames);
             this.panel1.Controls.Add(this.cmbWebsite);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(327, 56);
+            this.panel1.Size = new System.Drawing.Size(327, 72);
             this.panel1.TabIndex = 0;
+            // 
+            // rbTreeRels
+            // 
+            this.rbTreeRels.AutoSize = true;
+            this.rbTreeRels.Location = new System.Drawing.Point(165, 43);
+            this.rbTreeRels.Name = "rbTreeRels";
+            this.rbTreeRels.Size = new System.Drawing.Size(88, 17);
+            this.rbTreeRels.TabIndex = 3;
+            this.rbTreeRels.TabStop = true;
+            this.rbTreeRels.Text = "Relationships";
+            this.rbTreeRels.UseVisualStyleBackColor = true;
+            // 
+            // rbTreeNames
+            // 
+            this.rbTreeNames.AutoSize = true;
+            this.rbTreeNames.Checked = true;
+            this.rbTreeNames.Location = new System.Drawing.Point(76, 43);
+            this.rbTreeNames.Name = "rbTreeNames";
+            this.rbTreeNames.Size = new System.Drawing.Size(58, 17);
+            this.rbTreeNames.TabIndex = 2;
+            this.rbTreeNames.TabStop = true;
+            this.rbTreeNames.Text = "Names";
+            this.rbTreeNames.UseVisualStyleBackColor = true;
+            this.rbTreeNames.CheckedChanged += new System.EventHandler(this.rbTreeNames_CheckedChanged);
             // 
             // cmbWebsite
             // 
@@ -154,8 +184,58 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Website";
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 221);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.label8);
+            this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
+            this.splitContainer2.Size = new System.Drawing.Size(648, 557);
+            this.splitContainer2.SplitterDistance = 243;
+            this.splitContainer2.SplitterWidth = 8;
+            this.splitContainer2.TabIndex = 14;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 9);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Webroles";
+            // 
+            // grdWebroles
+            // 
+            this.grdWebroles.AllowUserToOrderColumns = true;
+            this.grdWebroles.AllowUserToResizeRows = false;
+            this.grdWebroles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.grdWebroles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.grdWebroles.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.grdWebroles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.grdWebroles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdWebroles.ColumnHeadersVisible = false;
+            this.grdWebroles.ColumnOrder = "";
+            this.grdWebroles.FilterColumns = "";
+            this.grdWebroles.Location = new System.Drawing.Point(132, 3);
+            this.grdWebroles.Name = "grdWebroles";
+            this.grdWebroles.OrganizationService = null;
+            this.grdWebroles.RowHeadersVisible = false;
+            this.grdWebroles.ShowFriendlyNames = true;
+            this.grdWebroles.ShowIdColumn = false;
+            this.grdWebroles.ShowIndexColumn = false;
+            this.grdWebroles.Size = new System.Drawing.Size(494, 237);
+            this.grdWebroles.TabIndex = 0;
+            // 
             // panItem
             // 
+            this.panItem.Controls.Add(this.txtItemEntityName);
             this.panItem.Controls.Add(this.txtItemPrivileges);
             this.panItem.Controls.Add(this.label7);
             this.panItem.Controls.Add(this.txtItemName);
@@ -174,27 +254,28 @@
             this.panItem.Size = new System.Drawing.Size(648, 165);
             this.panItem.TabIndex = 12;
             // 
-            // btnItemNewChild
+            // txtItemEntityName
             // 
-            this.btnItemNewChild.Enabled = false;
-            this.btnItemNewChild.Location = new System.Drawing.Point(290, 7);
-            this.btnItemNewChild.Name = "btnItemNewChild";
-            this.btnItemNewChild.Size = new System.Drawing.Size(152, 36);
-            this.btnItemNewChild.TabIndex = 13;
-            this.btnItemNewChild.Text = "New Child Permission";
-            this.btnItemNewChild.UseVisualStyleBackColor = true;
-            this.btnItemNewChild.Click += new System.EventHandler(this.btnItemNewChild_Click);
+            this.txtItemEntityName.Location = new System.Drawing.Point(132, 39);
+            this.txtItemEntityName.Name = "txtItemEntityName";
+            this.txtItemEntityName.Size = new System.Drawing.Size(234, 20);
+            this.txtItemEntityName.TabIndex = 15;
             // 
-            // btnItemOpen
+            // txtItemPrivileges
             // 
-            this.btnItemOpen.Enabled = false;
-            this.btnItemOpen.Location = new System.Drawing.Point(132, 7);
-            this.btnItemOpen.Name = "btnItemOpen";
-            this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
-            this.btnItemOpen.TabIndex = 12;
-            this.btnItemOpen.Text = "Open Entity Permission";
-            this.btnItemOpen.UseVisualStyleBackColor = true;
-            this.btnItemOpen.Click += new System.EventHandler(this.btnItemOpen_Click);
+            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
+            this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
+            this.txtItemPrivileges.Entity = null;
+            this.txtItemPrivileges.EntityReference = null;
+            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
+            this.txtItemPrivileges.LogicalName = null;
+            this.txtItemPrivileges.Name = "txtItemPrivileges";
+            this.txtItemPrivileges.OrganizationService = null;
+            this.txtItemPrivileges.Size = new System.Drawing.Size(494, 20);
+            this.txtItemPrivileges.TabIndex = 14;
             // 
             // label7
             // 
@@ -248,11 +329,11 @@
             this.txtItemEntity.Entity = null;
             this.txtItemEntity.EntityReference = null;
             this.txtItemEntity.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemEntity.Location = new System.Drawing.Point(132, 39);
+            this.txtItemEntity.Location = new System.Drawing.Point(372, 39);
             this.txtItemEntity.LogicalName = null;
             this.txtItemEntity.Name = "txtItemEntity";
             this.txtItemEntity.OrganizationService = null;
-            this.txtItemEntity.Size = new System.Drawing.Size(494, 20);
+            this.txtItemEntity.Size = new System.Drawing.Size(254, 20);
             this.txtItemEntity.TabIndex = 2;
             // 
             // txtItemRelationship
@@ -340,69 +421,27 @@
             this.panel2.Size = new System.Drawing.Size(648, 56);
             this.panel2.TabIndex = 13;
             // 
-            // splitContainer2
+            // btnItemOpen
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 221);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.btnItemOpen.Enabled = false;
+            this.btnItemOpen.Location = new System.Drawing.Point(132, 7);
+            this.btnItemOpen.Name = "btnItemOpen";
+            this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
+            this.btnItemOpen.TabIndex = 12;
+            this.btnItemOpen.Text = "Open Entity Permission";
+            this.btnItemOpen.UseVisualStyleBackColor = true;
+            this.btnItemOpen.Click += new System.EventHandler(this.btnItemOpen_Click);
             // 
-            // splitContainer2.Panel1
+            // btnItemNewChild
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.label8);
-            this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
-            this.splitContainer2.Size = new System.Drawing.Size(648, 557);
-            this.splitContainer2.SplitterDistance = 243;
-            this.splitContainer2.SplitterWidth = 8;
-            this.splitContainer2.TabIndex = 14;
-            // 
-            // grdWebroles
-            // 
-            this.grdWebroles.AllowUserToOrderColumns = true;
-            this.grdWebroles.AllowUserToResizeRows = false;
-            this.grdWebroles.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.grdWebroles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.grdWebroles.BackgroundColor = System.Drawing.SystemColors.Window;
-            this.grdWebroles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdWebroles.ColumnHeadersVisible = false;
-            this.grdWebroles.ColumnOrder = "";
-            this.grdWebroles.FilterColumns = "";
-            this.grdWebroles.Location = new System.Drawing.Point(132, 3);
-            this.grdWebroles.Name = "grdWebroles";
-            this.grdWebroles.OrganizationService = null;
-            this.grdWebroles.RowHeadersVisible = false;
-            this.grdWebroles.ShowFriendlyNames = true;
-            this.grdWebroles.ShowIdColumn = false;
-            this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(494, 237);
-            this.grdWebroles.TabIndex = 0;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 9);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(52, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Webroles";
-            // 
-            // txtItemPrivileges
-            // 
-            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
-            this.txtItemPrivileges.Entity = null;
-            this.txtItemPrivileges.EntityReference = null;
-            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
-            this.txtItemPrivileges.LogicalName = null;
-            this.txtItemPrivileges.Name = "txtItemPrivileges";
-            this.txtItemPrivileges.OrganizationService = null;
-            this.txtItemPrivileges.Size = new System.Drawing.Size(494, 20);
-            this.txtItemPrivileges.TabIndex = 14;
+            this.btnItemNewChild.Enabled = false;
+            this.btnItemNewChild.Location = new System.Drawing.Point(290, 7);
+            this.btnItemNewChild.Name = "btnItemNewChild";
+            this.btnItemNewChild.Size = new System.Drawing.Size(152, 36);
+            this.btnItemNewChild.TabIndex = 13;
+            this.btnItemNewChild.Text = "New Child Permission";
+            this.btnItemNewChild.UseVisualStyleBackColor = true;
+            this.btnItemNewChild.Click += new System.EventHandler(this.btnItemNewChild_Click);
             // 
             // EPVControl
             // 
@@ -420,14 +459,14 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panItem.ResumeLayout(false);
-            this.panItem.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
+            this.panItem.ResumeLayout(false);
+            this.panItem.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -460,5 +499,8 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private xrmtb.XrmToolBox.Controls.CRMGridView grdWebroles;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox txtItemEntityName;
+        private System.Windows.Forms.RadioButton rbTreeRels;
+        private System.Windows.Forms.RadioButton rbTreeNames;
     }
 }

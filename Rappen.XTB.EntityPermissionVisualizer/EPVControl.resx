@@ -128,7 +128,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAAU
-        DgAAAk1TRnQBSQFMAgEBBQEAAUABAAFAAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        DgAAAk1TRnQBSQFMAgEBBQEAAXABAAFwAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -192,6 +192,6 @@
 </value>
   </data>
   <data name="txtItemPrivileges.DisplayFormat" xml:space="preserve">
-    <value>&lt;iif|{adx_create|&lt;value&gt;}|eq|True|C&gt;&lt;iif|{adx_read|&lt;value&gt;}|eq|True|R&gt;&lt;iif|{adx_write|&lt;value&gt;}|eq|True|U&gt;&lt;iif|{adx_delete|&lt;value&gt;}|eq|True|D&gt;&lt;iif|{adx_append|&lt;value&gt;}|eq|True|A&gt;&lt;iif|{adx_appendto|&lt;value&gt;}|eq|True|T&gt;</value>
+    <value>&lt;iif|{adx_read|&lt;value&gt;}|eq|True|Read &gt;&lt;iif|{adx_create|&lt;value&gt;}|eq|True|Create &gt;&lt;iif|{adx_write|&lt;value&gt;}|eq|True|Update &gt;&lt;iif|{adx_delete|&lt;value&gt;}|eq|True|Delete &gt;&lt;iif|{adx_append|&lt;value&gt;}|eq|True|Append &gt;&lt;iif|{adx_appendto|&lt;value&gt;}|eq|True|AppendTo&gt;</value>
   </data>
 </root>
