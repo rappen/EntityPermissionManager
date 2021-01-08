@@ -9,6 +9,7 @@ namespace Rappen.XTB.EPV
 {
     public partial class EPVControl : PluginControlBase
     {
+
         #region Public Constructors
 
         public EPVControl()
@@ -71,14 +72,29 @@ namespace Rappen.XTB.EPV
 
         #region Private Methods
 
-        private void btnItemNewChild_Click(object sender, EventArgs e)
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            DeletePermission(tvPermissions.SelectedNode);
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+            OpenNewPermission(null);
+        }
+
+        private void btnNewChild_Click(object sender, EventArgs e)
         {
             OpenNewPermission(txtItemName.Entity);
         }
 
-        private void btnItemOpen_Click(object sender, EventArgs e)
+        private void btnOpen_Click(object sender, EventArgs e)
         {
             OpenPermission(txtItemName.Entity);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadPermissions();
         }
 
         private void cmbWebsite_SelectedIndexChanged(object sender, EventArgs e)
@@ -101,7 +117,7 @@ namespace Rappen.XTB.EPV
 
         private void tvPermissions_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            PermissionSelected(e.Node.Tag as EntityItem);
+            PermissionSelected(e.Node);
         }
 
         private void tvPermissions_BeforeExpand(object sender, TreeViewCancelEventArgs e)

@@ -35,6 +35,7 @@
             this.tvPermissions = new System.Windows.Forms.TreeView();
             this.imgScope = new System.Windows.Forms.ImageList(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
             this.rbTreeRels = new System.Windows.Forms.RadioButton();
             this.rbTreeNames = new System.Windows.Forms.RadioButton();
             this.cmbWebsite = new xrmtb.XrmToolBox.Controls.Controls.CDSDataComboBox();
@@ -56,10 +57,14 @@
             this.txtItemParent = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnItemOpen = new System.Windows.Forms.Button();
-            this.btnItemNewChild = new System.Windows.Forms.Button();
+            this.btnNew = new System.Windows.Forms.ToolStripButton();
+            this.btnOpen = new System.Windows.Forms.ToolStripButton();
+            this.btnNewChild = new System.Windows.Forms.ToolStripButton();
+            this.btnDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnRefresh = new System.Windows.Forms.ToolStripButton();
             this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
-            this.label9 = new System.Windows.Forms.Label();
+            this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -70,22 +75,28 @@
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
             this.panItem.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
             // 
             this.toolStripMenu.ImageScalingSize = new System.Drawing.Size(24, 24);
+            this.toolStripMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnNew,
+            this.btnOpen,
+            this.btnNewChild,
+            this.btnDelete,
+            this.toolStripSeparator1,
+            this.btnRefresh});
             this.toolStripMenu.Location = new System.Drawing.Point(0, 0);
             this.toolStripMenu.Name = "toolStripMenu";
-            this.toolStripMenu.Size = new System.Drawing.Size(983, 25);
+            this.toolStripMenu.Size = new System.Drawing.Size(983, 31);
             this.toolStripMenu.TabIndex = 4;
             this.toolStripMenu.Text = "toolStrip1";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 25);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 31);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -98,7 +109,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Panel2.Controls.Add(this.panItem);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(983, 778);
+            this.splitContainer1.Size = new System.Drawing.Size(983, 772);
             this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 5;
@@ -111,7 +122,7 @@
             this.tvPermissions.Location = new System.Drawing.Point(0, 72);
             this.tvPermissions.Name = "tvPermissions";
             this.tvPermissions.SelectedImageIndex = 0;
-            this.tvPermissions.Size = new System.Drawing.Size(421, 706);
+            this.tvPermissions.Size = new System.Drawing.Size(421, 700);
             this.tvPermissions.TabIndex = 1;
             this.tvPermissions.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvPermissions_BeforeExpand);
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
@@ -138,6 +149,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(421, 72);
             this.panel1.TabIndex = 0;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Show";
             // 
             // rbTreeRels
             // 
@@ -197,8 +217,8 @@
             // 
             this.splitContainer2.Panel1.Controls.Add(this.label8);
             this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
-            this.splitContainer2.Size = new System.Drawing.Size(554, 541);
-            this.splitContainer2.SplitterDistance = 236;
+            this.splitContainer2.Size = new System.Drawing.Size(554, 535);
+            this.splitContainer2.SplitterDistance = 233;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 14;
             // 
@@ -232,7 +252,7 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(400, 230);
+            this.grdWebroles.Size = new System.Drawing.Size(400, 227);
             this.grdWebroles.TabIndex = 0;
             // 
             // panItem
@@ -399,35 +419,66 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.btnItemOpen);
-            this.panel2.Controls.Add(this.btnItemNewChild);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(554, 72);
             this.panel2.TabIndex = 13;
             // 
-            // btnItemOpen
+            // btnNew
             // 
-            this.btnItemOpen.Enabled = false;
-            this.btnItemOpen.Location = new System.Drawing.Point(132, 16);
-            this.btnItemOpen.Name = "btnItemOpen";
-            this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
-            this.btnItemOpen.TabIndex = 12;
-            this.btnItemOpen.Text = "Open Entity Permission";
-            this.btnItemOpen.UseVisualStyleBackColor = true;
-            this.btnItemOpen.Click += new System.EventHandler(this.btnItemOpen_Click);
+            this.btnNew.Enabled = false;
+            this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
+            this.btnNew.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(59, 28);
+            this.btnNew.Text = "New";
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
-            // btnItemNewChild
+            // btnOpen
             // 
-            this.btnItemNewChild.Enabled = false;
-            this.btnItemNewChild.Location = new System.Drawing.Point(290, 16);
-            this.btnItemNewChild.Name = "btnItemNewChild";
-            this.btnItemNewChild.Size = new System.Drawing.Size(152, 36);
-            this.btnItemNewChild.TabIndex = 13;
-            this.btnItemNewChild.Text = "New Child Permission";
-            this.btnItemNewChild.UseVisualStyleBackColor = true;
-            this.btnItemNewChild.Click += new System.EventHandler(this.btnItemNewChild_Click);
+            this.btnOpen.Enabled = false;
+            this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
+            this.btnOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnOpen.Name = "btnOpen";
+            this.btnOpen.Size = new System.Drawing.Size(64, 28);
+            this.btnOpen.Text = "Open";
+            this.btnOpen.Click += new System.EventHandler(this.btnOpen_Click);
+            // 
+            // btnNewChild
+            // 
+            this.btnNewChild.Enabled = false;
+            this.btnNewChild.Image = ((System.Drawing.Image)(resources.GetObject("btnNewChild.Image")));
+            this.btnNewChild.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNewChild.Name = "btnNewChild";
+            this.btnNewChild.Size = new System.Drawing.Size(90, 28);
+            this.btnNewChild.Text = "New Child";
+            this.btnNewChild.Click += new System.EventHandler(this.btnNewChild_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Enabled = false;
+            this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
+            this.btnDelete.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(68, 28);
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // btnRefresh
+            // 
+            this.btnRefresh.Enabled = false;
+            this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
+            this.btnRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnRefresh.Name = "btnRefresh";
+            this.btnRefresh.Size = new System.Drawing.Size(71, 28);
+            this.btnRefresh.Text = "Reload";
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
             // 
             // txtItemPrivileges
             // 
@@ -445,15 +496,6 @@
             this.txtItemPrivileges.Size = new System.Drawing.Size(400, 20);
             this.txtItemPrivileges.TabIndex = 14;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(13, 45);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(34, 13);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Show";
-            // 
             // EPVControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -464,6 +506,8 @@
             this.Name = "EPVControl";
             this.Size = new System.Drawing.Size(983, 803);
             this.Load += new System.EventHandler(this.MyPluginControl_Load);
+            this.toolStripMenu.ResumeLayout(false);
+            this.toolStripMenu.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -477,7 +521,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
             this.panItem.ResumeLayout(false);
             this.panItem.PerformLayout();
-            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -504,8 +547,6 @@
         private System.Windows.Forms.Panel panItem;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ImageList imgScope;
-        private System.Windows.Forms.Button btnItemOpen;
-        private System.Windows.Forms.Button btnItemNewChild;
         private Helpers.Controls.XRMDataTextBox txtItemPrivileges;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private xrmtb.XrmToolBox.Controls.CRMGridView grdWebroles;
@@ -514,5 +555,11 @@
         private System.Windows.Forms.RadioButton rbTreeRels;
         private System.Windows.Forms.RadioButton rbTreeNames;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.ToolStripButton btnNew;
+        private System.Windows.Forms.ToolStripButton btnOpen;
+        private System.Windows.Forms.ToolStripButton btnNewChild;
+        private System.Windows.Forms.ToolStripButton btnDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton btnRefresh;
     }
 }

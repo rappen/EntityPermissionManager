@@ -29,6 +29,31 @@ namespace Rappen.XTB.EPV
 
         #region Private Methods
 
+        private void DeletePermission(TreeNode node)
+        {
+            if (!(node.Tag is EntityItem permission))
+            {
+                return;
+            }
+            if (MessageBox.Show($"Confirm deletion of permission {permission}.\nThis can NOT be undone!", "Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) != DialogResult.OK)
+            {
+                return;
+            }
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Deleting",
+                Work = (w, a) =>
+                {
+                    Service.Delete(permission.Entity.LogicalName, permission.Entity.Id);
+                },
+                PostWorkCallBack = (a) => HandleWorkAsync<object>(a, (obj) =>
+                {
+                    node.Remove();
+                    permissions = permissions.Where(p => p != permission.Entity);
+                })
+            });
+        }
+
         private static string GetDeepLink(string webappurl, string entity, Guid recordid, Guid viewid, NameValueCollection extraqs)
         {
             if (string.IsNullOrEmpty(entity))
@@ -199,13 +224,9 @@ namespace Rappen.XTB.EPV
             {
                 MessageBox.Show(args.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            else if (args.Result is T)
+            else if (args.Result is T || (args.Result == null && typeof(T) is object))
             {
                 nextMethod.Invoke((T)args.Result);
-            }
-            else if (args.Result == null)
-            {
-                // MessageBox.Show("No result from caller", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -215,6 +236,8 @@ namespace Rappen.XTB.EPV
 
         private void LoadPermissions()
         {
+            btnNew.Enabled = cmbWebsite.SelectedEntity != null;
+            btnRefresh.Enabled = cmbWebsite.SelectedEntity != null;
             tvPermissions.Nodes.Clear();
             if (cmbWebsite.SelectedEntity == null)
             {
@@ -287,12 +310,12 @@ namespace Rappen.XTB.EPV
         private void OpenNewPermission(Entity parent)
         {
             var extraqs = new NameValueCollection {
-                    { EntitypeRmission.Scope, ((int)EntitypeRmission.Scope_OptionSet.Overordnad).ToString() },
                     { EntitypeRmission.WebsiteId, cmbWebsite.SelectedEntity.Id.ToString() },
                     { EntitypeRmission.WebsiteId + "name", cmbWebsite.Text }
                 };
             if (parent != null)
             {
+                extraqs.Add(EntitypeRmission.Scope, ((int)EntitypeRmission.Scope_OptionSet.Overordnad).ToString());
                 extraqs.Add(EntitypeRmission.ParentEntitypeRmission, parent.Id.ToString());
                 extraqs.Add(EntitypeRmission.ParentEntitypeRmission + "name", txtItemName.Text);
             }
@@ -316,12 +339,14 @@ namespace Rappen.XTB.EPV
             }
         }
 
-        private void PermissionSelected(EntityItem permissionitem)
+        private void PermissionSelected(TreeNode node)
         {
+            var permissionitem = node.Tag as EntityItem;
             panItem.Controls.OfType<CDSDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
             panItem.Controls.OfType<XRMDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
-            btnItemOpen.Enabled = permissionitem != null;
-            btnItemNewChild.Enabled = permissionitem != null;
+            btnOpen.Enabled = permissionitem != null;
+            btnNewChild.Enabled = permissionitem != null;
+            btnDelete.Enabled = permissionitem != null && node.Nodes.Count == 0;
             txtItemEntityName.Text = GetPermissionEntityName(permissionitem);
             LoadWebroles();
         }
