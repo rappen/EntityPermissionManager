@@ -48,17 +48,7 @@ namespace Rappen.XTB.EPV
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
         {
             base.UpdateConnection(newService, detail, actionName, parameter);
-            permissions = null;
-            entities = null;
-            cmbWebsite.OrganizationService = newService;
-            txtItemName.OrganizationService = newService;
-            txtItemEntity.OrganizationService = newService;
-            txtItemScope.OrganizationService = newService;
-            txtItemParent.OrganizationService = newService;
-            txtItemRelationship.OrganizationService = newService;
-            txtItemPrivileges.OrganizationService = newService;
-            grdWebroles.OrganizationService = newService;
-            LoadWebsites();
+            ConnectionUpdated(newService);
         }
 
         #endregion Public Methods

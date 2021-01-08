@@ -26,6 +26,7 @@ namespace Rappen.XTB.EPV
         private Dictionary<string, EntityMetadataItem> entities;
         private Settings mySettings;
         private IEnumerable<Entity> permissions;
+        private string webappurl;
 
         #endregion Private Fields
 
@@ -51,6 +52,22 @@ namespace Rappen.XTB.EPV
                 }
             }
             return uri.ToString();
+        }
+
+        private void ConnectionUpdated(IOrganizationService newService)
+        {
+            permissions = null;
+            entities = null;
+            webappurl = GetFullWebApplicationUrl(ConnectionDetail);
+            cmbWebsite.OrganizationService = newService;
+            txtItemName.OrganizationService = newService;
+            txtItemEntity.OrganizationService = newService;
+            txtItemScope.OrganizationService = newService;
+            txtItemParent.OrganizationService = newService;
+            txtItemRelationship.OrganizationService = newService;
+            txtItemPrivileges.OrganizationService = newService;
+            grdWebroles.OrganizationService = newService;
+            LoadWebsites();
         }
 
         private void DeletePermission(TreeNode node)
@@ -157,6 +174,7 @@ namespace Rappen.XTB.EPV
             }
             return null;
         }
+
         private string GetPermissionEntityName(EntityItem permissionitem)
         {
             if (permissionitem == null)
@@ -275,7 +293,7 @@ namespace Rappen.XTB.EPV
                 extraqs.Add(EntitypeRmission.ParentEntitypeRmission, parent.Id.ToString());
                 extraqs.Add(EntitypeRmission.ParentEntitypeRmission + "name", txtItemName.Text);
             }
-            var url = Utils.GetDeepLink(GetFullWebApplicationUrl(ConnectionDetail), EntitypeRmission.EntityName, Guid.Empty, Guid.Empty, extraqs);
+            var url = Utils.GetRecordDeepLink(webappurl, EntitypeRmission.EntityName, Guid.Empty, extraqs);
             if (!string.IsNullOrEmpty(url))
             {
                 Process.Start(url);
@@ -288,7 +306,7 @@ namespace Rappen.XTB.EPV
             {
                 return;
             }
-            string url = Utils.GetDeepLink(GetFullWebApplicationUrl(ConnectionDetail), entity.LogicalName, entity.Id, Guid.Empty, null);
+            string url = Utils.GetRecordDeepLink(webappurl, entity, null);
             if (!string.IsNullOrEmpty(url))
             {
                 Process.Start(url);
@@ -320,7 +338,6 @@ namespace Rappen.XTB.EPV
             GetChildNodeDetails(tvPermissions.Nodes);
             //tvPermissions.ExpandAll();
         }
-
         #endregion Private Methods
 
     }
