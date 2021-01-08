@@ -178,6 +178,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EPVcode.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="EPVDescription.cs" />
     <Compile Include="EPVControl.cs">
       <SubType>UserControl</SubType>
