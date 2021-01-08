@@ -1,10 +1,9 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
-using Rappen.XTB.Helpers;
 using Rappen.XTB.Helpers.ControlItems;
 using Rappen.XTB.Helpers.Controls;
-using Rappen.XTB.Helpers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -12,7 +11,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Windows.Forms;
 using xrmtb.XrmToolBox.Controls;
@@ -189,10 +187,25 @@ namespace Rappen.XTB.EPV
             panItem.Controls.OfType<XRMDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
             btnItemOpen.Enabled = permissionitem != null;
             btnItemNewChild.Enabled = permissionitem != null;
-            txtItemEntityName.Text = permissionitem != null && permissionitem.Entity.TryGetAttributeValue("adx_entitylogicalname", out string itementity)
-                ? GetEntityMetadataItem(itementity).DisplayName
-                : string.Empty;
+            txtItemEntityName.Text = GetPermissionEntityName(permissionitem);
             LoadWebroles();
+        }
+
+        private string GetPermissionEntityName(EntityItem permissionitem)
+        {
+            if (permissionitem == null)
+            {
+                return string.Empty;
+            }
+            if (permissionitem.Entity.TryGetAttributeValue("adx_entitylogicalname", out string itementity))
+            {
+                if (GetEntityMetadataItem(itementity) is EntityMetadataItem emdi)
+                {
+                    return emdi.DisplayName;
+                }
+                return itementity;
+            }
+            return string.Empty;
         }
 
         private void LoadWebroles()
@@ -328,9 +341,11 @@ namespace Rappen.XTB.EPV
             }
             var url = GetDeepLink(GetFullWebApplicationUrl(ConnectionDetail), "adx_entitypermission", Guid.Empty, Guid.Empty,
                 new NameValueCollection {
-                    { "adx_scope", "756150003" },
-                    { "adx_parententitypermission", permission.Id.ToString() },
-                    { "adx_parententitypermissionname", txtItemName.Text }
+                    { EntitypeRmission.Scope, ((int)EntitypeRmission.Scope_OptionSet.Overordnad).ToString() },
+                    { EntitypeRmission.WebsiteId, cmbWebsite.SelectedEntity.Id.ToString() },
+                    { EntitypeRmission.WebsiteId + "name", cmbWebsite.Text },
+                    { EntitypeRmission.ParentEntitypeRmission, permission.Id.ToString() },
+                    { EntitypeRmission.ParentEntitypeRmission + "name", txtItemName.Text }
                 });
             if (!string.IsNullOrEmpty(url))
             {
@@ -348,9 +363,13 @@ namespace Rappen.XTB.EPV
             {
                 return meta;
             }
-            meta = new EntityMetadataItem(Service.GetEntity(entityname), true);
-            entities.Add(entityname, meta);
-            return meta;
+            if (Service.GetEntity(entityname) is EntityMetadata entitymeta)
+            {
+                meta = new EntityMetadataItem(entitymeta, true);
+                entities.Add(entityname, meta);
+                return meta;
+            }
+            return null;
         }
 
         private void rbTreeNames_CheckedChanged(object sender, EventArgs e)
@@ -372,11 +391,22 @@ namespace Rappen.XTB.EPV
                     Message = "Loading details",
                     Work = (w, args) =>
                     {
-                        nodes.OfType<TreeNode>()
+                        var items = nodes.OfType<TreeNode>()
                             .Where(n => n.Tag is PermissionItem item && !item.DetailsLoaded)
-                            .Select(n => n.Tag as PermissionItem)
-                            .ToList().ForEach(i => i.LoadDetails());
+                            .Select(n => n.Tag as PermissionItem);
+                        var total = items.Count();
+                        var current = 0;
+                        foreach (var item in items)
+                        {
+                            current++;
+                            w.ReportProgress(current * 100 / total, $"Loading details\n{current} / {total}");
+                            item.LoadDetails();
+                        }
                         args.Result = nodes.OfType<TreeNode>();
+                    },
+                    ProgressChanged = (args) =>
+                    {
+                        SetWorkingMessage(args.UserState.ToString());
                     },
                     PostWorkCallBack = (args) => HandleWorkAsync<IEnumerable<TreeNode>>(args, (childnodes) =>
                     {

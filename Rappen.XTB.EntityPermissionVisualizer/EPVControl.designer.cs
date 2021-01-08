@@ -44,7 +44,6 @@
             this.grdWebroles = new xrmtb.XrmToolBox.Controls.CRMGridView();
             this.panItem = new System.Windows.Forms.Panel();
             this.txtItemEntityName = new System.Windows.Forms.TextBox();
-            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtItemName = new xrmtb.XrmToolBox.Controls.Controls.CDSDataTextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -59,6 +58,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnItemOpen = new System.Windows.Forms.Button();
             this.btnItemNewChild = new System.Windows.Forms.Button();
+            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
+            this.label9 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -98,7 +99,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.panItem);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Size = new System.Drawing.Size(983, 778);
-            this.splitContainer1.SplitterDistance = 327;
+            this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 5;
             // 
@@ -110,7 +111,7 @@
             this.tvPermissions.Location = new System.Drawing.Point(0, 72);
             this.tvPermissions.Name = "tvPermissions";
             this.tvPermissions.SelectedImageIndex = 0;
-            this.tvPermissions.Size = new System.Drawing.Size(327, 706);
+            this.tvPermissions.Size = new System.Drawing.Size(421, 706);
             this.tvPermissions.TabIndex = 1;
             this.tvPermissions.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvPermissions_BeforeExpand);
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
@@ -127,6 +128,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.rbTreeRels);
             this.panel1.Controls.Add(this.rbTreeNames);
             this.panel1.Controls.Add(this.cmbWebsite);
@@ -134,18 +136,18 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(327, 72);
+            this.panel1.Size = new System.Drawing.Size(421, 72);
             this.panel1.TabIndex = 0;
             // 
             // rbTreeRels
             // 
             this.rbTreeRels.AutoSize = true;
-            this.rbTreeRels.Location = new System.Drawing.Point(165, 43);
+            this.rbTreeRels.Location = new System.Drawing.Point(223, 43);
             this.rbTreeRels.Name = "rbTreeRels";
-            this.rbTreeRels.Size = new System.Drawing.Size(88, 17);
+            this.rbTreeRels.Size = new System.Drawing.Size(121, 17);
             this.rbTreeRels.TabIndex = 3;
             this.rbTreeRels.TabStop = true;
-            this.rbTreeRels.Text = "Relationships";
+            this.rbTreeRels.Text = "Actual Relationships";
             this.rbTreeRels.UseVisualStyleBackColor = true;
             // 
             // rbTreeNames
@@ -154,10 +156,10 @@
             this.rbTreeNames.Checked = true;
             this.rbTreeNames.Location = new System.Drawing.Point(76, 43);
             this.rbTreeNames.Name = "rbTreeNames";
-            this.rbTreeNames.Size = new System.Drawing.Size(58, 17);
+            this.rbTreeNames.Size = new System.Drawing.Size(140, 17);
             this.rbTreeNames.TabIndex = 2;
             this.rbTreeNames.TabStop = true;
-            this.rbTreeNames.Text = "Names";
+            this.rbTreeNames.Text = "Entity Permission Names";
             this.rbTreeNames.UseVisualStyleBackColor = true;
             this.rbTreeNames.CheckedChanged += new System.EventHandler(this.rbTreeNames_CheckedChanged);
             // 
@@ -171,7 +173,7 @@
             this.cmbWebsite.Location = new System.Drawing.Point(76, 16);
             this.cmbWebsite.Name = "cmbWebsite";
             this.cmbWebsite.OrganizationService = null;
-            this.cmbWebsite.Size = new System.Drawing.Size(235, 21);
+            this.cmbWebsite.Size = new System.Drawing.Size(329, 21);
             this.cmbWebsite.TabIndex = 1;
             this.cmbWebsite.SelectedIndexChanged += new System.EventHandler(this.cmbWebsite_SelectedIndexChanged);
             // 
@@ -187,7 +189,7 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 221);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 237);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -195,8 +197,8 @@
             // 
             this.splitContainer2.Panel1.Controls.Add(this.label8);
             this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
-            this.splitContainer2.Size = new System.Drawing.Size(648, 557);
-            this.splitContainer2.SplitterDistance = 243;
+            this.splitContainer2.Size = new System.Drawing.Size(554, 541);
+            this.splitContainer2.SplitterDistance = 236;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 14;
             // 
@@ -230,7 +232,7 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(494, 237);
+            this.grdWebroles.Size = new System.Drawing.Size(400, 230);
             this.grdWebroles.TabIndex = 0;
             // 
             // panItem
@@ -249,9 +251,9 @@
             this.panItem.Controls.Add(this.txtItemParent);
             this.panItem.Controls.Add(this.label4);
             this.panItem.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panItem.Location = new System.Drawing.Point(0, 56);
+            this.panItem.Location = new System.Drawing.Point(0, 72);
             this.panItem.Name = "panItem";
-            this.panItem.Size = new System.Drawing.Size(648, 165);
+            this.panItem.Size = new System.Drawing.Size(554, 165);
             this.panItem.TabIndex = 12;
             // 
             // txtItemEntityName
@@ -260,22 +262,6 @@
             this.txtItemEntityName.Name = "txtItemEntityName";
             this.txtItemEntityName.Size = new System.Drawing.Size(234, 20);
             this.txtItemEntityName.TabIndex = 15;
-            // 
-            // txtItemPrivileges
-            // 
-            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
-            this.txtItemPrivileges.Entity = null;
-            this.txtItemPrivileges.EntityReference = null;
-            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
-            this.txtItemPrivileges.LogicalName = null;
-            this.txtItemPrivileges.Name = "txtItemPrivileges";
-            this.txtItemPrivileges.OrganizationService = null;
-            this.txtItemPrivileges.Size = new System.Drawing.Size(494, 20);
-            this.txtItemPrivileges.TabIndex = 14;
             // 
             // label7
             // 
@@ -299,7 +285,7 @@
             this.txtItemName.LogicalName = null;
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.OrganizationService = null;
-            this.txtItemName.Size = new System.Drawing.Size(494, 20);
+            this.txtItemName.Size = new System.Drawing.Size(400, 20);
             this.txtItemName.TabIndex = 0;
             // 
             // label2
@@ -333,7 +319,7 @@
             this.txtItemEntity.LogicalName = null;
             this.txtItemEntity.Name = "txtItemEntity";
             this.txtItemEntity.OrganizationService = null;
-            this.txtItemEntity.Size = new System.Drawing.Size(254, 20);
+            this.txtItemEntity.Size = new System.Drawing.Size(160, 20);
             this.txtItemEntity.TabIndex = 2;
             // 
             // txtItemRelationship
@@ -349,7 +335,7 @@
             this.txtItemRelationship.LogicalName = null;
             this.txtItemRelationship.Name = "txtItemRelationship";
             this.txtItemRelationship.OrganizationService = null;
-            this.txtItemRelationship.Size = new System.Drawing.Size(494, 20);
+            this.txtItemRelationship.Size = new System.Drawing.Size(400, 20);
             this.txtItemRelationship.TabIndex = 8;
             // 
             // label3
@@ -383,7 +369,7 @@
             this.txtItemScope.LogicalName = null;
             this.txtItemScope.Name = "txtItemScope";
             this.txtItemScope.OrganizationService = null;
-            this.txtItemScope.Size = new System.Drawing.Size(494, 20);
+            this.txtItemScope.Size = new System.Drawing.Size(400, 20);
             this.txtItemScope.TabIndex = 4;
             // 
             // txtItemParent
@@ -399,7 +385,7 @@
             this.txtItemParent.LogicalName = null;
             this.txtItemParent.Name = "txtItemParent";
             this.txtItemParent.OrganizationService = null;
-            this.txtItemParent.Size = new System.Drawing.Size(494, 20);
+            this.txtItemParent.Size = new System.Drawing.Size(400, 20);
             this.txtItemParent.TabIndex = 6;
             // 
             // label4
@@ -418,13 +404,13 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(648, 56);
+            this.panel2.Size = new System.Drawing.Size(554, 72);
             this.panel2.TabIndex = 13;
             // 
             // btnItemOpen
             // 
             this.btnItemOpen.Enabled = false;
-            this.btnItemOpen.Location = new System.Drawing.Point(132, 7);
+            this.btnItemOpen.Location = new System.Drawing.Point(132, 16);
             this.btnItemOpen.Name = "btnItemOpen";
             this.btnItemOpen.Size = new System.Drawing.Size(152, 36);
             this.btnItemOpen.TabIndex = 12;
@@ -435,13 +421,38 @@
             // btnItemNewChild
             // 
             this.btnItemNewChild.Enabled = false;
-            this.btnItemNewChild.Location = new System.Drawing.Point(290, 7);
+            this.btnItemNewChild.Location = new System.Drawing.Point(290, 16);
             this.btnItemNewChild.Name = "btnItemNewChild";
             this.btnItemNewChild.Size = new System.Drawing.Size(152, 36);
             this.btnItemNewChild.TabIndex = 13;
             this.btnItemNewChild.Text = "New Child Permission";
             this.btnItemNewChild.UseVisualStyleBackColor = true;
             this.btnItemNewChild.Click += new System.EventHandler(this.btnItemNewChild_Click);
+            // 
+            // txtItemPrivileges
+            // 
+            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
+            this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
+            this.txtItemPrivileges.Entity = null;
+            this.txtItemPrivileges.EntityReference = null;
+            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
+            this.txtItemPrivileges.LogicalName = null;
+            this.txtItemPrivileges.Name = "txtItemPrivileges";
+            this.txtItemPrivileges.OrganizationService = null;
+            this.txtItemPrivileges.Size = new System.Drawing.Size(400, 20);
+            this.txtItemPrivileges.TabIndex = 14;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(13, 45);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(34, 13);
+            this.label9.TabIndex = 4;
+            this.label9.Text = "Show";
             // 
             // EPVControl
             // 
@@ -502,5 +513,6 @@
         private System.Windows.Forms.TextBox txtItemEntityName;
         private System.Windows.Forms.RadioButton rbTreeRels;
         private System.Windows.Forms.RadioButton rbTreeNames;
+        private System.Windows.Forms.Label label9;
     }
 }

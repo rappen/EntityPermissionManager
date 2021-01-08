@@ -18,8 +18,7 @@ namespace Rappen.XTB.EPV
         public PermissionItem(Entity entity, bool relationships, IOrganizationService organizationService) : base(entity, organizationService)
         {
             this.relationships = relationships;
-            var nodeformat = relationships ? "{adx_entitylogicalname} {adx_contactrelationship}{adx_accountrelationship}{adx_parentrelationship}" : "{adx_entityname}";
-            TreeNodeText = Entity.Substitute(organizationService, nodeformat);
+            TreeNodeText = Entity.Substitute(organizationService, "{adx_entityname}");
         }
 
         public void LoadDetails()
