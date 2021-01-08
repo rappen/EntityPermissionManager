@@ -1,20 +1,30 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
-using Rappen.XTB.Helpers.ControlItems;
 using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
+using XrmToolBox.Extensibility.Interfaces;
 
 namespace Rappen.XTB.EPV
 {
-    public partial class EPVControl : PluginControlBase
+    public partial class EPVControl : PluginControlBase, IAboutPlugin, IGitHubPlugin
     {
+        private const string aiEndpoint = "https://dc.services.visualstudio.com/v2/track";
+        private const string aiKey = "eed73022-2444-45fd-928b-5eebd8fa46a6";    // jonas@rappen.net tenant, XrmToolBox
+        private AppInsights ai;
+
+        public string RepositoryName => "EntityPermissionVisualizer";
+
+        public string UserName => "rappen";
 
         #region Public Constructors
 
         public EPVControl()
         {
             InitializeComponent();
+            ai = new AppInsights(aiEndpoint, aiKey, Assembly.GetExecutingAssembly(), "Entity Permission Visualizer");
         }
 
         #endregion Public Constructors
@@ -50,6 +60,11 @@ namespace Rappen.XTB.EPV
             {
                 SettingsManager.Instance.Save(GetType(), mySettings);
             }
+        }
+
+        public void ShowAboutDialog()
+        {
+            Process.Start("https://jonasr.app");
         }
 
         public override void UpdateConnection(IOrganizationService newService, ConnectionDetail detail, string actionName, object parameter)
@@ -102,12 +117,18 @@ namespace Rappen.XTB.EPV
             LoadPermissions();
         }
 
-        private void MyPluginControl_Load(object sender, EventArgs e)
+        private void EPVControl_Load(object sender, EventArgs e)
         {
+            ai.WriteEvent("Load"); 
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
                 mySettings = new Settings();
             }
+        }
+
+        private void lblAbout_Click(object sender, EventArgs e)
+        {
+            ShowAboutDialog();
         }
 
         private void rbTreeNames_CheckedChanged(object sender, EventArgs e)
