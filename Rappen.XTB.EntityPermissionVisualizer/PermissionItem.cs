@@ -26,27 +26,27 @@ namespace Rappen.XTB.EPV
             if (relationships)
             {
                 var text = new StringBuilder();
-                if (Entity.TryGetAttributeValue(EntitypeRmission.EntityLogicalName, out string entity) && !string.IsNullOrEmpty(entity) &&
+                if (Entity.TryGetAttributeValue(Entitypermission.EntityLogicalName, out string entity) && !string.IsNullOrEmpty(entity) &&
                     Bag.Service.GetEntity(entity) is EntityMetadata entitymeta)
                 {
                     var emdi = new EntityMetadataItem(entitymeta, true);
                     var rel = string.Empty;
                     switch (Scope)
                     {
-                        case EntitypeRmission.Scope_OptionSet.Kontakt:
-                            if (Entity.TryGetAttributeValue(EntitypeRmission.ContactRelationship, out string crel))
+                        case Entitypermission.Scope_OptionSet.Contact:
+                            if (Entity.TryGetAttributeValue(Entitypermission.ContactRelationship, out string crel))
                             {
                                 rel = crel;
                             }
                             break;
-                        case EntitypeRmission.Scope_OptionSet.Konto:
-                            if (Entity.TryGetAttributeValue(EntitypeRmission.AccountRelationship, out string arel))
+                        case Entitypermission.Scope_OptionSet.Account:
+                            if (Entity.TryGetAttributeValue(Entitypermission.AccountRelationship, out string arel))
                             {
                                 rel = arel;
                             }
                             break;
-                        case EntitypeRmission.Scope_OptionSet.Overordnad:
-                            if (Entity.TryGetAttributeValue(EntitypeRmission.ParentRelationship, out string prel))
+                        case Entitypermission.Scope_OptionSet.Parent:
+                            if (Entity.TryGetAttributeValue(Entitypermission.ParentRelationship, out string prel))
                             {
                                 rel = prel;
                             }
@@ -80,27 +80,27 @@ namespace Rappen.XTB.EPV
                     }
                 }
                 text.Append(" (");
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Create, out bool create) && create)
+                if (Entity.TryGetAttributeValue(Entitypermission.Create, out bool create) && create)
                 {
                     text.Append("C");
                 }
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Read, out bool read) && read)
+                if (Entity.TryGetAttributeValue(Entitypermission.Read, out bool read) && read)
                 {
                     text.Append("R");
                 }
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Write, out bool update) && update)
+                if (Entity.TryGetAttributeValue(Entitypermission.Write, out bool update) && update)
                 {
                     text.Append("U");
                 }
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Delete, out bool delete) && delete)
+                if (Entity.TryGetAttributeValue(Entitypermission.Delete, out bool delete) && delete)
                 {
                     text.Append("D");
                 }
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Append, out bool append) && append)
+                if (Entity.TryGetAttributeValue(Entitypermission.Append, out bool append) && append)
                 {
                     text.Append("A");
                 }
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Appendto, out bool appendto) && appendto)
+                if (Entity.TryGetAttributeValue(Entitypermission.Appendto, out bool appendto) && appendto)
                 {
                     text.Append("T");
                 }
@@ -123,7 +123,7 @@ namespace Rappen.XTB.EPV
             get
             {
                 var result = ScopeValue.ToString("0000000000000");
-                if (Entity.TryGetAttributeValue(EntitypeRmission.PrimaryName, out string name))
+                if (Entity.TryGetAttributeValue(Entitypermission.PrimaryName, out string name))
                 {
                     result += name;
                 }
@@ -135,17 +135,17 @@ namespace Rappen.XTB.EPV
             }
         }
 
-        private EntitypeRmission.Scope_OptionSet Scope => (EntitypeRmission.Scope_OptionSet)ScopeValue;
+        private Entitypermission.Scope_OptionSet Scope => (Entitypermission.Scope_OptionSet)ScopeValue;
 
         private int ScopeValue
         {
             get
             {
-                if (Entity.TryGetAttributeValue(EntitypeRmission.Scope, out OptionSetValue scope))
+                if (Entity.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope))
                 {
                     return scope.Value;
                 }
-                return (int)EntitypeRmission.Scope_OptionSet.Global;
+                return (int)Entitypermission.Scope_OptionSet.Global;
             }
         }
     }

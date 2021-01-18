@@ -12,7 +12,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using System.Windows.Forms;
 using xrmtb.XrmToolBox.Controls.Controls;
 using XrmToolBox.Extensibility;
@@ -59,14 +58,14 @@ namespace Rappen.XTB.EPV
             permissions = null;
             entities = null;
             webappurl = GetFullWebApplicationUrl(ConnectionDetail);
-            cmbWebsite.OrganizationService = newService;
-            txtItemName.OrganizationService = newService;
-            txtItemEntity.OrganizationService = newService;
-            txtItemScope.OrganizationService = newService;
-            txtItemParent.OrganizationService = newService;
-            txtItemRelationship.OrganizationService = newService;
-            txtItemPrivileges.OrganizationService = newService;
-            grdWebroles.OrganizationService = newService;
+            cmbWebsite.Service = newService;
+            txtItemName.Service = newService;
+            txtItemEntity.Service = newService;
+            txtItemScope.Service = newService;
+            txtItemParent.Service = newService;
+            txtItemRelationship.Service = newService;
+            txtItemPrivileges.Service = newService;
+            grdWebroles.Service = newService;
             LoadWebsites();
         }
 
@@ -137,11 +136,11 @@ namespace Rappen.XTB.EPV
                 IEnumerable<Entity> childpermissions = null;
                 if (parentnode == null)
                 {   // All but parental permissions
-                    childpermissions = permissions.Where(p => p.TryGetAttributeValue(EntitypeRmission.Scope, out OptionSetValue scope) ? scope.Value != (int)EntitypeRmission.Scope_OptionSet.Overordnad : true);
+                    childpermissions = permissions.Where(p => p.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope) ? scope.Value != (int)Entitypermission.Scope_OptionSet.Parent : true);
                 }
                 else if (parentnode.Tag is EntityItem parentitem)
                 {
-                    childpermissions = permissions.Where(p => p.TryGetAttributeValue(EntitypeRmission.ParentEntitypeRmission, out EntityReference parent) ? parent.Id.Equals(parentitem.Entity.Id) : false);
+                    childpermissions = permissions.Where(p => p.TryGetAttributeValue(Entitypermission.ParentEntitypermission, out EntityReference parent) ? parent.Id.Equals(parentitem.Entity.Id) : false);
                 }
                 if (childpermissions.Count() > 0)
                 {
@@ -181,7 +180,7 @@ namespace Rappen.XTB.EPV
             {
                 return string.Empty;
             }
-            if (permissionitem.Entity.TryGetAttributeValue(EntitypeRmission.EntityLogicalName, out string itementity))
+            if (permissionitem.Entity.TryGetAttributeValue(Entitypermission.EntityLogicalName, out string itementity))
             {
                 if (GetEntityMetadataItem(itementity) is EntityMetadataItem emdi)
                 {
@@ -284,16 +283,16 @@ namespace Rappen.XTB.EPV
         private void OpenNewPermission(Entity parent)
         {
             var extraqs = new NameValueCollection {
-                    { EntitypeRmission.WebsiteId, cmbWebsite.SelectedEntity.Id.ToString() },
-                    { EntitypeRmission.WebsiteId + "name", cmbWebsite.Text }
+                    { Entitypermission.WebsiteId, cmbWebsite.SelectedEntity.Id.ToString() },
+                    { Entitypermission.WebsiteId + "name", cmbWebsite.Text }
                 };
             if (parent != null)
             {
-                extraqs.Add(EntitypeRmission.Scope, ((int)EntitypeRmission.Scope_OptionSet.Overordnad).ToString());
-                extraqs.Add(EntitypeRmission.ParentEntitypeRmission, parent.Id.ToString());
-                extraqs.Add(EntitypeRmission.ParentEntitypeRmission + "name", txtItemName.Text);
+                extraqs.Add(Entitypermission.Scope, ((int)Entitypermission.Scope_OptionSet.Parent).ToString());
+                extraqs.Add(Entitypermission.ParentEntitypermission, parent.Id.ToString());
+                extraqs.Add(Entitypermission.ParentEntitypermission + "name", txtItemName.Text);
             }
-            var url = Utils.GetRecordDeepLink(webappurl, EntitypeRmission.EntityName, Guid.Empty, extraqs);
+            var url = Utils.GetRecordDeepLink(webappurl, Entitypermission.EntityName, Guid.Empty, extraqs);
             if (!string.IsNullOrEmpty(url))
             {
                 Process.Start(url);
