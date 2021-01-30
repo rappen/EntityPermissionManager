@@ -67,12 +67,12 @@ namespace Rappen.XTB.EPV
 
         private void btnNewChild_Click(object sender, EventArgs e)
         {
-            OpenNewPermission(txtItemName.Entity);
+            OpenNewPermission(xrmPermission.Record);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
-            OpenPermission(txtItemName.Entity);
+            OpenPermission(xrmPermission.Record);
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -87,7 +87,7 @@ namespace Rappen.XTB.EPV
 
         private void EPVControl_Load(object sender, EventArgs e)
         {
-            ai.WriteEvent("Load"); 
+            ai.WriteEvent("Load");
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
                 mySettings = new Settings();

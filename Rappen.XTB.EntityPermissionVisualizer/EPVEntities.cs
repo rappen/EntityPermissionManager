@@ -4,7 +4,7 @@
 // GitHub     : https://github.com/rappen/LCG-UDG/
 // Source Org : https://jonasbells.crm4.dynamics.com/
 // Filename   : C:\Dev\GitHub\EntityPermissionVisualizer\Rappen.XTB.EntityPermissionVisualizer\EPVEntities.cs
-// Created    : 2021-01-16 22:51:19
+// Created    : 2021-01-30 12:46:08
 // *********************************************************************
 
 namespace Rappen.XTB.EPV
@@ -17,6 +17,8 @@ namespace Rappen.XTB.EPV
 
         #region Attributes
 
+        /// <summary>Type: Uniqueidentifier, RequiredLevel: SystemRequired</summary>
+        public const string PrimaryKey = "adx_entitypermissionid";
         /// <summary>Type: String, RequiredLevel: ApplicationRequired, MaxLength: 400, Format: Text</summary>
         public const string PrimaryName = "adx_entityname";
         /// <summary>Type: String, RequiredLevel: None, MaxLength: 1000, Format: Text</summary>
@@ -81,6 +83,8 @@ namespace Rappen.XTB.EPV
 
         #region Attributes
 
+        /// <summary>Type: Uniqueidentifier, RequiredLevel: SystemRequired</summary>
+        public const string PrimaryKey = "adx_webroleid";
         /// <summary>Type: String, RequiredLevel: ApplicationRequired, MaxLength: 100, Format: Text</summary>
         public const string PrimaryName = "adx_name";
         /// <summary>Type: Boolean, RequiredLevel: None, True: 1, False: 0, DefaultValue: False</summary>
@@ -114,6 +118,8 @@ namespace Rappen.XTB.EPV
 
         #region Attributes
 
+        /// <summary>Type: Uniqueidentifier, RequiredLevel: SystemRequired</summary>
+        public const string PrimaryKey = "adx_websiteid";
         /// <summary>Type: String, RequiredLevel: ApplicationRequired, MaxLength: 100, Format: Text</summary>
         public const string PrimaryName = "adx_name";
         /// <summary>Type: String, RequiredLevel: None, MaxLength: 253, Format: Text</summary>
@@ -166,6 +172,7 @@ namespace Rappen.XTB.EPV
         <string>adx_create</string>
         <string>adx_delete</string>
         <string>adx_entitylogicalname</string>
+        <string>adx_entitypermissionid</string>
         <string>adx_entityname</string>
         <string>adx_parententitypermission</string>
         <string>adx_parentrelationship</string>
@@ -188,6 +195,7 @@ namespace Rappen.XTB.EPV
         <string>adx_description</string>
         <string>adx_key</string>
         <string>adx_name</string>
+        <string>adx_webroleid</string>
         <string>adx_websiteid</string>
       </Attributes>
       <Relationships>
@@ -203,6 +211,7 @@ namespace Rappen.XTB.EPV
       <Attributes>
         <string>adx_name</string>
         <string>adx_primarydomainname</string>
+        <string>adx_websiteid</string>
       </Attributes>
       <Relationships>
         <string>adx_website_webrole</string>

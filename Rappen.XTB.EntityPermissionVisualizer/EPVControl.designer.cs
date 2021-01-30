@@ -45,24 +45,25 @@
             this.label9 = new System.Windows.Forms.Label();
             this.rbTreeRels = new System.Windows.Forms.RadioButton();
             this.rbTreeNames = new System.Windows.Forms.RadioButton();
-            this.cmbWebsite = new Rappen.XTB.Helpers.Controls.XRMDataComboBox();
+            this.cmbWebsite = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.label8 = new System.Windows.Forms.Label();
             this.grdWebroles = new Rappen.XTB.Helpers.Controls.XRMDataGridView();
             this.panItem = new System.Windows.Forms.Panel();
             this.txtItemEntityName = new System.Windows.Forms.TextBox();
-            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
+            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMColumnText();
+            this.xrmPermission = new Rappen.XTB.Helpers.Controls.XRMRecordHost();
             this.label7 = new System.Windows.Forms.Label();
-            this.txtItemName = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
+            this.txtItemName = new Rappen.XTB.Helpers.Controls.XRMColumnText();
             this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.txtItemEntity = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
-            this.txtItemRelationship = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
+            this.txtItemEntity = new Rappen.XTB.Helpers.Controls.XRMColumnText();
+            this.txtItemRelationship = new Rappen.XTB.Helpers.Controls.XRMColumnText();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.txtItemScope = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
-            this.txtItemParent = new Rappen.XTB.Helpers.Controls.XRMDataTextBox();
+            this.cmbItemScope = new Rappen.XTB.Helpers.Controls.XRMColumnOptionSet();
+            this.cmbItemParent = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.toolStripMenu.SuspendLayout();
@@ -256,11 +257,14 @@
             // 
             this.cmbWebsite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbWebsite.Column = null;
             this.cmbWebsite.DisplayFormat = "";
             this.cmbWebsite.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbWebsite.Filter = null;
             this.cmbWebsite.FormattingEnabled = true;
             this.cmbWebsite.Location = new System.Drawing.Point(76, 16);
             this.cmbWebsite.Name = "cmbWebsite";
+            this.cmbWebsite.RecordHost = null;
             this.cmbWebsite.Service = null;
             this.cmbWebsite.Size = new System.Drawing.Size(329, 21);
             this.cmbWebsite.TabIndex = 1;
@@ -339,8 +343,8 @@
             this.panItem.Controls.Add(this.txtItemRelationship);
             this.panItem.Controls.Add(this.label3);
             this.panItem.Controls.Add(this.label5);
-            this.panItem.Controls.Add(this.txtItemScope);
-            this.panItem.Controls.Add(this.txtItemParent);
+            this.panItem.Controls.Add(this.cmbItemScope);
+            this.panItem.Controls.Add(this.cmbItemParent);
             this.panItem.Controls.Add(this.label4);
             this.panItem.Dock = System.Windows.Forms.DockStyle.Top;
             this.panItem.Location = new System.Drawing.Point(0, 72);
@@ -360,16 +364,21 @@
             this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
+            this.txtItemPrivileges.Column = "";
             this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
-            this.txtItemPrivileges.Entity = null;
-            this.txtItemPrivileges.EntityReference = null;
-            this.txtItemPrivileges.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
             this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
-            this.txtItemPrivileges.LogicalName = null;
             this.txtItemPrivileges.Name = "txtItemPrivileges";
-            this.txtItemPrivileges.Service = null;
+            this.txtItemPrivileges.ReadOnly = true;
+            this.txtItemPrivileges.RecordHost = this.xrmPermission;
             this.txtItemPrivileges.Size = new System.Drawing.Size(400, 20);
             this.txtItemPrivileges.TabIndex = 14;
+            // 
+            // xrmPermission
+            // 
+            this.xrmPermission.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.xrmPermission.LogicalName = null;
+            this.xrmPermission.Record = null;
+            this.xrmPermission.Service = null;
             // 
             // label7
             // 
@@ -385,14 +394,11 @@
             this.txtItemName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtItemName.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemName.DisplayFormat = "adx_entityname";
-            this.txtItemName.Entity = null;
-            this.txtItemName.EntityReference = null;
-            this.txtItemName.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.txtItemName.Column = "adx_entityname";
+            this.txtItemName.DisplayFormat = "";
             this.txtItemName.Location = new System.Drawing.Point(132, 13);
-            this.txtItemName.LogicalName = null;
             this.txtItemName.Name = "txtItemName";
-            this.txtItemName.Service = null;
+            this.txtItemName.RecordHost = this.xrmPermission;
             this.txtItemName.Size = new System.Drawing.Size(400, 20);
             this.txtItemName.TabIndex = 0;
             // 
@@ -419,14 +425,11 @@
             this.txtItemEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtItemEntity.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemEntity.DisplayFormat = "adx_entitylogicalname";
-            this.txtItemEntity.Entity = null;
-            this.txtItemEntity.EntityReference = null;
-            this.txtItemEntity.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.txtItemEntity.Column = "adx_entitylogicalname";
+            this.txtItemEntity.DisplayFormat = "";
             this.txtItemEntity.Location = new System.Drawing.Point(372, 39);
-            this.txtItemEntity.LogicalName = null;
             this.txtItemEntity.Name = "txtItemEntity";
-            this.txtItemEntity.Service = null;
+            this.txtItemEntity.RecordHost = this.xrmPermission;
             this.txtItemEntity.Size = new System.Drawing.Size(160, 20);
             this.txtItemEntity.TabIndex = 2;
             // 
@@ -435,14 +438,12 @@
             this.txtItemRelationship.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtItemRelationship.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemRelationship.DisplayFormat = "{adx_contactrelationship}{adx_accountrelationship}{adx_parentrelationship}";
-            this.txtItemRelationship.Entity = null;
-            this.txtItemRelationship.EntityReference = null;
-            this.txtItemRelationship.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
+            this.txtItemRelationship.Column = "{adx_contactrelationship}{adx_accountrelationship}{adx_parentrelationship}";
+            this.txtItemRelationship.DisplayFormat = "";
             this.txtItemRelationship.Location = new System.Drawing.Point(132, 117);
-            this.txtItemRelationship.LogicalName = null;
             this.txtItemRelationship.Name = "txtItemRelationship";
-            this.txtItemRelationship.Service = null;
+            this.txtItemRelationship.ReadOnly = true;
+            this.txtItemRelationship.RecordHost = this.xrmPermission;
             this.txtItemRelationship.Size = new System.Drawing.Size(400, 20);
             this.txtItemRelationship.TabIndex = 8;
             // 
@@ -464,37 +465,34 @@
             this.label5.TabIndex = 7;
             this.label5.Text = "Parent";
             // 
-            // txtItemScope
+            // cmbItemScope
             // 
-            this.txtItemScope.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cmbItemScope.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemScope.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemScope.DisplayFormat = "adx_scope";
-            this.txtItemScope.Entity = null;
-            this.txtItemScope.EntityReference = null;
-            this.txtItemScope.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemScope.Location = new System.Drawing.Point(132, 65);
-            this.txtItemScope.LogicalName = null;
-            this.txtItemScope.Name = "txtItemScope";
-            this.txtItemScope.Service = null;
-            this.txtItemScope.Size = new System.Drawing.Size(400, 20);
-            this.txtItemScope.TabIndex = 4;
+            this.cmbItemScope.BackColor = System.Drawing.SystemColors.Window;
+            this.cmbItemScope.Column = "adx_scope";
+            this.cmbItemScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbItemScope.Location = new System.Drawing.Point(132, 65);
+            this.cmbItemScope.Name = "cmbItemScope";
+            this.cmbItemScope.RecordHost = this.xrmPermission;
+            this.cmbItemScope.Size = new System.Drawing.Size(400, 21);
+            this.cmbItemScope.TabIndex = 4;
             // 
-            // txtItemParent
+            // cmbItemParent
             // 
-            this.txtItemParent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cmbItemParent.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemParent.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemParent.DisplayFormat = "adx_parententitypermission";
-            this.txtItemParent.Entity = null;
-            this.txtItemParent.EntityReference = null;
-            this.txtItemParent.Id = new System.Guid("00000000-0000-0000-0000-000000000000");
-            this.txtItemParent.Location = new System.Drawing.Point(132, 91);
-            this.txtItemParent.LogicalName = null;
-            this.txtItemParent.Name = "txtItemParent";
-            this.txtItemParent.Service = null;
-            this.txtItemParent.Size = new System.Drawing.Size(400, 20);
-            this.txtItemParent.TabIndex = 6;
+            this.cmbItemParent.BackColor = System.Drawing.SystemColors.Window;
+            this.cmbItemParent.Column = "adx_parententitypermission";
+            this.cmbItemParent.DisplayFormat = "";
+            this.cmbItemParent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbItemParent.Filter = null;
+            this.cmbItemParent.Location = new System.Drawing.Point(132, 91);
+            this.cmbItemParent.Name = "cmbItemParent";
+            this.cmbItemParent.RecordHost = this.xrmPermission;
+            this.cmbItemParent.Service = null;
+            this.cmbItemParent.Size = new System.Drawing.Size(400, 21);
+            this.cmbItemParent.TabIndex = 6;
             // 
             // label4
             // 
@@ -550,23 +548,23 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
-        private Helpers.Controls.XRMDataComboBox cmbWebsite;
+        private Helpers.Controls.XRMColumnLookup cmbWebsite;
         private System.Windows.Forms.TreeView tvPermissions;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
-        private Helpers.Controls.XRMDataTextBox txtItemRelationship;
+        private Helpers.Controls.XRMColumnText txtItemRelationship;
         private System.Windows.Forms.Label label5;
-        private Helpers.Controls.XRMDataTextBox txtItemParent;
+        private Helpers.Controls.XRMColumnLookup cmbItemParent;
         private System.Windows.Forms.Label label4;
-        private Helpers.Controls.XRMDataTextBox txtItemScope;
+        private Helpers.Controls.XRMColumnOptionSet cmbItemScope;
         private System.Windows.Forms.Label label3;
-        private Helpers.Controls.XRMDataTextBox txtItemEntity;
+        private Helpers.Controls.XRMColumnText txtItemEntity;
         private System.Windows.Forms.Label label2;
-        private Helpers.Controls.XRMDataTextBox txtItemName;
+        private Helpers.Controls.XRMColumnText txtItemName;
         private System.Windows.Forms.Panel panItem;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ImageList imgScope;
-        private Helpers.Controls.XRMDataTextBox txtItemPrivileges;
+        private Helpers.Controls.XRMColumnText txtItemPrivileges;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private Helpers.Controls.XRMDataGridView grdWebroles;
         private System.Windows.Forms.Label label8;
@@ -581,5 +579,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton btnRefresh;
         private System.Windows.Forms.ToolStripLabel lblAbout;
+        private Helpers.Controls.XRMRecordHost xrmPermission;
     }
 }

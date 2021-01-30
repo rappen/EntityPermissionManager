@@ -59,12 +59,7 @@ namespace Rappen.XTB.EPV
             entities = null;
             webappurl = GetFullWebApplicationUrl(ConnectionDetail);
             cmbWebsite.Service = newService;
-            txtItemName.Service = newService;
-            txtItemEntity.Service = newService;
-            txtItemScope.Service = newService;
-            txtItemParent.Service = newService;
-            txtItemRelationship.Service = newService;
-            txtItemPrivileges.Service = newService;
+            xrmPermission.Service = newService;
             grdWebroles.Service = newService;
             LoadWebsites();
         }
@@ -209,16 +204,16 @@ namespace Rappen.XTB.EPV
 
         private void LoadPermissions()
         {
-            btnNew.Enabled = cmbWebsite.SelectedEntity != null;
-            btnRefresh.Enabled = cmbWebsite.SelectedEntity != null;
+            btnNew.Enabled = cmbWebsite.SelectedRecord != null;
+            btnRefresh.Enabled = cmbWebsite.SelectedRecord != null;
             tvPermissions.Nodes.Clear();
-            if (cmbWebsite.SelectedEntity == null)
+            if (cmbWebsite.SelectedRecord == null)
             {
                 return;
             }
             var query = new QueryExpression("adx_entitypermission");
             query.ColumnSet.AddColumns("adx_entityname", "adx_entitylogicalname", "adx_scope", "adx_parententitypermission", "adx_contactrelationship", "adx_accountrelationship", "adx_parentrelationship", "adx_read", "adx_create", "adx_write", "adx_delete", "adx_append", "adx_appendto", "adx_websiteid");
-            query.Criteria.AddCondition("adx_websiteid", ConditionOperator.Equal, cmbWebsite.SelectedEntity.Id);
+            query.Criteria.AddCondition("adx_websiteid", ConditionOperator.Equal, cmbWebsite.SelectedRecord.Id);
 
             var webroleid = Guid.Empty; // Prep for filtering/grouping by webrole
             if (!webroleid.Equals(Guid.Empty))
@@ -240,7 +235,7 @@ namespace Rappen.XTB.EPV
 
         private void LoadWebroles()
         {
-            var permission = txtItemName.Entity;
+            var permission = xrmPermission.Record;
             var query = new QueryExpression("adx_webrole");
             query.ColumnSet.AddColumns("adx_name", "adx_description");
             query.AddOrder("adx_name", OrderType.Ascending);
@@ -283,7 +278,7 @@ namespace Rappen.XTB.EPV
         private void OpenNewPermission(Entity parent)
         {
             var extraqs = new NameValueCollection {
-                    { Entitypermission.WebsiteId, cmbWebsite.SelectedEntity.Id.ToString() },
+                    { Entitypermission.WebsiteId, cmbWebsite.SelectedRecord.Id.ToString() },
                     { Entitypermission.WebsiteId + "name", cmbWebsite.Text }
                 };
             if (parent != null)
@@ -315,8 +310,17 @@ namespace Rappen.XTB.EPV
         private void PermissionSelected(TreeNode node)
         {
             var permissionitem = node.Tag as EntityItem;
-            panItem.Controls.OfType<CDSDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
-            panItem.Controls.OfType<XRMDataTextBox>().ToList().ForEach(c => c.Entity = permissionitem?.Entity);
+            xrmPermission.SuspendLayout();
+            xrmPermission.Record = permissionitem?.Entity;
+            if (permissionitem != null)
+            {
+                cmbItemParent.Filter = new FilterExpression()
+                {
+                    Conditions = {
+                        new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.NotEqual, permissionitem.Entity.Id) }
+                };
+            }
+            xrmPermission.ResumeLayout();
             btnOpen.Enabled = permissionitem != null;
             btnNewChild.Enabled = permissionitem != null;
             btnDelete.Enabled = permissionitem != null && node.Nodes.Count == 0;
@@ -337,7 +341,7 @@ namespace Rappen.XTB.EPV
             GetChildNodeDetails(tvPermissions.Nodes);
             //tvPermissions.ExpandAll();
         }
-        #endregion Private Methods
 
+        #endregion Private Methods
     }
 }
