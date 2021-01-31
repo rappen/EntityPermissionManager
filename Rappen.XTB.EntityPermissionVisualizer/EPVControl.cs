@@ -1,7 +1,9 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
+using Rappen.XTB.Helpers.Extensions;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
@@ -115,5 +117,34 @@ namespace Rappen.XTB.EPV
         }
 
         #endregion Private Methods
+
+        private void xrmPermission_RecordColumnUpdated(object sender, Helpers.Controls.XRMRecordEventArgs e)
+        {
+            btnItemSave.Enabled = xrmPermission.ChangedColumns?.Count() > 0;
+            btnItemUndo.Enabled = btnItemSave.Enabled;
+            listLog.Items.Clear();
+            if (xrmPermission?.ChangedColumns != null)
+            {
+                foreach (var key in xrmPermission.ChangedColumns)
+                {
+                    var value = xrmPermission[key];
+                    xrmPermission.Record.TryGetAttributeValue(key, out object oldvalue);
+                    var log = listLog.Items.Add(key);
+                    log.SubItems.Add(value != null ? EntityExtensions.AttributeToBaseType(value).ToString() : "null");
+                    log.SubItems.Add(value != null ? value.GetType().ToString() : oldvalue != null ? oldvalue.GetType().ToString() : "null");
+                    log.SubItems.Add(oldvalue != null ? EntityExtensions.AttributeToBaseType(oldvalue).ToString() : "null");
+                }
+            }
+        }
+
+        private void btnItemSave_Click(object sender, EventArgs e)
+        {
+            xrmPermission.SaveChanges();
+        }
+
+        private void btnItemUndo_Click(object sender, EventArgs e)
+        {
+            xrmPermission.UndoChanges();
+        }
     }
 }

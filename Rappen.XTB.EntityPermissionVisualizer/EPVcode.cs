@@ -4,7 +4,6 @@ using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using Rappen.XTB.Helpers;
 using Rappen.XTB.Helpers.ControlItems;
-using Rappen.XTB.Helpers.Controls;
 using Rappen.XTB.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using xrmtb.XrmToolBox.Controls.Controls;
 using XrmToolBox.Extensibility;
 
 namespace Rappen.XTB.EPV
@@ -251,6 +249,7 @@ namespace Rappen.XTB.EPV
                 PostWorkCallBack = (args) => HandleWorkAsync<EntityCollection>(args, (webroles) =>
                 {
                     grdWebroles.DataSource = webroles;
+                    lblNoRoles.Visible = webroles.Entities.Count == 0;
                 })
             });
         }
@@ -271,12 +270,33 @@ namespace Rappen.XTB.EPV
                 PostWorkCallBack = (args) => HandleWorkAsync<EntityCollection>(args, (websites) =>
                 {
                     cmbWebsite.DataSource = websites;
+                    if (cmbWebsite.Items.Count > 0 && cmbWebsite.SelectedIndex == -1)
+                    {
+                        cmbWebsite.SelectedIndex = 0;
+                    }
                 })
             });
         }
 
         private void OpenNewPermission(Entity parent)
         {
+            xrmPermission.SuspendLayout();
+            xrmPermission.Record = new Entity(Entitypermission.EntityName);
+            xrmPermission[Entitypermission.WebsiteId] = cmbWebsite.SelectedRecord.ToEntityReference();
+            if (parent != null)
+            {
+                xrmPermission[Entitypermission.ParentEntitypermission] = parent.ToEntityReference();
+                xrmPermission[Entitypermission.Scope] = new OptionSetValue((int)Entitypermission.Scope_OptionSet.Parent);
+                cmbItemParent.Filter = new FilterExpression { Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.Equal, parent.Id) } };
+            }
+            else
+            {
+                cmbItemParent.Filter = null;
+            }
+            xrmPermission.ResumeLayout();
+
+            return;
+
             var extraqs = new NameValueCollection {
                     { Entitypermission.WebsiteId, cmbWebsite.SelectedRecord.Id.ToString() },
                     { Entitypermission.WebsiteId + "name", cmbWebsite.Text }
@@ -312,14 +332,32 @@ namespace Rappen.XTB.EPV
             var permissionitem = node.Tag as EntityItem;
             xrmPermission.SuspendLayout();
             xrmPermission.Record = permissionitem?.Entity;
+            txtItemRelationship.Column = "NOT A VALID COLUMN";
             if (permissionitem != null)
             {
                 cmbItemParent.Filter = new FilterExpression()
                 {
-                    Conditions = {
-                        new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.NotEqual, permissionitem.Entity.Id) }
+                    Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.NotEqual, permissionitem.Entity.Id) }
                 };
+                if (permissionitem.Entity.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope))
+                {
+                    switch (scope.Value)
+                    {
+                        case (int)Entitypermission.Scope_OptionSet.Contact:
+                            txtItemRelationship.Column = Entitypermission.ContactRelationship;
+                            break;
+
+                        case (int)Entitypermission.Scope_OptionSet.Account:
+                            txtItemRelationship.Column = Entitypermission.AccountRelationship;
+                            break;
+
+                        case (int)Entitypermission.Scope_OptionSet.Parent:
+                            txtItemRelationship.Column = Entitypermission.ParentRelationship;
+                            break;
+                    }
+                }
             }
+            txtItemRelationship.Enabled = txtItemRelationship.Column != "NOT A VALID COLUMN";
             xrmPermission.ResumeLayout();
             btnOpen.Enabled = permissionitem != null;
             btnNewChild.Enabled = permissionitem != null;

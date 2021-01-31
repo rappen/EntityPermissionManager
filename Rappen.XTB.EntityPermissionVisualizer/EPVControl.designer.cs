@@ -48,12 +48,24 @@
             this.cmbWebsite = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
             this.label1 = new System.Windows.Forms.Label();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.lblNoRoles = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.grdWebroles = new Rappen.XTB.Helpers.Controls.XRMDataGridView();
+            this.listLog = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.panItem = new System.Windows.Forms.Panel();
-            this.txtItemEntityName = new System.Windows.Forms.TextBox();
-            this.txtItemPrivileges = new Rappen.XTB.Helpers.Controls.XRMColumnText();
+            this.xrmColumnBool6 = new Rappen.XTB.Helpers.Controls.XRMColumnBool();
             this.xrmPermission = new Rappen.XTB.Helpers.Controls.XRMRecordHost();
+            this.xrmColumnBool5 = new Rappen.XTB.Helpers.Controls.XRMColumnBool();
+            this.xrmColumnBool4 = new Rappen.XTB.Helpers.Controls.XRMColumnBool();
+            this.xrmColumnBool3 = new Rappen.XTB.Helpers.Controls.XRMColumnBool();
+            this.xrmColumnBool2 = new Rappen.XTB.Helpers.Controls.XRMColumnBool();
+            this.xrmColumnBool1 = new Rappen.XTB.Helpers.Controls.XRMColumnBool();
+            this.btnItemUndo = new System.Windows.Forms.Button();
+            this.btnItemSave = new System.Windows.Forms.Button();
+            this.txtItemEntityName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtItemName = new Rappen.XTB.Helpers.Controls.XRMColumnText();
             this.label2 = new System.Windows.Forms.Label();
@@ -66,6 +78,7 @@
             this.cmbItemParent = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -74,6 +87,7 @@
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
             this.panItem.SuspendLayout();
@@ -282,18 +296,33 @@
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 237);
+            this.splitContainer2.Location = new System.Drawing.Point(0, 295);
             this.splitContainer2.Name = "splitContainer2";
             this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.lblNoRoles);
             this.splitContainer2.Panel1.Controls.Add(this.label8);
             this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
-            this.splitContainer2.Size = new System.Drawing.Size(554, 535);
-            this.splitContainer2.SplitterDistance = 233;
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.listLog);
+            this.splitContainer2.Size = new System.Drawing.Size(554, 477);
+            this.splitContainer2.SplitterDistance = 207;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 14;
+            // 
+            // lblNoRoles
+            // 
+            this.lblNoRoles.AutoSize = true;
+            this.lblNoRoles.Location = new System.Drawing.Point(129, 9);
+            this.lblNoRoles.Name = "lblNoRoles";
+            this.lblNoRoles.Size = new System.Drawing.Size(111, 13);
+            this.lblNoRoles.TabIndex = 1;
+            this.lblNoRoles.Text = "No assigned webroles";
+            this.lblNoRoles.Visible = false;
             // 
             // label8
             // 
@@ -328,13 +357,52 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(400, 227);
+            this.grdWebroles.Size = new System.Drawing.Size(400, 201);
             this.grdWebroles.TabIndex = 0;
+            // 
+            // listLog
+            // 
+            this.listLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listLog.HideSelection = false;
+            this.listLog.Location = new System.Drawing.Point(0, 0);
+            this.listLog.Name = "listLog";
+            this.listLog.Size = new System.Drawing.Size(554, 262);
+            this.listLog.TabIndex = 0;
+            this.listLog.UseCompatibleStateImageBehavior = false;
+            this.listLog.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Key";
+            this.columnHeader1.Width = 139;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Value";
+            this.columnHeader2.Width = 117;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.DisplayIndex = 3;
+            this.columnHeader3.Text = "Type";
+            this.columnHeader3.Width = 154;
             // 
             // panItem
             // 
+            this.panItem.Controls.Add(this.xrmColumnBool6);
+            this.panItem.Controls.Add(this.xrmColumnBool5);
+            this.panItem.Controls.Add(this.xrmColumnBool4);
+            this.panItem.Controls.Add(this.xrmColumnBool3);
+            this.panItem.Controls.Add(this.xrmColumnBool2);
+            this.panItem.Controls.Add(this.xrmColumnBool1);
+            this.panItem.Controls.Add(this.btnItemUndo);
+            this.panItem.Controls.Add(this.btnItemSave);
             this.panItem.Controls.Add(this.txtItemEntityName);
-            this.panItem.Controls.Add(this.txtItemPrivileges);
             this.panItem.Controls.Add(this.label7);
             this.panItem.Controls.Add(this.txtItemName);
             this.panItem.Controls.Add(this.label2);
@@ -349,29 +417,21 @@
             this.panItem.Dock = System.Windows.Forms.DockStyle.Top;
             this.panItem.Location = new System.Drawing.Point(0, 72);
             this.panItem.Name = "panItem";
-            this.panItem.Size = new System.Drawing.Size(554, 165);
+            this.panItem.Size = new System.Drawing.Size(554, 223);
             this.panItem.TabIndex = 12;
             // 
-            // txtItemEntityName
+            // xrmColumnBool6
             // 
-            this.txtItemEntityName.Location = new System.Drawing.Point(132, 39);
-            this.txtItemEntityName.Name = "txtItemEntityName";
-            this.txtItemEntityName.Size = new System.Drawing.Size(234, 20);
-            this.txtItemEntityName.TabIndex = 15;
-            // 
-            // txtItemPrivileges
-            // 
-            this.txtItemPrivileges.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemPrivileges.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemPrivileges.Column = "";
-            this.txtItemPrivileges.DisplayFormat = resources.GetString("txtItemPrivileges.DisplayFormat");
-            this.txtItemPrivileges.Location = new System.Drawing.Point(132, 143);
-            this.txtItemPrivileges.Name = "txtItemPrivileges";
-            this.txtItemPrivileges.ReadOnly = true;
-            this.txtItemPrivileges.RecordHost = this.xrmPermission;
-            this.txtItemPrivileges.Size = new System.Drawing.Size(400, 20);
-            this.txtItemPrivileges.TabIndex = 14;
+            this.xrmColumnBool6.AutoSize = true;
+            this.xrmColumnBool6.Column = "adx_appendto";
+            this.xrmColumnBool6.Location = new System.Drawing.Point(452, 145);
+            this.xrmColumnBool6.Name = "xrmColumnBool6";
+            this.xrmColumnBool6.RecordHost = this.xrmPermission;
+            this.xrmColumnBool6.ShowMetadataLabels = false;
+            this.xrmColumnBool6.Size = new System.Drawing.Size(79, 17);
+            this.xrmColumnBool6.TabIndex = 23;
+            this.xrmColumnBool6.Text = "Append To";
+            this.xrmColumnBool6.UseVisualStyleBackColor = true;
             // 
             // xrmPermission
             // 
@@ -379,6 +439,101 @@
             this.xrmPermission.LogicalName = null;
             this.xrmPermission.Record = null;
             this.xrmPermission.Service = null;
+            this.xrmPermission.ColumnValueChanged += new Rappen.XTB.Helpers.Controls.XRMRecordEventHandler(this.xrmPermission_RecordColumnUpdated);
+            // 
+            // xrmColumnBool5
+            // 
+            this.xrmColumnBool5.AutoSize = true;
+            this.xrmColumnBool5.Column = "adx_append";
+            this.xrmColumnBool5.Location = new System.Drawing.Point(383, 145);
+            this.xrmColumnBool5.Name = "xrmColumnBool5";
+            this.xrmColumnBool5.RecordHost = this.xrmPermission;
+            this.xrmColumnBool5.ShowMetadataLabels = false;
+            this.xrmColumnBool5.Size = new System.Drawing.Size(63, 17);
+            this.xrmColumnBool5.TabIndex = 22;
+            this.xrmColumnBool5.Text = "Append";
+            this.xrmColumnBool5.UseVisualStyleBackColor = true;
+            // 
+            // xrmColumnBool4
+            // 
+            this.xrmColumnBool4.AutoSize = true;
+            this.xrmColumnBool4.Column = "adx_delete";
+            this.xrmColumnBool4.Location = new System.Drawing.Point(320, 145);
+            this.xrmColumnBool4.Name = "xrmColumnBool4";
+            this.xrmColumnBool4.RecordHost = this.xrmPermission;
+            this.xrmColumnBool4.ShowMetadataLabels = false;
+            this.xrmColumnBool4.Size = new System.Drawing.Size(57, 17);
+            this.xrmColumnBool4.TabIndex = 21;
+            this.xrmColumnBool4.Text = "Delete";
+            this.xrmColumnBool4.UseVisualStyleBackColor = true;
+            // 
+            // xrmColumnBool3
+            // 
+            this.xrmColumnBool3.AutoSize = true;
+            this.xrmColumnBool3.Column = "adx_write";
+            this.xrmColumnBool3.Location = new System.Drawing.Point(253, 145);
+            this.xrmColumnBool3.Name = "xrmColumnBool3";
+            this.xrmColumnBool3.RecordHost = this.xrmPermission;
+            this.xrmColumnBool3.ShowMetadataLabels = false;
+            this.xrmColumnBool3.Size = new System.Drawing.Size(61, 17);
+            this.xrmColumnBool3.TabIndex = 20;
+            this.xrmColumnBool3.Text = "Update";
+            this.xrmColumnBool3.UseVisualStyleBackColor = true;
+            // 
+            // xrmColumnBool2
+            // 
+            this.xrmColumnBool2.AutoSize = true;
+            this.xrmColumnBool2.Column = "adx_create";
+            this.xrmColumnBool2.Location = new System.Drawing.Point(190, 145);
+            this.xrmColumnBool2.Name = "xrmColumnBool2";
+            this.xrmColumnBool2.RecordHost = this.xrmPermission;
+            this.xrmColumnBool2.ShowMetadataLabels = false;
+            this.xrmColumnBool2.Size = new System.Drawing.Size(57, 17);
+            this.xrmColumnBool2.TabIndex = 19;
+            this.xrmColumnBool2.Text = "Create";
+            this.xrmColumnBool2.UseVisualStyleBackColor = true;
+            // 
+            // xrmColumnBool1
+            // 
+            this.xrmColumnBool1.AutoSize = true;
+            this.xrmColumnBool1.Column = "adx_read";
+            this.xrmColumnBool1.Location = new System.Drawing.Point(132, 145);
+            this.xrmColumnBool1.Name = "xrmColumnBool1";
+            this.xrmColumnBool1.RecordHost = this.xrmPermission;
+            this.xrmColumnBool1.ShowMetadataLabels = false;
+            this.xrmColumnBool1.Size = new System.Drawing.Size(52, 17);
+            this.xrmColumnBool1.TabIndex = 18;
+            this.xrmColumnBool1.Text = "Read";
+            this.xrmColumnBool1.UseVisualStyleBackColor = true;
+            // 
+            // btnItemUndo
+            // 
+            this.btnItemUndo.Enabled = false;
+            this.btnItemUndo.Location = new System.Drawing.Point(224, 180);
+            this.btnItemUndo.Name = "btnItemUndo";
+            this.btnItemUndo.Size = new System.Drawing.Size(75, 23);
+            this.btnItemUndo.TabIndex = 17;
+            this.btnItemUndo.Text = "Undo";
+            this.btnItemUndo.UseVisualStyleBackColor = true;
+            this.btnItemUndo.Click += new System.EventHandler(this.btnItemUndo_Click);
+            // 
+            // btnItemSave
+            // 
+            this.btnItemSave.Enabled = false;
+            this.btnItemSave.Location = new System.Drawing.Point(132, 180);
+            this.btnItemSave.Name = "btnItemSave";
+            this.btnItemSave.Size = new System.Drawing.Size(75, 23);
+            this.btnItemSave.TabIndex = 16;
+            this.btnItemSave.Text = "Save";
+            this.btnItemSave.UseVisualStyleBackColor = true;
+            this.btnItemSave.Click += new System.EventHandler(this.btnItemSave_Click);
+            // 
+            // txtItemEntityName
+            // 
+            this.txtItemEntityName.Location = new System.Drawing.Point(132, 39);
+            this.txtItemEntityName.Name = "txtItemEntityName";
+            this.txtItemEntityName.Size = new System.Drawing.Size(234, 20);
+            this.txtItemEntityName.TabIndex = 15;
             // 
             // label7
             // 
@@ -438,7 +593,7 @@
             this.txtItemRelationship.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.txtItemRelationship.BackColor = System.Drawing.SystemColors.Window;
-            this.txtItemRelationship.Column = "{adx_contactrelationship}{adx_accountrelationship}{adx_parentrelationship}";
+            this.txtItemRelationship.Column = "";
             this.txtItemRelationship.DisplayFormat = "";
             this.txtItemRelationship.Location = new System.Drawing.Point(132, 117);
             this.txtItemRelationship.Name = "txtItemRelationship";
@@ -475,6 +630,7 @@
             this.cmbItemScope.Location = new System.Drawing.Point(132, 65);
             this.cmbItemScope.Name = "cmbItemScope";
             this.cmbItemScope.RecordHost = this.xrmPermission;
+            this.cmbItemScope.ShowValue = false;
             this.cmbItemScope.Size = new System.Drawing.Size(400, 21);
             this.cmbItemScope.TabIndex = 4;
             // 
@@ -511,6 +667,12 @@
             this.panel2.Size = new System.Drawing.Size(554, 72);
             this.panel2.TabIndex = 13;
             // 
+            // columnHeader4
+            // 
+            this.columnHeader4.DisplayIndex = 2;
+            this.columnHeader4.Text = "Old value";
+            this.columnHeader4.Width = 117;
+            // 
             // EPVControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -533,6 +695,7 @@
             this.panel1.PerformLayout();
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
@@ -564,7 +727,6 @@
         private System.Windows.Forms.Panel panItem;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ImageList imgScope;
-        private Helpers.Controls.XRMColumnText txtItemPrivileges;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private Helpers.Controls.XRMDataGridView grdWebroles;
         private System.Windows.Forms.Label label8;
@@ -580,5 +742,19 @@
         private System.Windows.Forms.ToolStripButton btnRefresh;
         private System.Windows.Forms.ToolStripLabel lblAbout;
         private Helpers.Controls.XRMRecordHost xrmPermission;
+        private System.Windows.Forms.Button btnItemSave;
+        private System.Windows.Forms.Button btnItemUndo;
+        private Helpers.Controls.XRMColumnBool xrmColumnBool6;
+        private Helpers.Controls.XRMColumnBool xrmColumnBool5;
+        private Helpers.Controls.XRMColumnBool xrmColumnBool4;
+        private Helpers.Controls.XRMColumnBool xrmColumnBool3;
+        private Helpers.Controls.XRMColumnBool xrmColumnBool2;
+        private Helpers.Controls.XRMColumnBool xrmColumnBool1;
+        private System.Windows.Forms.Label lblNoRoles;
+        private System.Windows.Forms.ListView listLog;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
