@@ -5,6 +5,7 @@ using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using Rappen.XTB.Helpers;
 using Rappen.XTB.Helpers.ControlItems;
+using Rappen.XTB.Helpers.Controls;
 using Rappen.XTB.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,33 @@ namespace Rappen.XTB.EPV
         #endregion Private Fields
 
         #region Private Methods
+
+        private void AddWebRole()
+        {
+            var lkp = new XRMLookupDialog
+            {
+                Service = Service,
+                LogicalName = Webrole.EntityName,
+                Multiselect = true,
+                Title = "Select webrole(s)"
+            };
+            if (lkp.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = $"Adding {lkp.Records.Count()} webrole(s)",
+                Work = (w, a) =>
+                {
+                    Service.Associate(Entitypermission.EntityName, xrmPermission.Id, new Relationship(Entitypermission.RelMM_EntitypermissionWebrole), new EntityReferenceCollection(lkp.Records.Select(wr => wr.ToEntityReference()).ToList()));
+                },
+                PostWorkCallBack = (a) => HandleWorkAsync<object>(a, (obj) =>
+                {
+                    LoadWebroles();
+                })
+            });
+        }
 
         private static string GetFullWebApplicationUrl(ConnectionDetail connectionDetail)
         {
@@ -111,6 +139,34 @@ namespace Rappen.XTB.EPV
                 {
                     node.Remove();
                     permissions = permissions.Where(p => p != permission.Entity);
+                })
+            });
+        }
+
+        private void DeleteWebRoles()
+        {
+            var webroles = grdWebroles.SelectedCellRecords;
+            if (webroles.Count() == 0)
+            {
+                return;
+            }
+            var msg = grdWebroles.SelectedCellRecords.Count() > 1
+                ? $"Delete {webroles.Count()} webroles?"
+                : $"Delete webrole {grdWebroles.SelectedCellRecords.First()}?";
+            if (MessageBox.Show(msg, "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
+            {
+                return;
+            }
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Deleting webrole",
+                Work = (w, a) =>
+                {
+                    Service.Disassociate(Entitypermission.EntityName, xrmPermission.Id, new Relationship(Entitypermission.RelMM_EntitypermissionWebrole), new EntityReferenceCollection(webroles.Select(wr => wr.ToEntityReference()).ToList()));
+                },
+                PostWorkCallBack = (a) => HandleWorkAsync<object>(a, (obj) =>
+                {
+                    LoadWebroles();
                 })
             });
         }
@@ -382,6 +438,8 @@ namespace Rappen.XTB.EPV
                 {
                     grdWebroles.DataSource = webroles;
                     lblNoRoles.Visible = webroles.Entities.Count == 0;
+                    var rowheights = grdWebroles.Rows.OfType<DataGridViewRow>().Sum(r => r.Height);
+                    panWebroles.Height = Math.Max(40, grdWebroles.Top + rowheights + 10);
                 })
             });
         }
@@ -651,6 +709,12 @@ namespace Rappen.XTB.EPV
                     LogPendingChanges();
                 })
             });
+        }
+
+        private void UpdateWebroleButtons()
+        {
+            btnWebroleAdd.Enabled = xrmPermission.Record != null && !xrmPermission.Id.Equals(Guid.Empty);
+            btnWebroleRemove.Enabled = btnWebroleAdd.Enabled && grdWebroles.SelectedCellRecords.Count() > 0;
         }
 
         #endregion Private Methods

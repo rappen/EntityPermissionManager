@@ -2,6 +2,7 @@
 using Microsoft.Xrm.Sdk;
 using Rappen.XTB.Helpers.Extensions;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
@@ -169,5 +170,20 @@ namespace Rappen.XTB.EPV
         }
 
         #endregion Private Methods
+
+        private void grdWebroles_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateWebroleButtons();
+        }
+
+        private void btnWebroleRemove_Click(object sender, EventArgs e)
+        {
+            DeleteWebRoles();
+        }
+
+        private void btnWebroleAdd_Click(object sender, EventArgs e)
+        {
+            AddWebRole();
+        }
     }
 }

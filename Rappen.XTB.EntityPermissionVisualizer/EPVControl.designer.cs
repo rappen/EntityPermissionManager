@@ -46,14 +46,17 @@
             this.rbTreeRels = new System.Windows.Forms.RadioButton();
             this.rbTreeNames = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.lblNoRoles = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.listLog = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.panWebroleButtons = new System.Windows.Forms.Panel();
+            this.btnWebroleRemove = new System.Windows.Forms.Button();
+            this.btnWebroleAdd = new System.Windows.Forms.Button();
+            this.panWebroles = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.lblNoRoles = new System.Windows.Forms.Label();
             this.panItem = new System.Windows.Forms.Panel();
             this.lblNoParent = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -90,10 +93,8 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
+            this.panWebroleButtons.SuspendLayout();
+            this.panWebroles.SuspendLayout();
             this.panItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
             this.SuspendLayout();
@@ -193,7 +194,9 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Panel2.Controls.Add(this.listLog);
+            this.splitContainer1.Panel2.Controls.Add(this.panWebroleButtons);
+            this.splitContainer1.Panel2.Controls.Add(this.panWebroles);
             this.splitContainer1.Panel2.Controls.Add(this.panItem);
             this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.splitContainer1.Size = new System.Drawing.Size(983, 772);
@@ -281,58 +284,18 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Website";
             // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 344);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.lblNoRoles);
-            this.splitContainer2.Panel1.Controls.Add(this.label8);
-            this.splitContainer2.Panel1.Controls.Add(this.grdWebroles);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.listLog);
-            this.splitContainer2.Size = new System.Drawing.Size(554, 428);
-            this.splitContainer2.SplitterDistance = 185;
-            this.splitContainer2.SplitterWidth = 8;
-            this.splitContainer2.TabIndex = 14;
-            // 
-            // lblNoRoles
-            // 
-            this.lblNoRoles.AutoSize = true;
-            this.lblNoRoles.Location = new System.Drawing.Point(129, 9);
-            this.lblNoRoles.Name = "lblNoRoles";
-            this.lblNoRoles.Size = new System.Drawing.Size(111, 13);
-            this.lblNoRoles.TabIndex = 1;
-            this.lblNoRoles.Text = "No assigned webroles";
-            this.lblNoRoles.Visible = false;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(24, 9);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(52, 13);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Webroles";
-            // 
             // listLog
             // 
             this.listLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1,
-            this.columnHeader2,
             this.columnHeader3,
+            this.columnHeader2,
             this.columnHeader4});
             this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listLog.HideSelection = false;
-            this.listLog.Location = new System.Drawing.Point(0, 0);
+            this.listLog.Location = new System.Drawing.Point(0, 533);
             this.listLog.Name = "listLog";
-            this.listLog.Size = new System.Drawing.Size(554, 235);
+            this.listLog.Size = new System.Drawing.Size(554, 239);
             this.listLog.TabIndex = 0;
             this.listLog.UseCompatibleStateImageBehavior = false;
             this.listLog.View = System.Windows.Forms.View.Details;
@@ -342,22 +305,86 @@
             this.columnHeader1.Text = "Key";
             this.columnHeader1.Width = 139;
             // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Value";
-            this.columnHeader2.Width = 117;
-            // 
             // columnHeader3
             // 
             this.columnHeader3.DisplayIndex = 3;
             this.columnHeader3.Text = "Type";
             this.columnHeader3.Width = 154;
             // 
+            // columnHeader2
+            // 
+            this.columnHeader2.DisplayIndex = 1;
+            this.columnHeader2.Text = "New value";
+            this.columnHeader2.Width = 117;
+            // 
             // columnHeader4
             // 
             this.columnHeader4.DisplayIndex = 2;
             this.columnHeader4.Text = "Old value";
             this.columnHeader4.Width = 117;
+            // 
+            // panWebroleButtons
+            // 
+            this.panWebroleButtons.Controls.Add(this.btnWebroleRemove);
+            this.panWebroleButtons.Controls.Add(this.btnWebroleAdd);
+            this.panWebroleButtons.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panWebroleButtons.Location = new System.Drawing.Point(0, 443);
+            this.panWebroleButtons.Name = "panWebroleButtons";
+            this.panWebroleButtons.Size = new System.Drawing.Size(554, 90);
+            this.panWebroleButtons.TabIndex = 3;
+            // 
+            // btnWebroleRemove
+            // 
+            this.btnWebroleRemove.Enabled = false;
+            this.btnWebroleRemove.Location = new System.Drawing.Point(224, 6);
+            this.btnWebroleRemove.Name = "btnWebroleRemove";
+            this.btnWebroleRemove.Size = new System.Drawing.Size(75, 23);
+            this.btnWebroleRemove.TabIndex = 1;
+            this.btnWebroleRemove.Text = "Remove";
+            this.btnWebroleRemove.UseVisualStyleBackColor = true;
+            this.btnWebroleRemove.Click += new System.EventHandler(this.btnWebroleRemove_Click);
+            // 
+            // btnWebroleAdd
+            // 
+            this.btnWebroleAdd.Enabled = false;
+            this.btnWebroleAdd.Location = new System.Drawing.Point(132, 6);
+            this.btnWebroleAdd.Name = "btnWebroleAdd";
+            this.btnWebroleAdd.Size = new System.Drawing.Size(75, 23);
+            this.btnWebroleAdd.TabIndex = 0;
+            this.btnWebroleAdd.Text = "Add";
+            this.btnWebroleAdd.UseVisualStyleBackColor = true;
+            this.btnWebroleAdd.Click += new System.EventHandler(this.btnWebroleAdd_Click);
+            // 
+            // panWebroles
+            // 
+            this.panWebroles.BackColor = System.Drawing.SystemColors.Window;
+            this.panWebroles.Controls.Add(this.label8);
+            this.panWebroles.Controls.Add(this.lblNoRoles);
+            this.panWebroles.Controls.Add(this.grdWebroles);
+            this.panWebroles.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panWebroles.Location = new System.Drawing.Point(0, 344);
+            this.panWebroles.Name = "panWebroles";
+            this.panWebroles.Size = new System.Drawing.Size(554, 99);
+            this.panWebroles.TabIndex = 2;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(24, 12);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(52, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Webroles";
+            // 
+            // lblNoRoles
+            // 
+            this.lblNoRoles.AutoSize = true;
+            this.lblNoRoles.Location = new System.Drawing.Point(129, 12);
+            this.lblNoRoles.Name = "lblNoRoles";
+            this.lblNoRoles.Size = new System.Drawing.Size(111, 13);
+            this.lblNoRoles.TabIndex = 1;
+            this.lblNoRoles.Text = "No assigned webroles";
+            this.lblNoRoles.Visible = false;
             // 
             // panItem
             // 
@@ -560,7 +587,7 @@
             this.grdWebroles.ColumnHeadersVisible = false;
             this.grdWebroles.ColumnOrder = "";
             this.grdWebroles.FilterColumns = "";
-            this.grdWebroles.Location = new System.Drawing.Point(132, 3);
+            this.grdWebroles.Location = new System.Drawing.Point(132, 6);
             this.grdWebroles.Name = "grdWebroles";
             this.grdWebroles.ReadOnly = true;
             this.grdWebroles.RowHeadersVisible = false;
@@ -568,8 +595,9 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(400, 179);
+            this.grdWebroles.Size = new System.Drawing.Size(400, 90);
             this.grdWebroles.TabIndex = 0;
+            this.grdWebroles.SelectionChanged += new System.EventHandler(this.grdWebroles_SelectionChanged);
             // 
             // cmbItemEntity
             // 
@@ -761,11 +789,9 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
+            this.panWebroleButtons.ResumeLayout(false);
+            this.panWebroles.ResumeLayout(false);
+            this.panWebroles.PerformLayout();
             this.panItem.ResumeLayout(false);
             this.panItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
@@ -795,7 +821,6 @@
         private System.Windows.Forms.Panel panItem;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ImageList imgScope;
-        private System.Windows.Forms.SplitContainer splitContainer2;
         private Helpers.Controls.XRMDataGridView grdWebroles;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.RadioButton rbTreeRels;
@@ -829,5 +854,9 @@
         private System.Windows.Forms.Label lblNoParent;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panWebroles;
+        private System.Windows.Forms.Panel panWebroleButtons;
+        private System.Windows.Forms.Button btnWebroleRemove;
+        private System.Windows.Forms.Button btnWebroleAdd;
     }
 }
