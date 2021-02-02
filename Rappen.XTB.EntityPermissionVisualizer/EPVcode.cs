@@ -39,9 +39,10 @@ namespace Rappen.XTB.EPV
                 Service = Service,
                 LogicalName = Webrole.EntityName,
                 Multiselect = true,
+                ShowRemoveButton = false,
                 Title = "Select webrole(s)"
             };
-            if (lkp.ShowDialog() != DialogResult.OK)
+            if (lkp.ShowDialog(this) != DialogResult.OK)
             {
                 return;
             }
@@ -85,6 +86,7 @@ namespace Rappen.XTB.EPV
         {
             permissions = null;
             entitydetails = null;
+            xrmPermission.Record = null;
             webappurl = GetFullWebApplicationUrl(ConnectionDetail);
             cmbWebsite.Service = newService;
             xrmPermission.Service = newService;
@@ -152,7 +154,7 @@ namespace Rappen.XTB.EPV
             }
             var msg = grdWebroles.SelectedCellRecords.Count() > 1
                 ? $"Delete {webroles.Count()} webroles?"
-                : $"Delete webrole {grdWebroles.SelectedCellRecords.First()}?";
+                : $"Delete webrole {grdWebroles.SelectedCellRecords.First().GetAttributeValue<string>(Webrole.PrimaryName)}?";
             if (MessageBox.Show(msg, "Delete", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) != DialogResult.OK)
             {
                 return;
@@ -553,6 +555,7 @@ namespace Rappen.XTB.EPV
             btnOpen.Enabled = !Guid.Empty.Equals(xrmPermission.Record?.Id);
             btnNewChild.Enabled = !Guid.Empty.Equals(xrmPermission.Record?.Id);
             btnDelete.Enabled = !Guid.Empty.Equals(xrmPermission.Record?.Id) && node.Nodes.Count == 0;
+            UpdateWebroleButtons();
         }
 
         private void PopulatePermissionEntities()
@@ -714,7 +717,7 @@ namespace Rappen.XTB.EPV
         private void UpdateWebroleButtons()
         {
             btnWebroleAdd.Enabled = xrmPermission.Record != null && !xrmPermission.Id.Equals(Guid.Empty);
-            btnWebroleRemove.Enabled = btnWebroleAdd.Enabled && grdWebroles.SelectedCellRecords.Count() > 0;
+            btnWebroleRemove.Enabled = btnWebroleAdd.Enabled && grdWebroles.SelectedCellRecords?.Count() > 0;
         }
 
         #endregion Private Methods

@@ -479,6 +479,7 @@
             this.btnItemUndo.TabIndex = 17;
             this.btnItemUndo.Text = "Undo";
             this.btnItemUndo.UseVisualStyleBackColor = true;
+            this.btnItemUndo.Visible = false;
             this.btnItemUndo.Click += new System.EventHandler(this.btnItemUndo_Click);
             // 
             // btnItemSave
@@ -583,11 +584,12 @@
             this.grdWebroles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.grdWebroles.BackgroundColor = System.Drawing.SystemColors.Window;
             this.grdWebroles.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.grdWebroles.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
             this.grdWebroles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdWebroles.ColumnHeadersVisible = false;
             this.grdWebroles.ColumnOrder = "";
             this.grdWebroles.FilterColumns = "";
-            this.grdWebroles.Location = new System.Drawing.Point(132, 6);
+            this.grdWebroles.Location = new System.Drawing.Point(132, 8);
             this.grdWebroles.Name = "grdWebroles";
             this.grdWebroles.ReadOnly = true;
             this.grdWebroles.RowHeadersVisible = false;
@@ -595,7 +597,7 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(400, 90);
+            this.grdWebroles.Size = new System.Drawing.Size(400, 88);
             this.grdWebroles.TabIndex = 0;
             this.grdWebroles.SelectionChanged += new System.EventHandler(this.grdWebroles_SelectionChanged);
             // 
