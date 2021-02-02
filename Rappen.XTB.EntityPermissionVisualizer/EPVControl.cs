@@ -64,7 +64,7 @@ namespace Rappen.XTB.EPV
 
         private void btnItemSave_Click(object sender, EventArgs e)
         {
-            xrmPermission.SaveChanges();
+            SavePermissionItem();
         }
 
         private void btnItemUndo_Click(object sender, EventArgs e)
@@ -161,6 +161,10 @@ namespace Rappen.XTB.EPV
 
         private void xrmPermission_RecordColumnUpdated(object sender, Helpers.Controls.XRMRecordEventArgs e)
         {
+            if (offmainthread)
+            {
+                return;
+            }
             LogPendingChanges();
         }
 

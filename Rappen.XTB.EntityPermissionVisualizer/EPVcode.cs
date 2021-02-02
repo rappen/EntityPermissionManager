@@ -8,11 +8,9 @@ using Rappen.XTB.Helpers.ControlItems;
 using Rappen.XTB.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection.Emit;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 using Scope = Rappen.XTB.EPV.Entitypermission.Scope_OptionSet;
@@ -25,6 +23,7 @@ namespace Rappen.XTB.EPV
 
         private IEnumerable<EntityMetadata> allentities;
         private Dictionary<string, EntityMetadataItem> entitydetails;
+        private bool offmainthread;
         private IEnumerable<Entity> permissions;
         private string webappurl;
 
@@ -114,6 +113,22 @@ namespace Rappen.XTB.EPV
                     permissions = permissions.Where(p => p != permission.Entity);
                 })
             });
+        }
+
+        private TreeNode FindNodeByRecordId(IEnumerable<TreeNode> nodes, Guid id)
+        {
+            if (nodes.FirstOrDefault(n => n.Tag is PermissionItem item && item.Entity.Id.Equals(id)) is TreeNode node)
+            {
+                return node;
+            }
+            foreach (var childnode in nodes)
+            {
+                if (childnode.Nodes?.Count > 0 && FindNodeByRecordId(childnode.Nodes.OfType<TreeNode>(), id) is TreeNode foundnode)
+                {
+                    return foundnode;
+                }
+            }
+            return null;
         }
 
         private void GetChildNodeDetails(TreeNodeCollection nodes)
@@ -586,6 +601,56 @@ namespace Rappen.XTB.EPV
             tvPermissions.Nodes.AddRange(GetChildPermissions(null).ToArray());
             GetChildNodeDetails(tvPermissions.Nodes);
             //tvPermissions.ExpandAll();
+        }
+
+        private void SavePermissionItem()
+        {
+            var isnew = xrmPermission.Record.Id.Equals(Guid.Empty);
+            var parentchanged = xrmPermission.ChangedColumns.ToList().Contains(Entitypermission.ParentEntitypermission);
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Saving Entity Permission",
+                Work = (worker, args) =>
+                {
+                    offmainthread = true;
+                    xrmPermission.SaveChanges();
+                    args.Result = xrmPermission.Record;
+                    offmainthread = false;
+                },
+                PostWorkCallBack = (args) => HandleWorkAsync<Entity>(args, (savedpermission) =>
+                {
+                    var permissionitem = new PermissionItem(savedpermission, rbTreeRels.Checked, Service);
+                    if (isnew)
+                    {
+                        var node = permissionitem.ToNode();
+                        var parentnode = GetScope() == Scope.Parent ? isnew ? tvPermissions.SelectedNode : node.Parent : null;
+                        if (parentnode != null)
+                        {
+                            parentnode.Nodes.Add(node);
+                        }
+                        else
+                        {
+                            tvPermissions.Nodes.Add(node);
+                        }
+                    }
+                    else
+                    {
+                        var node = tvPermissions.SelectedNode;
+                        permissionitem.DefineNode(node);
+                        if (parentchanged)
+                        {
+                            if (savedpermission.TryGetAttributeValue(Entitypermission.ParentEntitypermission, out EntityReference parentref) &&
+                                FindNodeByRecordId(tvPermissions.Nodes.OfType<TreeNode>(), parentref.Id) is TreeNode parentnode &&
+                                node.Parent != parentnode)
+                            {
+                                node.Parent.Nodes.Remove(node);
+                                parentnode.Nodes.Add(node);
+                            }
+                        }
+                    }
+                    LogPendingChanges();
+                })
+            });
         }
 
         #endregion Private Methods

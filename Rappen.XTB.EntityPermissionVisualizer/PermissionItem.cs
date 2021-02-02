@@ -13,6 +13,7 @@ namespace Rappen.XTB.EPV
         private bool relationships;
 
         public bool DetailsLoaded { get; set; }
+
         public string TreeNodeText { get; internal set; }
 
         public PermissionItem(Entity entity, bool relationships, IOrganizationService organizationService) : base(entity, organizationService)
@@ -114,10 +115,17 @@ namespace Rappen.XTB.EPV
 
         public TreeNode ToNode()
         {
-            var name = TreeNodeText;
-            var image = ScopeValue - 756150000;
-            var node = new TreeNode(name, image, image) { Tag = this };
+            var node = new TreeNode();
+            DefineNode(node);
             return node;
+        }
+
+        public void DefineNode(TreeNode node)
+        {
+            node.Tag = this;
+            node.Text = TreeNodeText;
+            node.ImageIndex = ScopeValue - (int)Entitypermission.Scope_OptionSet.Global;
+            node.SelectedImageIndex = node.ImageIndex;
         }
 
         public string OrderBy
