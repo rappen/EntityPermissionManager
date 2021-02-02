@@ -87,6 +87,8 @@
             this.txtItemRelationship = new Rappen.XTB.Helpers.Controls.XRMColumnText();
             this.cmbItemScope = new Rappen.XTB.Helpers.Controls.XRMColumnOptionSet();
             this.cmbItemParent = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.chkShowDebug = new System.Windows.Forms.CheckBox();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -97,6 +99,10 @@
             this.panWebroles.SuspendLayout();
             this.panItem.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -194,12 +200,8 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.listLog);
-            this.splitContainer1.Panel2.Controls.Add(this.panWebroleButtons);
-            this.splitContainer1.Panel2.Controls.Add(this.panWebroles);
-            this.splitContainer1.Panel2.Controls.Add(this.panItem);
-            this.splitContainer1.Panel2.Controls.Add(this.panel2);
-            this.splitContainer1.Size = new System.Drawing.Size(983, 772);
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Size = new System.Drawing.Size(983, 1094);
             this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 5;
@@ -214,7 +216,7 @@
             this.tvPermissions.Location = new System.Drawing.Point(16, 72);
             this.tvPermissions.Name = "tvPermissions";
             this.tvPermissions.SelectedImageIndex = 0;
-            this.tvPermissions.Size = new System.Drawing.Size(389, 700);
+            this.tvPermissions.Size = new System.Drawing.Size(389, 1022);
             this.tvPermissions.TabIndex = 1;
             this.tvPermissions.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvPermissions_BeforeExpand);
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
@@ -293,9 +295,9 @@
             this.columnHeader4});
             this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listLog.HideSelection = false;
-            this.listLog.Location = new System.Drawing.Point(0, 533);
+            this.listLog.Location = new System.Drawing.Point(0, 0);
             this.listLog.Name = "listLog";
-            this.listLog.Size = new System.Drawing.Size(554, 239);
+            this.listLog.Size = new System.Drawing.Size(554, 225);
             this.listLog.TabIndex = 0;
             this.listLog.UseCompatibleStateImageBehavior = false;
             this.listLog.View = System.Windows.Forms.View.Details;
@@ -328,9 +330,9 @@
             this.panWebroleButtons.Controls.Add(this.btnWebroleRemove);
             this.panWebroleButtons.Controls.Add(this.btnWebroleAdd);
             this.panWebroleButtons.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panWebroleButtons.Location = new System.Drawing.Point(0, 443);
+            this.panWebroleButtons.Location = new System.Drawing.Point(0, 385);
             this.panWebroleButtons.Name = "panWebroleButtons";
-            this.panWebroleButtons.Size = new System.Drawing.Size(554, 90);
+            this.panWebroleButtons.Size = new System.Drawing.Size(554, 42);
             this.panWebroleButtons.TabIndex = 3;
             // 
             // btnWebroleRemove
@@ -364,7 +366,7 @@
             this.panWebroles.Dock = System.Windows.Forms.DockStyle.Top;
             this.panWebroles.Location = new System.Drawing.Point(0, 344);
             this.panWebroles.Name = "panWebroles";
-            this.panWebroles.Size = new System.Drawing.Size(554, 99);
+            this.panWebroles.Size = new System.Drawing.Size(554, 41);
             this.panWebroles.TabIndex = 2;
             // 
             // label8
@@ -597,7 +599,7 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(400, 88);
+            this.grdWebroles.Size = new System.Drawing.Size(400, 30);
             this.grdWebroles.TabIndex = 0;
             this.grdWebroles.SelectionChanged += new System.EventHandler(this.grdWebroles_SelectionChanged);
             // 
@@ -771,6 +773,42 @@
             this.cmbItemParent.TabIndex = 6;
             this.cmbItemParent.SelectedIndexChanged += new System.EventHandler(this.cmbItemParent_SelectedIndexChanged);
             // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.chkShowDebug);
+            this.splitContainer2.Panel1.Controls.Add(this.panWebroleButtons);
+            this.splitContainer2.Panel1.Controls.Add(this.panWebroles);
+            this.splitContainer2.Panel1.Controls.Add(this.panItem);
+            this.splitContainer2.Panel1.Controls.Add(this.panel2);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.listLog);
+            this.splitContainer2.Panel2Collapsed = true;
+            this.splitContainer2.Size = new System.Drawing.Size(554, 1094);
+            this.splitContainer2.SplitterDistance = 861;
+            this.splitContainer2.SplitterWidth = 8;
+            this.splitContainer2.TabIndex = 14;
+            // 
+            // chkShowDebug
+            // 
+            this.chkShowDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkShowDebug.AutoSize = true;
+            this.chkShowDebug.Location = new System.Drawing.Point(445, 1074);
+            this.chkShowDebug.Name = "chkShowDebug";
+            this.chkShowDebug.Size = new System.Drawing.Size(106, 17);
+            this.chkShowDebug.TabIndex = 14;
+            this.chkShowDebug.Text = "Show debug info";
+            this.chkShowDebug.UseVisualStyleBackColor = true;
+            this.chkShowDebug.CheckedChanged += new System.EventHandler(this.chkShowDebug_CheckedChanged);
+            // 
             // EPVControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -780,7 +818,7 @@
             this.Controls.Add(this.toolStripMenu);
             this.Name = "EPVControl";
             this.PluginIcon = ((System.Drawing.Icon)(resources.GetObject("$this.PluginIcon")));
-            this.Size = new System.Drawing.Size(983, 803);
+            this.Size = new System.Drawing.Size(983, 1125);
             this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
             this.Load += new System.EventHandler(this.EPVControl_Load);
             this.toolStripMenu.ResumeLayout(false);
@@ -797,6 +835,11 @@
             this.panItem.ResumeLayout(false);
             this.panItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -860,5 +903,7 @@
         private System.Windows.Forms.Panel panWebroleButtons;
         private System.Windows.Forms.Button btnWebroleRemove;
         private System.Windows.Forms.Button btnWebroleAdd;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.CheckBox chkShowDebug;
     }
 }

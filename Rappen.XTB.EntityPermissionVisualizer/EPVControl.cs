@@ -185,5 +185,10 @@ namespace Rappen.XTB.EPV
         {
             AddWebRole();
         }
+
+        private void chkShowDebug_CheckedChanged(object sender, EventArgs e)
+        {
+            splitContainer2.Panel2Collapsed = !chkShowDebug.Checked;
+        }
     }
 }
