@@ -381,7 +381,7 @@
             // lblNoRoles
             // 
             this.lblNoRoles.AutoSize = true;
-            this.lblNoRoles.Location = new System.Drawing.Point(129, 12);
+            this.lblNoRoles.Location = new System.Drawing.Point(133, 12);
             this.lblNoRoles.Name = "lblNoRoles";
             this.lblNoRoles.Size = new System.Drawing.Size(111, 13);
             this.lblNoRoles.TabIndex = 1;
@@ -425,7 +425,7 @@
             // lblNoParent
             // 
             this.lblNoParent.AutoSize = true;
-            this.lblNoParent.Location = new System.Drawing.Point(129, 69);
+            this.lblNoParent.Location = new System.Drawing.Point(133, 69);
             this.lblNoParent.Name = "lblNoParent";
             this.lblNoParent.Size = new System.Drawing.Size(75, 13);
             this.lblNoParent.TabIndex = 29;
@@ -453,7 +453,7 @@
             // lblNoRelationships
             // 
             this.lblNoRelationships.AutoSize = true;
-            this.lblNoRelationships.Location = new System.Drawing.Point(129, 149);
+            this.lblNoRelationships.Location = new System.Drawing.Point(133, 149);
             this.lblNoRelationships.Name = "lblNoRelationships";
             this.lblNoRelationships.Size = new System.Drawing.Size(127, 13);
             this.lblNoRelationships.TabIndex = 26;
@@ -717,28 +717,30 @@
             // 
             this.txtItemEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemEntity.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txtItemEntity.BackColor = System.Drawing.SystemColors.Window;
+            this.txtItemEntity.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtItemEntity.Column = "adx_entitylogicalname";
             this.txtItemEntity.DisplayFormat = "";
-            this.txtItemEntity.Location = new System.Drawing.Point(132, 120);
+            this.txtItemEntity.Location = new System.Drawing.Point(136, 123);
             this.txtItemEntity.Name = "txtItemEntity";
             this.txtItemEntity.ReadOnly = true;
             this.txtItemEntity.RecordHost = this.xrmPermission;
-            this.txtItemEntity.Size = new System.Drawing.Size(400, 20);
+            this.txtItemEntity.Size = new System.Drawing.Size(396, 13);
             this.txtItemEntity.TabIndex = 2;
             // 
             // txtItemRelationship
             // 
             this.txtItemRelationship.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtItemRelationship.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.txtItemRelationship.BackColor = System.Drawing.SystemColors.Window;
+            this.txtItemRelationship.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtItemRelationship.Column = "";
             this.txtItemRelationship.DisplayFormat = "";
-            this.txtItemRelationship.Location = new System.Drawing.Point(132, 173);
+            this.txtItemRelationship.Location = new System.Drawing.Point(135, 176);
             this.txtItemRelationship.Name = "txtItemRelationship";
             this.txtItemRelationship.ReadOnly = true;
             this.txtItemRelationship.RecordHost = this.xrmPermission;
-            this.txtItemRelationship.Size = new System.Drawing.Size(400, 20);
+            this.txtItemRelationship.Size = new System.Drawing.Size(396, 13);
             this.txtItemRelationship.TabIndex = 8;
             // 
             // cmbItemScope

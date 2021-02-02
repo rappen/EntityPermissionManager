@@ -2,7 +2,6 @@
 using Microsoft.Xrm.Sdk;
 using Rappen.XTB.Helpers.Extensions;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;

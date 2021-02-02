@@ -615,6 +615,7 @@ namespace Rappen.XTB.EPV
                 lblNoRelationships.Text = "Not applicable";
                 lblNoRelationships.Visible = true;
                 cmbItemRelationship.Visible = false;
+                txtItemRelationship.Visible = false;
                 return;
             }
             var fromname = fromentity.Metadata.LogicalName;
