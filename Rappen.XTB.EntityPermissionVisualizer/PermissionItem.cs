@@ -18,7 +18,7 @@ namespace Rappen.XTB.EPV
         public PermissionItem(Entity entity, bool relationships, IOrganizationService organizationService) : base(entity, organizationService)
         {
             this.relationships = relationships;
-            TreeNodeText = Entity.Substitute(organizationService, "{adx_entityname}");
+            TreeNodeText = Entity.Substitute(organizationService, "{" + Entitypermission.PrimaryName + "}");
         }
 
         public void LoadDetails()
@@ -39,12 +39,14 @@ namespace Rappen.XTB.EPV
                                 rel = crel;
                             }
                             break;
+
                         case Entitypermission.Scope_OptionSet.Account:
                             if (Entity.TryGetAttributeValue(Entitypermission.AccountRelationship, out string arel))
                             {
                                 rel = arel;
                             }
                             break;
+
                         case Entitypermission.Scope_OptionSet.Parent:
                             if (Entity.TryGetAttributeValue(Entitypermission.ParentRelationship, out string prel))
                             {

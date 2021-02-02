@@ -1,5 +1,6 @@
 ﻿using McTools.Xrm.Connection;
 using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Metadata;
 using Microsoft.Xrm.Sdk.Query;
 using Rappen.XTB.Helpers;
@@ -11,8 +12,10 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
+using Scope = Rappen.XTB.EPV.Entitypermission.Scope_OptionSet;
 
 namespace Rappen.XTB.EPV
 {
@@ -20,8 +23,8 @@ namespace Rappen.XTB.EPV
     {
         #region Private Fields
 
-        private Dictionary<string, EntityMetadataItem> entities;
-        private Settings mySettings;
+        private IEnumerable<EntityMetadata> allentities;
+        private Dictionary<string, EntityMetadataItem> entitydetails;
         private IEnumerable<Entity> permissions;
         private string webappurl;
 
@@ -54,12 +57,38 @@ namespace Rappen.XTB.EPV
         private void ConnectionUpdated(IOrganizationService newService)
         {
             permissions = null;
-            entities = null;
+            entitydetails = null;
             webappurl = GetFullWebApplicationUrl(ConnectionDetail);
             cmbWebsite.Service = newService;
             xrmPermission.Service = newService;
             grdWebroles.Service = newService;
-            LoadWebsites();
+            LoadEntities();
+        }
+
+        private void CreateNewPermission(Entity parent)
+        {
+            btnItemSave.Text = "Create";
+            btnItemUndo.Text = "Cancel";
+            xrmPermission.SuspendLayout();
+            xrmPermission.Record = new Entity(Entitypermission.EntityName);
+            xrmPermission.SetValue(Entitypermission.WebsiteId, cmbWebsite.SelectedRecord.ToEntityReference());
+            if (parent != null)
+            {
+                xrmPermission.SetValue(Entitypermission.ParentEntitypermission, parent.ToEntityReference());
+                xrmPermission.SetValue(Entitypermission.Scope, new OptionSetValue((int)Scope.Parent));
+                cmbItemParent.Filter = new FilterExpression { Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.Equal, parent.Id) } };
+            }
+            else
+            {
+                xrmPermission.SetValue(Entitypermission.Scope, new OptionSetValue((int)Scope.Global));
+                cmbItemParent.Filter = null;
+            }
+            xrmPermission.ResumeLayout();
+            grdWebroles.DataSource = null;
+            panItem.Enabled = true;
+            btnOpen.Enabled = false;
+            btnNewChild.Enabled = false;
+            btnDelete.Enabled = false;
         }
 
         private void DeletePermission(TreeNode node)
@@ -129,7 +158,7 @@ namespace Rappen.XTB.EPV
                 IEnumerable<Entity> childpermissions = null;
                 if (parentnode == null)
                 {   // All but parental permissions
-                    childpermissions = permissions.Where(p => p.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope) ? scope.Value != (int)Entitypermission.Scope_OptionSet.Parent : true);
+                    childpermissions = permissions.Where(p => p.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope) ? scope.Value != (int)Scope.Parent : true);
                 }
                 else if (parentnode.Tag is EntityItem parentitem)
                 {
@@ -150,19 +179,54 @@ namespace Rappen.XTB.EPV
 
         private EntityMetadataItem GetEntityMetadataItem(string entityname)
         {
-            if (entities == null)
+            if (entitydetails == null)
             {
-                entities = new Dictionary<string, EntityMetadataItem>();
+                entitydetails = new Dictionary<string, EntityMetadataItem>();
             }
-            if (entities.TryGetValue(entityname, out EntityMetadataItem meta))
+            if (entitydetails.TryGetValue(entityname, out EntityMetadataItem meta))
             {
                 return meta;
             }
             if (Service.GetEntity(entityname) is EntityMetadata entitymeta)
             {
                 meta = new EntityMetadataItem(entitymeta, true);
-                entities.Add(entityname, meta);
+                entitydetails.Add(entityname, meta);
                 return meta;
+            }
+            return null;
+        }
+
+        private EntityMetadataItem GetFromEntity()
+        {
+            var fromentityname = string.Empty;
+            switch (GetScope())
+            {
+                case Scope.Contact:
+                    fromentityname = "contact";
+                    break;
+
+                case Scope.Account:
+                    fromentityname = "account";
+                    break;
+
+                case Scope.Parent:
+                    fromentityname = GetParentPermissionEntityName();
+                    break;
+            }
+            if (string.IsNullOrEmpty(fromentityname) || !(Service.GetEntity(fromentityname) is EntityMetadata meta))
+            {
+                return null;
+            }
+            return new EntityMetadataItem(meta, true);
+        }
+
+        private string GetParentPermissionEntityName()
+        {
+            if (xrmPermission[Entitypermission.ParentEntitypermission] is EntityReference parentref &&
+                permissions.FirstOrDefault(p => p.Id.Equals(parentref.Id)) is Entity parentperm &&
+                parentperm.TryGetAttributeValue(Entitypermission.EntityLogicalName, out string parentname))
+            {
+                return parentname;
             }
             return null;
         }
@@ -184,6 +248,41 @@ namespace Rappen.XTB.EPV
             return string.Empty;
         }
 
+        private string GetRelationshipColumn()
+        {
+            switch (GetScope())
+            {
+                case Scope.Contact:
+                    return Entitypermission.ContactRelationship;
+
+                case Scope.Account:
+                    return Entitypermission.AccountRelationship;
+
+                case Scope.Parent:
+                    return Entitypermission.ParentRelationship;
+            }
+            return null;
+        }
+
+        private Scope GetScope()
+        {
+            if (xrmPermission[Entitypermission.Scope] is OptionSetValue scope)
+            {
+                return (Scope)scope.Value;
+            }
+            return Scope.Self;
+        }
+
+        private EntityMetadataItem GetToEntity()
+        {
+            var toentityname = xrmPermission[Entitypermission.EntityLogicalName] as string;
+            if (string.IsNullOrEmpty(toentityname) || !(Service.GetEntity(toentityname) is EntityMetadata meta))
+            {
+                return null;
+            }
+            return new EntityMetadataItem(meta, true);
+        }
+
         private void HandleWorkAsync<T>(RunWorkerCompletedEventArgs args, Action<T> nextMethod)
         {
             if (args.Error != null)
@@ -198,6 +297,24 @@ namespace Rappen.XTB.EPV
             {
                 MessageBox.Show($"Expected result of {typeof(T)}\nGot result of {args.Result.GetType()}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LoadEntities()
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Loading tables",
+                Work = (worker, args) =>
+                {
+                    args.Result = Service.LoadEntities();
+                },
+                PostWorkCallBack = (args) => HandleWorkAsync<RetrieveMetadataChangesResponse>(args, (entities) =>
+                {
+                    allentities = entities.EntityMetadata;
+                    LoadWebsites();
+                })
+            });
+            allentities = Service.LoadEntities().EntityMetadata;
         }
 
         private void LoadPermissions()
@@ -227,7 +344,7 @@ namespace Rappen.XTB.EPV
                 {
                     args.Result = Service.RetrieveMultiple(query);
                 },
-                PostWorkCallBack = (args) => HandleWorkAsync<EntityCollection>(args, PopulatePermissions)
+                PostWorkCallBack = (args) => HandleWorkAsync<EntityCollection>(args, PopulatePermissionsTree)
             });
         }
 
@@ -278,39 +395,24 @@ namespace Rappen.XTB.EPV
             });
         }
 
-        private void OpenNewPermission(Entity parent)
+        private void LogPendingChanges()
         {
-            xrmPermission.SuspendLayout();
-            xrmPermission.Record = new Entity(Entitypermission.EntityName);
-            xrmPermission[Entitypermission.WebsiteId] = cmbWebsite.SelectedRecord.ToEntityReference();
-            if (parent != null)
+            btnItemSave.Enabled = xrmPermission.ChangedColumns?.Count() > 0;
+            btnItemUndo.Enabled = btnItemSave.Enabled;
+            listLog.Items.Clear();
+            if (xrmPermission?.ChangedColumns != null)
             {
-                xrmPermission[Entitypermission.ParentEntitypermission] = parent.ToEntityReference();
-                xrmPermission[Entitypermission.Scope] = new OptionSetValue((int)Entitypermission.Scope_OptionSet.Parent);
-                cmbItemParent.Filter = new FilterExpression { Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.Equal, parent.Id) } };
-            }
-            else
-            {
-                cmbItemParent.Filter = null;
-            }
-            xrmPermission.ResumeLayout();
-
-            return;
-
-            var extraqs = new NameValueCollection {
-                    { Entitypermission.WebsiteId, cmbWebsite.SelectedRecord.Id.ToString() },
-                    { Entitypermission.WebsiteId + "name", cmbWebsite.Text }
-                };
-            if (parent != null)
-            {
-                extraqs.Add(Entitypermission.Scope, ((int)Entitypermission.Scope_OptionSet.Parent).ToString());
-                extraqs.Add(Entitypermission.ParentEntitypermission, parent.Id.ToString());
-                extraqs.Add(Entitypermission.ParentEntitypermission + "name", txtItemName.Text);
-            }
-            var url = Utils.GetRecordDeepLink(webappurl, Entitypermission.EntityName, Guid.Empty, extraqs);
-            if (!string.IsNullOrEmpty(url))
-            {
-                Process.Start(url);
+                foreach (var key in xrmPermission.ChangedColumns)
+                {
+                    var value = xrmPermission[key];
+                    var basevalue = EntityExtensions.AttributeToBaseType(value);
+                    xrmPermission.Record.TryGetAttributeValue(key, out object oldvalue);
+                    var baseold = EntityExtensions.AttributeToBaseType(oldvalue);
+                    var log = listLog.Items.Add(key);
+                    log.SubItems.Add(basevalue != null ? basevalue.ToString() : "null");
+                    log.SubItems.Add(value != null ? value.GetType().ToString() : oldvalue != null ? oldvalue.GetType().ToString() : "null");
+                    log.SubItems.Add(baseold != null ? baseold.ToString() : "null");
+                }
             }
         }
 
@@ -327,52 +429,158 @@ namespace Rappen.XTB.EPV
             }
         }
 
+        private void PermissionEntityUpdated()
+        {
+            xrmPermission.SetValue(Entitypermission.EntityLogicalName, cmbItemEntity.SelectedEntity?.LogicalName);
+            PopulatePermissionRelationships();
+        }
+
+        private void PermissionRelationshipUpdated()
+        {
+            var relattr = GetRelationshipColumn();
+            if (!string.IsNullOrEmpty(relattr) &&
+                cmbItemRelationship.SelectedItem is RelationshipItem rel)
+            {
+                xrmPermission.SetValue(relattr, rel.Metadata.SchemaName);
+            }
+        }
+
+        private void PermissionScopeUpdated()
+        {
+            cmbItemParent.Visible = GetScope() == Scope.Parent;
+            lblNoParent.Visible = !cmbItemParent.Visible;
+            if (!cmbItemParent.Visible)
+            {
+                cmbItemParent.SelectedItem = null;
+            }
+            txtItemRelationship.Column = GetRelationshipColumn() ?? "not a valid column";
+            PopulatePermissionEntities();
+        }
+
         private void PermissionSelected(TreeNode node)
         {
+            panItem.Enabled = false;
             var permissionitem = node.Tag as EntityItem;
             xrmPermission.SuspendLayout();
             xrmPermission.Record = permissionitem?.Entity;
-            txtItemRelationship.Column = "NOT A VALID COLUMN";
-            if (permissionitem != null)
+            if (xrmPermission.Record != null)
             {
+                btnItemSave.Text = "Save";
+                btnItemUndo.Text = "Undo";
                 cmbItemParent.Filter = new FilterExpression()
                 {
-                    Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.NotEqual, permissionitem.Entity.Id) }
+                    Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.NotEqual, xrmPermission.Record.Id) }
                 };
-                if (permissionitem.Entity.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope))
-                {
-                    switch (scope.Value)
-                    {
-                        case (int)Entitypermission.Scope_OptionSet.Contact:
-                            txtItemRelationship.Column = Entitypermission.ContactRelationship;
-                            break;
-
-                        case (int)Entitypermission.Scope_OptionSet.Account:
-                            txtItemRelationship.Column = Entitypermission.AccountRelationship;
-                            break;
-
-                        case (int)Entitypermission.Scope_OptionSet.Parent:
-                            txtItemRelationship.Column = Entitypermission.ParentRelationship;
-                            break;
-                    }
-                }
             }
-            txtItemRelationship.Enabled = txtItemRelationship.Column != "NOT A VALID COLUMN";
+            txtItemRelationship.Column = GetRelationshipColumn() ?? "not a valid column";
+            PermissionScopeUpdated();
             xrmPermission.ResumeLayout();
-            btnOpen.Enabled = permissionitem != null;
-            btnNewChild.Enabled = permissionitem != null;
-            btnDelete.Enabled = permissionitem != null && node.Nodes.Count == 0;
-            txtItemEntityName.Text = GetPermissionEntityName(permissionitem);
             LoadWebroles();
+            panItem.Enabled = xrmPermission.Record != null;
+            btnOpen.Enabled = !Guid.Empty.Equals(xrmPermission.Record?.Id);
+            btnNewChild.Enabled = !Guid.Empty.Equals(xrmPermission.Record?.Id);
+            btnDelete.Enabled = !Guid.Empty.Equals(xrmPermission.Record?.Id) && node.Nodes.Count == 0;
         }
 
-        private void PopulatePermissions(EntityCollection newpermissions)
+        private void PopulatePermissionEntities()
+        {
+            var entities = allentities.Where(e => e.IsIntersect != true);
+            var fromentity = string.Empty;
+            switch (GetScope())
+            {
+                case Scope.Parent:
+                    fromentity = GetParentPermissionEntityName();
+                    break;
+
+                case Scope.Account:
+                    fromentity = "account";
+                    break;
+
+                case Scope.Contact:
+                    fromentity = "contact";
+                    break;
+
+                case Scope.Self:
+                    entities = entities.Where(e => e.LogicalName == "contact");
+                    break;
+
+                case Scope.Global:
+                    break;
+            }
+            if (!string.IsNullOrEmpty(fromentity))
+            {
+                entities = entities.Where(e =>
+                    e.OneToManyRelationships?.Any(r => r.ReferencingEntity.Equals(fromentity)) == true ||
+                    e.ManyToOneRelationships?.Any(r => r.ReferencedEntity.Equals(fromentity)) == true ||
+                    e.ManyToManyRelationships?.Any(r => r.Entity1LogicalName.Equals(fromentity)) == true ||
+                    e.ManyToManyRelationships?.Any(r => r.Entity2LogicalName.Equals(fromentity)) == true);
+            }
+            var entityname = xrmPermission[Entitypermission.EntityLogicalName] as string;
+            cmbItemEntity.DataSource = entities;
+            cmbItemEntity.SetSelected(entityname);
+            cmbItemEntity.Enabled = cmbItemEntity.Items.Count > 0;
+            cmbItemEntity.DropDownStyle = cmbItemEntity.Items.Count > 100 ? ComboBoxStyle.DropDown : ComboBoxStyle.DropDownList;
+            if (cmbItemEntity.Items.Count == 1 && cmbItemEntity.SelectedEntity == null)
+            {
+                cmbItemEntity.SelectedIndex = 0;
+            }
+            PopulatePermissionRelationships();
+        }
+
+        private void PopulatePermissionRelationships()
+        {
+            var fromentity = GetFromEntity();
+            var toentity = GetToEntity();
+            if (fromentity == null || toentity == null)
+            {
+                cmbItemRelationship.SelectedItem = null;
+                cmbItemRelationship.SelectedIndex = -1;
+                cmbItemRelationship.DataSource = null;
+                lblNoRelationships.Text = "Not applicable";
+                lblNoRelationships.Visible = true;
+                cmbItemRelationship.Visible = false;
+                return;
+            }
+            var fromname = fromentity.Metadata.LogicalName;
+            var toname = toentity.Metadata.LogicalName;
+            var rel1m = toentity.Metadata.OneToManyRelationships.Where(r => r.ReferencingEntity.Equals(fromname));
+            var relm1 = toentity.Metadata.ManyToOneRelationships.Where(r => r.ReferencedEntity.Equals(fromname));
+            var relmm = toentity.Metadata.ManyToManyRelationships.Where(r =>
+                (r.Entity1LogicalName.Equals(fromname) && r.Entity2LogicalName.Equals(toname)) ||
+                (r.Entity1LogicalName.Equals(toname) && r.Entity2LogicalName.Equals(fromname)));
+            var rels = rel1m.Select(r => new RelationshipItem(r, $"1:M {r.ReferencingEntity} {r.ReferencingAttribute}"))
+                .Concat(relm1.Select(r => new RelationshipItem(r, $"M:1 {r.ReferencingAttribute} {r.ReferencedEntity}")))
+                .Concat(relmm.Select(r => new RelationshipItem(r, $"M:M {(r.Entity1LogicalName != toname ? r.Entity1LogicalName : r.Entity2LogicalName)}")));
+
+            // Kommer hit massor med gånger när bara en post valts.
+
+            var relationship = xrmPermission[GetRelationshipColumn()] as string;
+            cmbItemRelationship.DataSource = rels.ToList();
+            if (!string.IsNullOrEmpty(relationship) &&
+                cmbItemRelationship.DataSource is IEnumerable<RelationshipItem> ds &&
+                ds?.FirstOrDefault(e => e.Metadata.SchemaName.Equals(relationship)) is RelationshipItem newselected)
+            {
+                cmbItemRelationship.SelectedItem = newselected;
+            }
+            else
+            {
+                cmbItemRelationship.SelectedItem = null;
+                cmbItemRelationship.SelectedIndex = -1;
+            }
+
+            lblNoRelationships.Text = $"No relationships available between {fromentity} and {toentity}";
+            lblNoRelationships.Visible = rels.Count() == 0;
+            cmbItemRelationship.Visible = !lblNoRelationships.Visible;
+            txtItemRelationship.Visible = !lblNoRelationships.Visible;
+        }
+
+        private void PopulatePermissionsTree(EntityCollection newpermissions)
         {
             permissions = newpermissions.Entities;
-            PopulatePermissions();
+            PopulatePermissionsTree();
         }
 
-        private void PopulatePermissions()
+        private void PopulatePermissionsTree()
         {
             tvPermissions.Nodes.Clear();
             tvPermissions.Nodes.AddRange(GetChildPermissions(null).ToArray());

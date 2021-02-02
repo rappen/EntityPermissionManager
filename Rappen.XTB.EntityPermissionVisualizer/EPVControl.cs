@@ -13,13 +13,21 @@ namespace Rappen.XTB.EPV
 {
     public partial class EPVControl : PluginControlBase, IAboutPlugin, IGitHubPlugin
     {
+        #region Private Fields
+
         private const string aiEndpoint = "https://dc.services.visualstudio.com/v2/track";
         private const string aiKey = "eed73022-2444-45fd-928b-5eebd8fa46a6";    // jonas@rappen.net tenant, XrmToolBox
         private AppInsights ai;
 
+        #endregion Private Fields
+
+        #region Public Properties
+
         public string RepositoryName => "EntityPermissionVisualizer";
 
         public string UserName => "rappen";
+
+        #endregion Public Properties
 
         #region Public Constructors
 
@@ -27,20 +35,12 @@ namespace Rappen.XTB.EPV
         {
             InitializeComponent();
             ai = new AppInsights(aiEndpoint, aiKey, Assembly.GetExecutingAssembly(), "Entity Permission Visualizer");
+            MetadataExtensions.entityProperties = MetadataExtensions.entityProperties.Concat(new string[] { "ManyToOneRelationships", "OneToManyRelationships", "ManyToManyRelationships" }).ToArray();
         }
 
         #endregion Public Constructors
 
         #region Public Methods
-
-        public override void ClosingPlugin(PluginCloseInfo info)
-        {
-            base.ClosingPlugin(info);
-            if (!info.Cancel)
-            {
-                SettingsManager.Instance.Save(GetType(), mySettings);
-            }
-        }
 
         public void ShowAboutDialog()
         {
@@ -62,14 +62,25 @@ namespace Rappen.XTB.EPV
             DeletePermission(tvPermissions.SelectedNode);
         }
 
+        private void btnItemSave_Click(object sender, EventArgs e)
+        {
+            xrmPermission.SaveChanges();
+        }
+
+        private void btnItemUndo_Click(object sender, EventArgs e)
+        {
+            xrmPermission.UndoChanges();
+            PermissionSelected(tvPermissions.SelectedNode);
+        }
+
         private void btnNew_Click(object sender, EventArgs e)
         {
-            OpenNewPermission(null);
+            CreateNewPermission(null);
         }
 
         private void btnNewChild_Click(object sender, EventArgs e)
         {
-            OpenNewPermission(xrmPermission.Record);
+            CreateNewPermission(xrmPermission.Record);
         }
 
         private void btnOpen_Click(object sender, EventArgs e)
@@ -82,6 +93,42 @@ namespace Rappen.XTB.EPV
             LoadPermissions();
         }
 
+        private void cmbItemEntity_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!panItem.Enabled)
+            {
+                return;
+            }
+            PermissionEntityUpdated();
+        }
+
+        private void cmbItemParent_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!panItem.Enabled)
+            {
+                return;
+            }
+            PopulatePermissionEntities();
+        }
+
+        private void cmbItemRelationship_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!panItem.Enabled)
+            {
+                return;
+            }
+            PermissionRelationshipUpdated();
+        }
+
+        private void cmbItemScope_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!panItem.Enabled)
+            {
+                return;
+            }
+            PermissionScopeUpdated();
+        }
+
         private void cmbWebsite_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadPermissions();
@@ -90,10 +137,6 @@ namespace Rappen.XTB.EPV
         private void EPVControl_Load(object sender, EventArgs e)
         {
             ai.WriteEvent("Load");
-            if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
-            {
-                mySettings = new Settings();
-            }
         }
 
         private void lblAbout_Click(object sender, EventArgs e)
@@ -103,7 +146,7 @@ namespace Rappen.XTB.EPV
 
         private void rbTreeNames_CheckedChanged(object sender, EventArgs e)
         {
-            PopulatePermissions();
+            PopulatePermissionsTree();
         }
 
         private void tvPermissions_AfterSelect(object sender, TreeViewEventArgs e)
@@ -116,35 +159,11 @@ namespace Rappen.XTB.EPV
             GetChildNodeDetails(e.Node.Nodes);
         }
 
-        #endregion Private Methods
-
         private void xrmPermission_RecordColumnUpdated(object sender, Helpers.Controls.XRMRecordEventArgs e)
         {
-            btnItemSave.Enabled = xrmPermission.ChangedColumns?.Count() > 0;
-            btnItemUndo.Enabled = btnItemSave.Enabled;
-            listLog.Items.Clear();
-            if (xrmPermission?.ChangedColumns != null)
-            {
-                foreach (var key in xrmPermission.ChangedColumns)
-                {
-                    var value = xrmPermission[key];
-                    xrmPermission.Record.TryGetAttributeValue(key, out object oldvalue);
-                    var log = listLog.Items.Add(key);
-                    log.SubItems.Add(value != null ? EntityExtensions.AttributeToBaseType(value).ToString() : "null");
-                    log.SubItems.Add(value != null ? value.GetType().ToString() : oldvalue != null ? oldvalue.GetType().ToString() : "null");
-                    log.SubItems.Add(oldvalue != null ? EntityExtensions.AttributeToBaseType(oldvalue).ToString() : "null");
-                }
-            }
+            LogPendingChanges();
         }
 
-        private void btnItemSave_Click(object sender, EventArgs e)
-        {
-            xrmPermission.SaveChanges();
-        }
-
-        private void btnItemUndo_Click(object sender, EventArgs e)
-        {
-            xrmPermission.UndoChanges();
-        }
+        #endregion Private Methods
     }
 }
