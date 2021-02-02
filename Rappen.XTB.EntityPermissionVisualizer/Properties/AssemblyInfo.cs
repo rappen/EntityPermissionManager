@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Portal Entity Permission Visualizer")]
-[assembly: AssemblyDescription("Visualizes the true structure of Power Apps Portals Entity Permissions.")]
+[assembly: AssemblyTitle("Portal Entity Permission Manager")]
+[assembly: AssemblyDescription("Visualizes the true structure of Power Apps Portals Entity Permissions and lets you easily work with them.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jonas Rapp, Sweden")]
-[assembly: AssemblyProduct("Rappen.XTB.EntityPermissionVisualizer")]
+[assembly: AssemblyProduct("Rappen.XTB.EntityPermissionManager")]
 [assembly: AssemblyCopyright("Copyright © Jonas Rapp 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

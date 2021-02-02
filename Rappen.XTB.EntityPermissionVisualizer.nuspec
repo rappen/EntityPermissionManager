@@ -3,20 +3,20 @@
   <metadata>
     <id>Rappen.XrmToolBox.EntityPermissionVisualizer</id>
     <version>1.0.0</version>
-    <title>Portal Entity Permission Visualizer</title>
+    <title>Portal Entity Permission Manager</title>
     <authors>Jonas Rapp</authors>
     <owners>rappen</owners>
     <projectUrl>https://github.com/rappen/EntityPermissionVisualizer</projectUrl>
     <iconUrl>https://jonasr.app/wp-content/uploads/EPV-150.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <summary>XrmToolBox tool to visualize the true structure of Power Apps Portals Entity Permissions.</summary>
-    <description>XrmToolBox tool to visualize the true structure of Power Apps Portals Entity Permissions.</description>
+    <summary>XrmToolBox tool to manage Power Apps Portals Entity Permissions and visualize their true structure.</summary>
+    <description>Manage Power Apps Portals Entity Permissions and visualize their true structure.</description>
     <releaseNotes>
       Full release notes:
       https://github.com/rappen/EntityPermissionVisualizer/releases/tag/$buildnumber$
     </releaseNotes>
     <copyright>Copyright Jonas Rapp 2021</copyright>
-    <tags>XrmToolBox Portal Entity Permission Visualizer</tags>
+    <tags>XrmToolBox Portal Entity Permission Manager</tags>
     <dependencies>
       <dependency id="XrmToolBox" version="1.2020.12.43" />
     </dependencies>

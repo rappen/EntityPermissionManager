@@ -12,8 +12,8 @@ namespace Rappen.XTB.EPV
     // Do not forget to update version number and author (company attribute) in AssemblyInfo.cs class
     // To generate Base64 string for Images below, you can use https://www.base64-image.de/
     [Export(typeof(IXrmToolBoxPlugin)),
-        ExportMetadata("Name", "Portal Entity Permission Visualizer"),
-        ExportMetadata("Description", "Visualizes the true structure of Power Apps Portals Entity Permissions."),
+        ExportMetadata("Name", "Portal Entity Permission Manager"),
+        ExportMetadata("Description", "Manage Power Apps Portals Entity Permissions and visualize their true structure."),
         // Please specify the base64 content of a 32x32 pixels image
         ExportMetadata("SmallImageBase64", "iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAFXRFWHRDcmVhdGlvbiBUaW1lAAflAQgMORMkqPe+AAAAB3RJTUUH5QEIDykoCCZR4gAAAAlwSFlzAAAKjAAACowBvcbP2AAAAaRQTFRF///G3ufGrca9jKW9e5y9hKW9pb291t7GIVq1AEKtAEq9IVqcKWOUGFqta5S17/fGCEqlUoRzSoScAGP/rc5S1ucpMXu1Y4xrEFKlWoS1vc69GFKtAEK1MXOt9/cIhLV7WpSMEEqtlK29AErOAGP3zt4x5+8YEGvvxt455+8QAFLWlLW9GFKcY5R7Y6WcjLVz//8Ac62MOYTGe62EAFrnc5y9tcYx7/cQMYTOtdZKQoSlnLW9MWuUzt4hGGO93u8hSpS1UoR7CEqtvdZCpcZSEGvna6WUSnu15+/GAFLenL1CWpylc6WMlL1jCGvvxta9lL1rWoxzAFrvKXPGhK1rlLVSe7V7MYTGIXPeKWO1CGv3WpSUGHPn3uchKXvWUpSt9//GSoy1WpycY5ycIWO13ucYjK29AErGGFqlxt4xWpSElK1KOXOM1uchCFLGc62EQoy9IXveSpStvdY59/8Ie6VaUpylUoS1CFrWxtYpY4y1tdZCQnOEQnO1EFKtQnuM1t4hWoxrY4x7SoSUvc4pEEqlhK1Sc5xjQoytKWucOWuMc5S9fLR2XQAAAAF0Uk5TAEDm2GYAAAKXSURBVHjabZPrWxJBFMYXw8tZEa0RDVzX27LianpEFK3UYpS8YCpakglYJEhGamkmpd3v/3RnBhB99HzYfXbf3zPn9o6ilGNzsXc4n//X6dlUrorq/Clo6p+/GQ1C7sVLsu0IHL/aGWt0Mfb70AEn1Rf1qg616aCRCWB0aCqIq6eh9Hm9Eiwja3YTMIWILq+J+s+G/OY5fZYlMUX6XrAnQlzUMYfHP/IlvQK+GYzHDcYSwfFtJiKjJfXvUMwyc/oJXWEcov/crFPp1Rb//MX6is2hQqV5jSVziAMx5sdwhoBd/HCMH7VsTj2RDUKAMcOri+L096oWsLLH0BDcMVK4Ah4ChjU61NAXErtj+jiIGNmaaDo4jCbwXeaIgBqLgH3ZA38bzWhRw0+nbfUFYpgKhOopQ5SkZ7gnhpBjoga2PxieBsuPbwzKUQGirRTG6BnBmAREQNcubjAtraRFCWwQaTzrHNfOAO31JKd5OBV7LaeIo4/zHC6rGqiFgB2Mc/7Krdi3i0AW8aVaBnbQyyVQSrHB8bmY8fZSMjadiMSRy5E7z4r0Ct1Yf7GFMny4JCtJKzPFNoW+biLqfn8qPB/rxkExPyBrPbFk/U/pewN9k/GEsAWtJUnP2Q7yRCUVsYTLXdGV1UeF44P88VpYDkZ1i22HZtmYVwWYo3XN+8z5yIKXMgUfMhYAaV6nZnDakjXlYgXTMjYdRjT7DfWB9EN9y10cn6htnfSdAewetvnwfshWsJQHRmTq0TIwZhrsNtwpmbK371b/gOyrCPjJgAEYLtu+E7oMr7S9BAxfT7cF9vMXw9OiteqNJaBNb1c7qi5erXonNFy/UQCamm+C23b5dtprANRaB02kzlmtXBm2imt2e2XVBfU/o4KP2jCFJSoAAAAASUVORK5CYII="),
         // Please specify the base64 content of a 80x80 pixels image
@@ -29,11 +29,11 @@ namespace Rappen.XTB.EPV
         }
 
         /// <summary>
-        /// Constructor 
+        /// Constructor
         /// </summary>
         public EPVDescription()
         {
-            // If you have external assemblies that you need to load, uncomment the following to 
+            // If you have external assemblies that you need to load, uncomment the following to
             // hook into the event that will fire when an Assembly fails to resolve
             // AppDomain.CurrentDomain.AssemblyResolve += new ResolveEventHandler(AssemblyResolveEventHandler);
         }
@@ -41,7 +41,7 @@ namespace Rappen.XTB.EPV
         /// <summary>
         /// Event fired by CLR when an assembly reference fails to load
         /// Assumes that related assemblies will be loaded from a subfolder named the same as the Plugin
-        /// For example, a folder named Sample.XrmToolBox.MyPlugin 
+        /// For example, a folder named Sample.XrmToolBox.MyPlugin
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>
