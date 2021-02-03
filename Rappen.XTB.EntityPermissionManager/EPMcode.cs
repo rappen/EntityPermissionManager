@@ -275,11 +275,11 @@ namespace Rappen.XTB.EPM
             switch (GetScope())
             {
                 case Scope.Contact:
-                    fromentityname = "contact";
+                    fromentityname = Contact.EntityName;
                     break;
 
                 case Scope.Account:
-                    fromentityname = "account";
+                    fromentityname = Account.EntityName;
                     break;
 
                 case Scope.Parent:
@@ -569,15 +569,15 @@ namespace Rappen.XTB.EPM
                     break;
 
                 case Scope.Account:
-                    fromentity = "account";
+                    fromentity = Account.EntityName;
                     break;
 
                 case Scope.Contact:
-                    fromentity = "contact";
+                    fromentity = Contact.EntityName;
                     break;
 
                 case Scope.Self:
-                    entities = entities.Where(e => e.LogicalName == "contact");
+                    entities = entities.Where(e => e.LogicalName == Contact.EntityName);
                     break;
 
                 case Scope.Global:
