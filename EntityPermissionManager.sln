@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30323.103
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rappen.XTB.EntityPermissionVisualizer", "Rappen.XTB.EntityPermissionVisualizer\Rappen.XTB.EntityPermissionVisualizer.csproj", "{EE8CCB4A-28A5-43B1-8FE1-10E79A8E4F15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rappen.XTB.EntityPermissionManager", "Rappen.XTB.EntityPermissionManager\Rappen.XTB.EntityPermissionManager.csproj", "{EE8CCB4A-28A5-43B1-8FE1-10E79A8E4F15}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Rappen.XTB.Helpers", "Rappen.XTB.Helper\Rappen.XTB.Helpers.shproj", "{0B88B381-EE9D-41E8-A62C-90152C42DE90}"
 EndProject
