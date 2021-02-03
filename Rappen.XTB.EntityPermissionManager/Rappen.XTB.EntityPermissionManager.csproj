@@ -8,8 +8,8 @@
     <ProjectGuid>{EE8CCB4A-28A5-43B1-8FE1-10E79A8E4F15}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Rappen.XTB.EPV</RootNamespace>
-    <AssemblyName>Rappen.XTB.EPV</AssemblyName>
+    <RootNamespace>Rappen.XTB.EPM</RootNamespace>
+    <AssemblyName>Rappen.XTB.EPM</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
@@ -171,17 +171,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EPVcode.cs">
+    <Compile Include="EPMcode.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EPVDescription.cs" />
-    <Compile Include="EPVControl.cs">
+    <Compile Include="EPMDescription.cs" />
+    <Compile Include="EPMControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EPVControl.designer.cs">
-      <DependentUpon>EPVControl.cs</DependentUpon>
+    <Compile Include="EPMControl.designer.cs">
+      <DependentUpon>EPMControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="EPVEntities.cs" />
+    <Compile Include="EPMEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RelationshipItem.cs" />
     <Compile Include="PermissionItem.cs" />
@@ -191,8 +191,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="EPVControl.resx">
-      <DependentUpon>EPVControl.cs</DependentUpon>
+    <EmbeddedResource Include="EPMControl.resx">
+      <DependentUpon>EPMControl.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\Rappen.XTB.Helper\Rappen.XTB.Helpers.projitems" Label="Shared" />
@@ -200,7 +200,7 @@
   <PropertyGroup>
     <PostBuildEvent>if $(ConfigurationName) == Debug (
   IF NOT EXIST Plugins mkdir Plugins
-  move /Y "Rappen.XTB.EPV.dll" Plugins
+  move /Y "Rappen.XTB.EPM.dll" Plugins
 )</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

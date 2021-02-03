@@ -7,7 +7,7 @@ using System.Reflection;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
 
-namespace Rappen.XTB.EPV
+namespace Rappen.XTB.EPM
 {
     // Do not forget to update version number and author (company attribute) in AssemblyInfo.cs class
     // To generate Base64 string for Images below, you can use https://www.base64-image.de/
@@ -21,17 +21,17 @@ namespace Rappen.XTB.EPV
         ExportMetadata("BackgroundColor", "#FFFFC0"),
         ExportMetadata("PrimaryFontColor", "#0000C0"),
         ExportMetadata("SecondaryFontColor", "#0000FF")]
-    public class EPVDescription : PluginBase
+    public class EPMDescription : PluginBase
     {
         public override IXrmToolBoxPluginControl GetControl()
         {
-            return new EPVControl();
+            return new EPMControl();
         }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public EPVDescription()
+        public EPMDescription()
         {
             // If you have external assemblies that you need to load, uncomment the following to
             // hook into the event that will fire when an Assembly fails to resolve

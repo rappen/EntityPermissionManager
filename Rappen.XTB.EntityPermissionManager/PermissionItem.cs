@@ -6,7 +6,7 @@ using Rappen.XTB.Helpers.Extensions;
 using System.Text;
 using System.Windows.Forms;
 
-namespace Rappen.XTB.EPV
+namespace Rappen.XTB.EPM
 {
     public class PermissionItem : EntityItem
     {

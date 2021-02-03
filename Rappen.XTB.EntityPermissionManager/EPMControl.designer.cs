@@ -1,6 +1,6 @@
-﻿namespace Rappen.XTB.EPV
+﻿namespace Rappen.XTB.EPM
 {
-    partial class EPVControl
+    partial class EPMControl
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EPVControl));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EPMControl));
             this.toolStripMenu = new System.Windows.Forms.ToolStrip();
             this.btnNew = new System.Windows.Forms.ToolStripButton();
             this.btnOpen = new System.Windows.Forms.ToolStripButton();
@@ -811,18 +811,18 @@
             this.chkShowDebug.UseVisualStyleBackColor = true;
             this.chkShowDebug.CheckedChanged += new System.EventHandler(this.chkShowDebug_CheckedChanged);
             // 
-            // EPVControl
+            // EPMControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.toolStripMenu);
-            this.Name = "EPVControl";
+            this.Name = "EPMControl";
             this.PluginIcon = ((System.Drawing.Icon)(resources.GetObject("$this.PluginIcon")));
             this.Size = new System.Drawing.Size(983, 1125);
             this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
-            this.Load += new System.EventHandler(this.EPVControl_Load);
+            this.Load += new System.EventHandler(this.EPMControl_Load);
             this.toolStripMenu.ResumeLayout(false);
             this.toolStripMenu.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);

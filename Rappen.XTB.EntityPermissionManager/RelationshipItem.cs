@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk.Metadata;
 
-namespace Rappen.XTB.EPV
+namespace Rappen.XTB.EPM
 {
     public class RelationshipItem
     {

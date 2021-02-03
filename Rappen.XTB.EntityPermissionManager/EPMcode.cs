@@ -14,11 +14,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 using XrmToolBox.Extensibility;
-using Scope = Rappen.XTB.EPV.Entitypermission.Scope_OptionSet;
+using Scope = Rappen.XTB.EPM.Entitypermission.Scope_OptionSet;
 
-namespace Rappen.XTB.EPV
+namespace Rappen.XTB.EPM
 {
-    public partial class EPVControl
+    public partial class EPMControl
     {
         #region Private Fields
 

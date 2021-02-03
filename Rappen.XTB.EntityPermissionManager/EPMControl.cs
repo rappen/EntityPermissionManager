@@ -9,9 +9,9 @@ using System.Windows.Forms;
 using XrmToolBox.Extensibility;
 using XrmToolBox.Extensibility.Interfaces;
 
-namespace Rappen.XTB.EPV
+namespace Rappen.XTB.EPM
 {
-    public partial class EPVControl : PluginControlBase, IAboutPlugin, IGitHubPlugin
+    public partial class EPMControl : PluginControlBase, IAboutPlugin, IGitHubPlugin
     {
         #region Private Fields
 
@@ -23,7 +23,7 @@ namespace Rappen.XTB.EPV
 
         #region Public Constructors
 
-        public EPVControl()
+        public EPMControl()
         {
             InitializeComponent();
             ai = new AppInsights(aiEndpoint, aiKey, Assembly.GetExecutingAssembly(), "Entity Permission Manager");
@@ -149,7 +149,7 @@ namespace Rappen.XTB.EPV
             LoadPermissions();
         }
 
-        private void EPVControl_Load(object sender, EventArgs e)
+        private void EPMControl_Load(object sender, EventArgs e)
         {
             ai.WriteEvent("Load");
         }
