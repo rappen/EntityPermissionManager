@@ -1,3 +1,3 @@
-# EntityPermissionVisualizer
+# EntityPermissionManager
 
-![EPV](https://jonasr.app/wp-content/uploads/EPV-1280-banner.png)
+![EPM](https://jonasr.app/wp-content/uploads/EPM-1280-banner.png)
