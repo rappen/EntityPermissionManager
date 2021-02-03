@@ -21,24 +21,24 @@ namespace Rappen.XTB.EPV
 
         #endregion Private Fields
 
-        #region Public Properties
-
-        public string RepositoryName => "EntityPermissionVisualizer";
-
-        public string UserName => "rappen";
-
-        #endregion Public Properties
-
         #region Public Constructors
 
         public EPVControl()
         {
             InitializeComponent();
-            ai = new AppInsights(aiEndpoint, aiKey, Assembly.GetExecutingAssembly(), "Entity Permission Visualizer");
+            ai = new AppInsights(aiEndpoint, aiKey, Assembly.GetExecutingAssembly(), "Entity Permission Manager");
             MetadataExtensions.entityProperties = MetadataExtensions.entityProperties.Concat(new string[] { "ManyToOneRelationships", "OneToManyRelationships", "ManyToManyRelationships" }).ToArray();
         }
 
         #endregion Public Constructors
+
+        #region Public Properties
+
+        public string RepositoryName => "EntityPermissionManager";
+
+        public string UserName => "rappen";
+
+        #endregion Public Properties
 
         #region Public Methods
 
@@ -93,6 +93,21 @@ namespace Rappen.XTB.EPV
             LoadPermissions();
         }
 
+        private void btnWebroleAdd_Click(object sender, EventArgs e)
+        {
+            AddWebRole();
+        }
+
+        private void btnWebroleRemove_Click(object sender, EventArgs e)
+        {
+            DeleteWebRoles();
+        }
+
+        private void chkShowDebug_CheckedChanged(object sender, EventArgs e)
+        {
+            splitContainer2.Panel2Collapsed = !chkShowDebug.Checked;
+        }
+
         private void cmbItemEntity_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!panItem.Enabled)
@@ -139,6 +154,11 @@ namespace Rappen.XTB.EPV
             ai.WriteEvent("Load");
         }
 
+        private void grdWebroles_SelectionChanged(object sender, EventArgs e)
+        {
+            UpdateWebroleButtons();
+        }
+
         private void lblAbout_Click(object sender, EventArgs e)
         {
             ShowAboutDialog();
@@ -169,25 +189,5 @@ namespace Rappen.XTB.EPV
         }
 
         #endregion Private Methods
-
-        private void grdWebroles_SelectionChanged(object sender, EventArgs e)
-        {
-            UpdateWebroleButtons();
-        }
-
-        private void btnWebroleRemove_Click(object sender, EventArgs e)
-        {
-            DeleteWebRoles();
-        }
-
-        private void btnWebroleAdd_Click(object sender, EventArgs e)
-        {
-            AddWebRole();
-        }
-
-        private void chkShowDebug_CheckedChanged(object sender, EventArgs e)
-        {
-            splitContainer2.Panel2Collapsed = !chkShowDebug.Checked;
-        }
     }
 }

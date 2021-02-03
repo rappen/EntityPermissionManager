@@ -10,16 +10,72 @@ namespace Rappen.XTB.EPV
 {
     public class PermissionItem : EntityItem
     {
+        #region Private Fields
+
         private bool relationships;
 
-        public bool DetailsLoaded { get; set; }
+        #endregion Private Fields
 
-        public string TreeNodeText { get; internal set; }
+        #region Public Constructors
 
         public PermissionItem(Entity entity, bool relationships, IOrganizationService organizationService) : base(entity, organizationService)
         {
             this.relationships = relationships;
             TreeNodeText = Entity.Substitute(organizationService, "{" + Entitypermission.PrimaryName + "}");
+        }
+
+        #endregion Public Constructors
+
+        #region Public Properties
+
+        public bool DetailsLoaded { get; set; }
+
+        public string OrderBy
+        {
+            get
+            {
+                var result = ScopeValue.ToString("0000000000000");
+                if (Entity.TryGetAttributeValue(Entitypermission.PrimaryName, out string name))
+                {
+                    result += name;
+                }
+                else
+                {
+                    result += Entity.Id.ToString();
+                }
+                return result;
+            }
+        }
+
+        private Entitypermission.Scope_OptionSet Scope => (Entitypermission.Scope_OptionSet)ScopeValue;
+        public string TreeNodeText { get; internal set; }
+
+        #endregion Public Properties
+
+        #region Private Properties
+
+        private int ScopeValue
+        {
+            get
+            {
+                if (Entity.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope))
+                {
+                    return scope.Value;
+                }
+                return (int)Entitypermission.Scope_OptionSet.Global;
+            }
+        }
+
+        #endregion Private Properties
+
+        #region Public Methods
+
+        public void DefineNode(TreeNode node)
+        {
+            node.Tag = this;
+            node.Text = TreeNodeText;
+            node.ImageIndex = ScopeValue - (int)Entitypermission.Scope_OptionSet.Global;
+            node.SelectedImageIndex = node.ImageIndex;
         }
 
         public void LoadDetails()
@@ -120,43 +176,6 @@ namespace Rappen.XTB.EPV
             return node;
         }
 
-        public void DefineNode(TreeNode node)
-        {
-            node.Tag = this;
-            node.Text = TreeNodeText;
-            node.ImageIndex = ScopeValue - (int)Entitypermission.Scope_OptionSet.Global;
-            node.SelectedImageIndex = node.ImageIndex;
-        }
-
-        public string OrderBy
-        {
-            get
-            {
-                var result = ScopeValue.ToString("0000000000000");
-                if (Entity.TryGetAttributeValue(Entitypermission.PrimaryName, out string name))
-                {
-                    result += name;
-                }
-                else
-                {
-                    result += Entity.Id.ToString();
-                }
-                return result;
-            }
-        }
-
-        private Entitypermission.Scope_OptionSet Scope => (Entitypermission.Scope_OptionSet)ScopeValue;
-
-        private int ScopeValue
-        {
-            get
-            {
-                if (Entity.TryGetAttributeValue(Entitypermission.Scope, out OptionSetValue scope))
-                {
-                    return scope.Value;
-                }
-                return (int)Entitypermission.Scope_OptionSet.Global;
-            }
-        }
+        #endregion Public Methods
     }
 }

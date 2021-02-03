@@ -446,9 +446,9 @@
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(24, 123);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(62, 13);
+            this.label10.Size = new System.Drawing.Size(63, 13);
             this.label10.TabIndex = 27;
-            this.label10.Text = "Entity name";
+            this.label10.Text = "Table name";
             // 
             // lblNoRelationships
             // 
@@ -527,9 +527,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(24, 96);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(33, 13);
+            this.label3.Size = new System.Drawing.Size(34, 13);
             this.label3.TabIndex = 3;
-            this.label3.Text = "Entity";
+            this.label3.Text = "Table";
             // 
             // label5
             // 
