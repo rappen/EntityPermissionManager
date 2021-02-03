@@ -484,9 +484,9 @@ namespace Rappen.XTB.EPM
                     xrmPermission.Record.TryGetAttributeValue(key, out object oldvalue);
                     var baseold = EntityExtensions.AttributeToBaseType(oldvalue);
                     var log = listLog.Items.Add(key);
-                    log.SubItems.Add(basevalue != null ? basevalue.ToString() : "null");
-                    log.SubItems.Add(value != null ? value.GetType().ToString() : oldvalue != null ? oldvalue.GetType().ToString() : "null");
                     log.SubItems.Add(baseold != null ? baseold.ToString() : "null");
+                    log.SubItems.Add(basevalue != null ? basevalue.ToString() : "null");
+                    log.SubItems.Add((value != null ? value.GetType().ToString() : oldvalue != null ? oldvalue.GetType().ToString() : "null").Split('.').LastOrDefault());
                 }
             }
         }

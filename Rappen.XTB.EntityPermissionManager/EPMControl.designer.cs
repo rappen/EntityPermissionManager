@@ -46,11 +46,8 @@
             this.rbTreeRels = new System.Windows.Forms.RadioButton();
             this.rbTreeNames = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.listLog = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.chkShowDebug = new System.Windows.Forms.CheckBox();
             this.panWebroleButtons = new System.Windows.Forms.Panel();
             this.btnWebroleRemove = new System.Windows.Forms.Button();
             this.btnWebroleAdd = new System.Windows.Forms.Button();
@@ -72,6 +69,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.listLog = new System.Windows.Forms.ListView();
+            this.colColumn = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colNew = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colOld = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cmbWebsite = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
             this.grdWebroles = new Rappen.XTB.Helpers.Controls.XRMDataGridView();
             this.cmbItemEntity = new Rappen.XTB.Helpers.Controls.XRMEntityComboBox();
@@ -87,22 +89,20 @@
             this.txtItemRelationship = new Rappen.XTB.Helpers.Controls.XRMColumnText();
             this.cmbItemScope = new Rappen.XTB.Helpers.Controls.XRMColumnOptionSet();
             this.cmbItemParent = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.chkShowDebug = new System.Windows.Forms.CheckBox();
             this.toolStripMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panWebroleButtons.SuspendLayout();
-            this.panWebroles.SuspendLayout();
-            this.panItem.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panWebroleButtons.SuspendLayout();
+            this.panWebroles.SuspendLayout();
+            this.panItem.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripMenu
@@ -189,6 +189,7 @@
             // 
             // splitContainer1
             // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 31);
             this.splitContainer1.Name = "splitContainer1";
@@ -211,12 +212,13 @@
             this.tvPermissions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.tvPermissions.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.tvPermissions.ImageIndex = 0;
             this.tvPermissions.ImageList = this.imgScope;
             this.tvPermissions.Location = new System.Drawing.Point(16, 72);
             this.tvPermissions.Name = "tvPermissions";
             this.tvPermissions.SelectedImageIndex = 0;
-            this.tvPermissions.Size = new System.Drawing.Size(389, 1022);
+            this.tvPermissions.Size = new System.Drawing.Size(387, 1020);
             this.tvPermissions.TabIndex = 1;
             this.tvPermissions.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvPermissions_BeforeExpand);
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
@@ -241,7 +243,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(421, 72);
+            this.panel1.Size = new System.Drawing.Size(419, 72);
             this.panel1.TabIndex = 0;
             // 
             // label9
@@ -286,44 +288,41 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Website";
             // 
-            // listLog
+            // splitContainer2
             // 
-            this.listLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader3,
-            this.columnHeader2,
-            this.columnHeader4});
-            this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listLog.HideSelection = false;
-            this.listLog.Location = new System.Drawing.Point(0, 0);
-            this.listLog.Name = "listLog";
-            this.listLog.Size = new System.Drawing.Size(554, 225);
-            this.listLog.TabIndex = 0;
-            this.listLog.UseCompatibleStateImageBehavior = false;
-            this.listLog.View = System.Windows.Forms.View.Details;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // columnHeader1
+            // splitContainer2.Panel1
             // 
-            this.columnHeader1.Text = "Key";
-            this.columnHeader1.Width = 139;
+            this.splitContainer2.Panel1.Controls.Add(this.chkShowDebug);
+            this.splitContainer2.Panel1.Controls.Add(this.panWebroleButtons);
+            this.splitContainer2.Panel1.Controls.Add(this.panWebroles);
+            this.splitContainer2.Panel1.Controls.Add(this.panItem);
+            this.splitContainer2.Panel1.Controls.Add(this.panel2);
             // 
-            // columnHeader3
+            // splitContainer2.Panel2
             // 
-            this.columnHeader3.DisplayIndex = 3;
-            this.columnHeader3.Text = "Type";
-            this.columnHeader3.Width = 154;
+            this.splitContainer2.Panel2.Controls.Add(this.listLog);
+            this.splitContainer2.Panel2Collapsed = true;
+            this.splitContainer2.Size = new System.Drawing.Size(552, 1092);
+            this.splitContainer2.SplitterDistance = 861;
+            this.splitContainer2.SplitterWidth = 8;
+            this.splitContainer2.TabIndex = 14;
             // 
-            // columnHeader2
+            // chkShowDebug
             // 
-            this.columnHeader2.DisplayIndex = 1;
-            this.columnHeader2.Text = "New value";
-            this.columnHeader2.Width = 117;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.DisplayIndex = 2;
-            this.columnHeader4.Text = "Old value";
-            this.columnHeader4.Width = 117;
+            this.chkShowDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkShowDebug.AutoSize = true;
+            this.chkShowDebug.Location = new System.Drawing.Point(443, 1072);
+            this.chkShowDebug.Name = "chkShowDebug";
+            this.chkShowDebug.Size = new System.Drawing.Size(106, 17);
+            this.chkShowDebug.TabIndex = 14;
+            this.chkShowDebug.Text = "Show debug info";
+            this.chkShowDebug.UseVisualStyleBackColor = true;
+            this.chkShowDebug.CheckedChanged += new System.EventHandler(this.chkShowDebug_CheckedChanged);
             // 
             // panWebroleButtons
             // 
@@ -332,7 +331,7 @@
             this.panWebroleButtons.Dock = System.Windows.Forms.DockStyle.Top;
             this.panWebroleButtons.Location = new System.Drawing.Point(0, 385);
             this.panWebroleButtons.Name = "panWebroleButtons";
-            this.panWebroleButtons.Size = new System.Drawing.Size(554, 42);
+            this.panWebroleButtons.Size = new System.Drawing.Size(552, 42);
             this.panWebroleButtons.TabIndex = 3;
             // 
             // btnWebroleRemove
@@ -366,7 +365,7 @@
             this.panWebroles.Dock = System.Windows.Forms.DockStyle.Top;
             this.panWebroles.Location = new System.Drawing.Point(0, 344);
             this.panWebroles.Name = "panWebroles";
-            this.panWebroles.Size = new System.Drawing.Size(554, 41);
+            this.panWebroles.Size = new System.Drawing.Size(552, 41);
             this.panWebroles.TabIndex = 2;
             // 
             // label8
@@ -419,7 +418,7 @@
             this.panItem.Enabled = false;
             this.panItem.Location = new System.Drawing.Point(0, 72);
             this.panItem.Name = "panItem";
-            this.panItem.Size = new System.Drawing.Size(554, 272);
+            this.panItem.Size = new System.Drawing.Size(552, 272);
             this.panItem.TabIndex = 12;
             // 
             // lblNoParent
@@ -468,7 +467,7 @@
             this.cmbItemRelationship.FormattingEnabled = true;
             this.cmbItemRelationship.Location = new System.Drawing.Point(132, 146);
             this.cmbItemRelationship.Name = "cmbItemRelationship";
-            this.cmbItemRelationship.Size = new System.Drawing.Size(400, 21);
+            this.cmbItemRelationship.Size = new System.Drawing.Size(398, 21);
             this.cmbItemRelationship.TabIndex = 25;
             this.cmbItemRelationship.SelectedIndexChanged += new System.EventHandler(this.cmbItemRelationship_SelectedIndexChanged);
             // 
@@ -554,8 +553,46 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(554, 72);
+            this.panel2.Size = new System.Drawing.Size(552, 72);
             this.panel2.TabIndex = 13;
+            // 
+            // listLog
+            // 
+            this.listLog.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.colColumn,
+            this.colOld,
+            this.colNew,
+            this.colType});
+            this.listLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listLog.HideSelection = false;
+            this.listLog.Location = new System.Drawing.Point(0, 0);
+            this.listLog.Name = "listLog";
+            this.listLog.Size = new System.Drawing.Size(150, 46);
+            this.listLog.TabIndex = 0;
+            this.listLog.UseCompatibleStateImageBehavior = false;
+            this.listLog.View = System.Windows.Forms.View.Details;
+            // 
+            // colColumn
+            // 
+            this.colColumn.Text = "Column";
+            this.colColumn.Width = 139;
+            // 
+            // colType
+            // 
+            this.colType.DisplayIndex = 3;
+            this.colType.Text = "Type";
+            this.colType.Width = 154;
+            // 
+            // colNew
+            // 
+            this.colNew.DisplayIndex = 1;
+            this.colNew.Text = "New value";
+            this.colNew.Width = 117;
+            // 
+            // colOld
+            // 
+            this.colOld.Text = "Old value";
+            this.colOld.Width = 117;
             // 
             // cmbWebsite
             // 
@@ -570,7 +607,7 @@
             this.cmbWebsite.Name = "cmbWebsite";
             this.cmbWebsite.RecordHost = null;
             this.cmbWebsite.Service = null;
-            this.cmbWebsite.Size = new System.Drawing.Size(329, 21);
+            this.cmbWebsite.Size = new System.Drawing.Size(327, 21);
             this.cmbWebsite.TabIndex = 1;
             this.cmbWebsite.SelectedIndexChanged += new System.EventHandler(this.cmbWebsite_SelectedIndexChanged);
             // 
@@ -599,7 +636,7 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(400, 30);
+            this.grdWebroles.Size = new System.Drawing.Size(398, 30);
             this.grdWebroles.TabIndex = 0;
             this.grdWebroles.SelectionChanged += new System.EventHandler(this.grdWebroles_SelectionChanged);
             // 
@@ -610,7 +647,7 @@
             this.cmbItemEntity.FormattingEnabled = true;
             this.cmbItemEntity.Location = new System.Drawing.Point(132, 93);
             this.cmbItemEntity.Name = "cmbItemEntity";
-            this.cmbItemEntity.Size = new System.Drawing.Size(400, 21);
+            this.cmbItemEntity.Size = new System.Drawing.Size(398, 21);
             this.cmbItemEntity.TabIndex = 24;
             this.cmbItemEntity.SelectedIndexChanged += new System.EventHandler(this.cmbItemEntity_SelectedIndexChanged);
             // 
@@ -710,7 +747,7 @@
             this.txtItemName.Location = new System.Drawing.Point(132, 13);
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.RecordHost = this.xrmPermission;
-            this.txtItemName.Size = new System.Drawing.Size(400, 20);
+            this.txtItemName.Size = new System.Drawing.Size(398, 20);
             this.txtItemName.TabIndex = 0;
             // 
             // txtItemEntity
@@ -725,7 +762,7 @@
             this.txtItemEntity.Name = "txtItemEntity";
             this.txtItemEntity.ReadOnly = true;
             this.txtItemEntity.RecordHost = this.xrmPermission;
-            this.txtItemEntity.Size = new System.Drawing.Size(396, 13);
+            this.txtItemEntity.Size = new System.Drawing.Size(394, 13);
             this.txtItemEntity.TabIndex = 2;
             // 
             // txtItemRelationship
@@ -740,7 +777,7 @@
             this.txtItemRelationship.Name = "txtItemRelationship";
             this.txtItemRelationship.ReadOnly = true;
             this.txtItemRelationship.RecordHost = this.xrmPermission;
-            this.txtItemRelationship.Size = new System.Drawing.Size(396, 13);
+            this.txtItemRelationship.Size = new System.Drawing.Size(394, 13);
             this.txtItemRelationship.TabIndex = 8;
             // 
             // cmbItemScope
@@ -754,7 +791,7 @@
             this.cmbItemScope.Name = "cmbItemScope";
             this.cmbItemScope.RecordHost = this.xrmPermission;
             this.cmbItemScope.ShowValue = false;
-            this.cmbItemScope.Size = new System.Drawing.Size(400, 21);
+            this.cmbItemScope.Size = new System.Drawing.Size(398, 21);
             this.cmbItemScope.TabIndex = 4;
             this.cmbItemScope.SelectedIndexChanged += new System.EventHandler(this.cmbItemScope_SelectedIndexChanged);
             // 
@@ -771,45 +808,9 @@
             this.cmbItemParent.Name = "cmbItemParent";
             this.cmbItemParent.RecordHost = this.xrmPermission;
             this.cmbItemParent.Service = null;
-            this.cmbItemParent.Size = new System.Drawing.Size(400, 21);
+            this.cmbItemParent.Size = new System.Drawing.Size(398, 21);
             this.cmbItemParent.TabIndex = 6;
             this.cmbItemParent.SelectedIndexChanged += new System.EventHandler(this.cmbItemParent_SelectedIndexChanged);
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.chkShowDebug);
-            this.splitContainer2.Panel1.Controls.Add(this.panWebroleButtons);
-            this.splitContainer2.Panel1.Controls.Add(this.panWebroles);
-            this.splitContainer2.Panel1.Controls.Add(this.panItem);
-            this.splitContainer2.Panel1.Controls.Add(this.panel2);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.listLog);
-            this.splitContainer2.Panel2Collapsed = true;
-            this.splitContainer2.Size = new System.Drawing.Size(554, 1094);
-            this.splitContainer2.SplitterDistance = 861;
-            this.splitContainer2.SplitterWidth = 8;
-            this.splitContainer2.TabIndex = 14;
-            // 
-            // chkShowDebug
-            // 
-            this.chkShowDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkShowDebug.AutoSize = true;
-            this.chkShowDebug.Location = new System.Drawing.Point(445, 1074);
-            this.chkShowDebug.Name = "chkShowDebug";
-            this.chkShowDebug.Size = new System.Drawing.Size(106, 17);
-            this.chkShowDebug.TabIndex = 14;
-            this.chkShowDebug.Text = "Show debug info";
-            this.chkShowDebug.UseVisualStyleBackColor = true;
-            this.chkShowDebug.CheckedChanged += new System.EventHandler(this.chkShowDebug_CheckedChanged);
             // 
             // EPMControl
             // 
@@ -831,17 +832,17 @@
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel1.PerformLayout();
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.panWebroleButtons.ResumeLayout(false);
             this.panWebroles.ResumeLayout(false);
             this.panWebroles.PerformLayout();
             this.panItem.ResumeLayout(false);
             this.panItem.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdWebroles)).EndInit();
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -891,10 +892,10 @@
         private Helpers.Controls.XRMColumnBool xrmColumnBool1;
         private System.Windows.Forms.Label lblNoRoles;
         private System.Windows.Forms.ListView listLog;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ColumnHeader colColumn;
+        private System.Windows.Forms.ColumnHeader colNew;
+        private System.Windows.Forms.ColumnHeader colType;
+        private System.Windows.Forms.ColumnHeader colOld;
         private Helpers.Controls.XRMEntityComboBox cmbItemEntity;
         private System.Windows.Forms.ComboBox cmbItemRelationship;
         private System.Windows.Forms.Label lblNoRelationships;
