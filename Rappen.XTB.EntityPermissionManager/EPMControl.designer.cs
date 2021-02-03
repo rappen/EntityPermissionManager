@@ -41,8 +41,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.chkShowDebug = new System.Windows.Forms.CheckBox();
             this.panWebroleButtons = new System.Windows.Forms.Panel();
-            this.btnWebroleRemove = new System.Windows.Forms.Button();
-            this.btnWebroleAdd = new System.Windows.Forms.Button();
             this.panWebroles = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.lblNoRoles = new System.Windows.Forms.Label();
@@ -51,7 +49,6 @@
             this.lblNoRelationships = new System.Windows.Forms.Label();
             this.cmbItemRelationship = new System.Windows.Forms.ComboBox();
             this.btnItemUndo = new System.Windows.Forms.Button();
-            this.btnItemSave = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -70,6 +67,9 @@
             this.colNew = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.btnItemSave = new System.Windows.Forms.Button();
+            this.btnWebroleRemove = new System.Windows.Forms.Button();
+            this.btnWebroleAdd = new System.Windows.Forms.Button();
             this.cmbWebsite = new Rappen.XTB.Helpers.Controls.XRMColumnLookup();
             this.grdWebroles = new Rappen.XTB.Helpers.Controls.XRMDataGridView();
             this.cmbItemEntity = new Rappen.XTB.Helpers.Controls.XRMEntityComboBox();
@@ -116,8 +116,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(983, 556);
-            this.splitContainer1.SplitterDistance = 421;
+            this.splitContainer1.Size = new System.Drawing.Size(983, 621);
+            this.splitContainer1.SplitterDistance = 388;
             this.splitContainer1.SplitterWidth = 8;
             this.splitContainer1.TabIndex = 5;
             // 
@@ -127,13 +127,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tvPermissions.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tvPermissions.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tvPermissions.HideSelection = false;
             this.tvPermissions.ImageIndex = 0;
             this.tvPermissions.ImageList = this.imgScope;
             this.tvPermissions.Location = new System.Drawing.Point(16, 109);
             this.tvPermissions.Name = "tvPermissions";
             this.tvPermissions.SelectedImageIndex = 0;
-            this.tvPermissions.Size = new System.Drawing.Size(387, 445);
+            this.tvPermissions.Size = new System.Drawing.Size(354, 510);
             this.tvPermissions.TabIndex = 1;
             this.tvPermissions.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tvPermissions_BeforeExpand);
             this.tvPermissions.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvPermissions_AfterSelect);
@@ -158,7 +159,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(419, 96);
+            this.panel1.Size = new System.Drawing.Size(386, 96);
             this.panel1.TabIndex = 0;
             // 
             // btnRefresh
@@ -169,7 +170,7 @@
             this.btnRefresh.FlatAppearance.BorderSize = 0;
             this.btnRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRefresh.Image = ((System.Drawing.Image)(resources.GetObject("btnRefresh.Image")));
-            this.btnRefresh.Location = new System.Drawing.Point(330, 8);
+            this.btnRefresh.Location = new System.Drawing.Point(297, 8);
             this.btnRefresh.Name = "btnRefresh";
             this.btnRefresh.Size = new System.Drawing.Size(86, 73);
             this.btnRefresh.TabIndex = 4;
@@ -229,7 +230,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.listLog);
             this.splitContainer2.Panel2Collapsed = true;
-            this.splitContainer2.Size = new System.Drawing.Size(552, 554);
+            this.splitContainer2.Size = new System.Drawing.Size(585, 619);
             this.splitContainer2.SplitterDistance = 504;
             this.splitContainer2.SplitterWidth = 8;
             this.splitContainer2.TabIndex = 14;
@@ -238,7 +239,7 @@
             // 
             this.chkShowDebug.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.chkShowDebug.AutoSize = true;
-            this.chkShowDebug.Location = new System.Drawing.Point(443, 534);
+            this.chkShowDebug.Location = new System.Drawing.Point(476, 599);
             this.chkShowDebug.Name = "chkShowDebug";
             this.chkShowDebug.Size = new System.Drawing.Size(106, 17);
             this.chkShowDebug.TabIndex = 14;
@@ -251,32 +252,10 @@
             this.panWebroleButtons.Controls.Add(this.btnWebroleRemove);
             this.panWebroleButtons.Controls.Add(this.btnWebroleAdd);
             this.panWebroleButtons.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panWebroleButtons.Location = new System.Drawing.Point(0, 395);
+            this.panWebroleButtons.Location = new System.Drawing.Point(0, 432);
             this.panWebroleButtons.Name = "panWebroleButtons";
-            this.panWebroleButtons.Size = new System.Drawing.Size(552, 42);
+            this.panWebroleButtons.Size = new System.Drawing.Size(585, 72);
             this.panWebroleButtons.TabIndex = 3;
-            // 
-            // btnWebroleRemove
-            // 
-            this.btnWebroleRemove.Enabled = false;
-            this.btnWebroleRemove.Location = new System.Drawing.Point(190, 6);
-            this.btnWebroleRemove.Name = "btnWebroleRemove";
-            this.btnWebroleRemove.Size = new System.Drawing.Size(75, 23);
-            this.btnWebroleRemove.TabIndex = 1;
-            this.btnWebroleRemove.Text = "Remove";
-            this.btnWebroleRemove.UseVisualStyleBackColor = true;
-            this.btnWebroleRemove.Click += new System.EventHandler(this.btnWebroleRemove_Click);
-            // 
-            // btnWebroleAdd
-            // 
-            this.btnWebroleAdd.Enabled = false;
-            this.btnWebroleAdd.Location = new System.Drawing.Point(98, 6);
-            this.btnWebroleAdd.Name = "btnWebroleAdd";
-            this.btnWebroleAdd.Size = new System.Drawing.Size(75, 23);
-            this.btnWebroleAdd.TabIndex = 0;
-            this.btnWebroleAdd.Text = "Add";
-            this.btnWebroleAdd.UseVisualStyleBackColor = true;
-            this.btnWebroleAdd.Click += new System.EventHandler(this.btnWebroleAdd_Click);
             // 
             // panWebroles
             // 
@@ -285,9 +264,9 @@
             this.panWebroles.Controls.Add(this.lblNoRoles);
             this.panWebroles.Controls.Add(this.grdWebroles);
             this.panWebroles.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panWebroles.Location = new System.Drawing.Point(0, 354);
+            this.panWebroles.Location = new System.Drawing.Point(0, 391);
             this.panWebroles.Name = "panWebroles";
-            this.panWebroles.Size = new System.Drawing.Size(552, 41);
+            this.panWebroles.Size = new System.Drawing.Size(585, 41);
             this.panWebroles.TabIndex = 2;
             // 
             // label8
@@ -322,7 +301,6 @@
             this.panItem.Controls.Add(this.xrmColumnBool2);
             this.panItem.Controls.Add(this.xrmColumnBool1);
             this.panItem.Controls.Add(this.btnItemUndo);
-            this.panItem.Controls.Add(this.btnItemSave);
             this.panItem.Controls.Add(this.label7);
             this.panItem.Controls.Add(this.txtItemName);
             this.panItem.Controls.Add(this.label2);
@@ -334,17 +312,18 @@
             this.panItem.Controls.Add(this.cmbItemScope);
             this.panItem.Controls.Add(this.cmbItemParent);
             this.panItem.Controls.Add(this.label4);
+            this.panItem.Controls.Add(this.btnItemSave);
             this.panItem.Dock = System.Windows.Forms.DockStyle.Top;
             this.panItem.Enabled = false;
             this.panItem.Location = new System.Drawing.Point(0, 96);
             this.panItem.Name = "panItem";
-            this.panItem.Size = new System.Drawing.Size(552, 258);
+            this.panItem.Size = new System.Drawing.Size(585, 295);
             this.panItem.TabIndex = 12;
             // 
             // lblNoParent
             // 
             this.lblNoParent.AutoSize = true;
-            this.lblNoParent.Location = new System.Drawing.Point(99, 69);
+            this.lblNoParent.Location = new System.Drawing.Point(99, 77);
             this.lblNoParent.Name = "lblNoParent";
             this.lblNoParent.Size = new System.Drawing.Size(75, 13);
             this.lblNoParent.TabIndex = 29;
@@ -354,7 +333,7 @@
             // lblNoRelationships
             // 
             this.lblNoRelationships.AutoSize = true;
-            this.lblNoRelationships.Location = new System.Drawing.Point(99, 138);
+            this.lblNoRelationships.Location = new System.Drawing.Point(99, 154);
             this.lblNoRelationships.Name = "lblNoRelationships";
             this.lblNoRelationships.Size = new System.Drawing.Size(127, 13);
             this.lblNoRelationships.TabIndex = 26;
@@ -367,16 +346,16 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbItemRelationship.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbItemRelationship.FormattingEnabled = true;
-            this.cmbItemRelationship.Location = new System.Drawing.Point(98, 135);
+            this.cmbItemRelationship.Location = new System.Drawing.Point(98, 151);
             this.cmbItemRelationship.Name = "cmbItemRelationship";
-            this.cmbItemRelationship.Size = new System.Drawing.Size(432, 21);
+            this.cmbItemRelationship.Size = new System.Drawing.Size(465, 21);
             this.cmbItemRelationship.TabIndex = 25;
             this.cmbItemRelationship.SelectedIndexChanged += new System.EventHandler(this.cmbItemRelationship_SelectedIndexChanged);
             // 
             // btnItemUndo
             // 
             this.btnItemUndo.Enabled = false;
-            this.btnItemUndo.Location = new System.Drawing.Point(190, 223);
+            this.btnItemUndo.Location = new System.Drawing.Point(454, 243);
             this.btnItemUndo.Name = "btnItemUndo";
             this.btnItemUndo.Size = new System.Drawing.Size(75, 23);
             this.btnItemUndo.TabIndex = 17;
@@ -385,21 +364,10 @@
             this.btnItemUndo.Visible = false;
             this.btnItemUndo.Click += new System.EventHandler(this.btnItemUndo_Click);
             // 
-            // btnItemSave
-            // 
-            this.btnItemSave.Enabled = false;
-            this.btnItemSave.Location = new System.Drawing.Point(98, 223);
-            this.btnItemSave.Name = "btnItemSave";
-            this.btnItemSave.Size = new System.Drawing.Size(75, 23);
-            this.btnItemSave.TabIndex = 16;
-            this.btnItemSave.Text = "Save";
-            this.btnItemSave.UseVisualStyleBackColor = true;
-            this.btnItemSave.Click += new System.EventHandler(this.btnItemSave_Click);
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(24, 183);
+            this.label7.Location = new System.Drawing.Point(24, 203);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(52, 13);
             this.label7.TabIndex = 11;
@@ -417,7 +385,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(24, 138);
+            this.label6.Location = new System.Drawing.Point(24, 154);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 13);
             this.label6.TabIndex = 9;
@@ -426,7 +394,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(24, 96);
+            this.label3.Location = new System.Drawing.Point(24, 108);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(34, 13);
             this.label3.TabIndex = 3;
@@ -435,7 +403,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(24, 69);
+            this.label5.Location = new System.Drawing.Point(24, 77);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 13);
             this.label5.TabIndex = 7;
@@ -444,7 +412,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(24, 42);
+            this.label4.Location = new System.Drawing.Point(24, 46);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(38, 13);
             this.label4.TabIndex = 5;
@@ -460,7 +428,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(552, 96);
+            this.panel2.Size = new System.Drawing.Size(585, 96);
             this.panel2.TabIndex = 13;
             // 
             // btnAbout
@@ -471,7 +439,7 @@
             this.btnAbout.FlatAppearance.BorderSize = 0;
             this.btnAbout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAbout.Image = ((System.Drawing.Image)(resources.GetObject("btnAbout.Image")));
-            this.btnAbout.Location = new System.Drawing.Point(463, 8);
+            this.btnAbout.Location = new System.Drawing.Point(496, 8);
             this.btnAbout.Name = "btnAbout";
             this.btnAbout.Size = new System.Drawing.Size(86, 73);
             this.btnAbout.TabIndex = 4;
@@ -487,7 +455,7 @@
             this.btnOpen.FlatAppearance.BorderSize = 0;
             this.btnOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnOpen.Image = ((System.Drawing.Image)(resources.GetObject("btnOpen.Image")));
-            this.btnOpen.Location = new System.Drawing.Point(343, 10);
+            this.btnOpen.Location = new System.Drawing.Point(364, 8);
             this.btnOpen.Name = "btnOpen";
             this.btnOpen.Size = new System.Drawing.Size(86, 73);
             this.btnOpen.TabIndex = 3;
@@ -503,7 +471,7 @@
             this.btnDelete.FlatAppearance.BorderSize = 0;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.Image = ((System.Drawing.Image)(resources.GetObject("btnDelete.Image")));
-            this.btnDelete.Location = new System.Drawing.Point(238, 8);
+            this.btnDelete.Location = new System.Drawing.Point(272, 8);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(86, 73);
             this.btnDelete.TabIndex = 2;
@@ -519,7 +487,7 @@
             this.btnNewChild.FlatAppearance.BorderSize = 0;
             this.btnNewChild.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNewChild.Image = ((System.Drawing.Image)(resources.GetObject("btnNewChild.Image")));
-            this.btnNewChild.Location = new System.Drawing.Point(132, 8);
+            this.btnNewChild.Location = new System.Drawing.Point(180, 8);
             this.btnNewChild.Name = "btnNewChild";
             this.btnNewChild.Size = new System.Drawing.Size(86, 73);
             this.btnNewChild.TabIndex = 1;
@@ -534,7 +502,7 @@
             this.btnNew.FlatAppearance.BorderSize = 0;
             this.btnNew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNew.Image = ((System.Drawing.Image)(resources.GetObject("btnNew.Image")));
-            this.btnNew.Location = new System.Drawing.Point(27, 8);
+            this.btnNew.Location = new System.Drawing.Point(88, 8);
             this.btnNew.Name = "btnNew";
             this.btnNew.Size = new System.Drawing.Size(86, 73);
             this.btnNew.TabIndex = 0;
@@ -582,6 +550,54 @@
             // 
             this.toolTip1.ForeColor = System.Drawing.SystemColors.HotTrack;
             // 
+            // btnItemSave
+            // 
+            this.btnItemSave.BackColor = System.Drawing.Color.White;
+            this.btnItemSave.Enabled = false;
+            this.btnItemSave.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnItemSave.FlatAppearance.BorderSize = 0;
+            this.btnItemSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnItemSave.Image = ((System.Drawing.Image)(resources.GetObject("btnItemSave.Image")));
+            this.btnItemSave.Location = new System.Drawing.Point(88, 217);
+            this.btnItemSave.Name = "btnItemSave";
+            this.btnItemSave.Size = new System.Drawing.Size(86, 73);
+            this.btnItemSave.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.btnItemSave, "Save to Dataverse");
+            this.btnItemSave.UseVisualStyleBackColor = false;
+            this.btnItemSave.Click += new System.EventHandler(this.btnItemSave_Click);
+            // 
+            // btnWebroleRemove
+            // 
+            this.btnWebroleRemove.BackColor = System.Drawing.Color.White;
+            this.btnWebroleRemove.Enabled = false;
+            this.btnWebroleRemove.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnWebroleRemove.FlatAppearance.BorderSize = 0;
+            this.btnWebroleRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWebroleRemove.Image = ((System.Drawing.Image)(resources.GetObject("btnWebroleRemove.Image")));
+            this.btnWebroleRemove.Location = new System.Drawing.Point(180, 0);
+            this.btnWebroleRemove.Name = "btnWebroleRemove";
+            this.btnWebroleRemove.Size = new System.Drawing.Size(86, 73);
+            this.btnWebroleRemove.TabIndex = 4;
+            this.toolTip1.SetToolTip(this.btnWebroleRemove, "Remove selected webrole");
+            this.btnWebroleRemove.UseVisualStyleBackColor = false;
+            this.btnWebroleRemove.Click += new System.EventHandler(this.btnWebroleRemove_Click);
+            // 
+            // btnWebroleAdd
+            // 
+            this.btnWebroleAdd.BackColor = System.Drawing.Color.White;
+            this.btnWebroleAdd.Enabled = false;
+            this.btnWebroleAdd.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnWebroleAdd.FlatAppearance.BorderSize = 0;
+            this.btnWebroleAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnWebroleAdd.Image = ((System.Drawing.Image)(resources.GetObject("btnWebroleAdd.Image")));
+            this.btnWebroleAdd.Location = new System.Drawing.Point(88, 0);
+            this.btnWebroleAdd.Name = "btnWebroleAdd";
+            this.btnWebroleAdd.Size = new System.Drawing.Size(86, 73);
+            this.btnWebroleAdd.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.btnWebroleAdd, "Add webrole(s)");
+            this.btnWebroleAdd.UseVisualStyleBackColor = false;
+            this.btnWebroleAdd.Click += new System.EventHandler(this.btnWebroleAdd_Click);
+            // 
             // cmbWebsite
             // 
             this.cmbWebsite.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -595,7 +611,7 @@
             this.cmbWebsite.Name = "cmbWebsite";
             this.cmbWebsite.RecordHost = null;
             this.cmbWebsite.Service = null;
-            this.cmbWebsite.Size = new System.Drawing.Size(236, 21);
+            this.cmbWebsite.Size = new System.Drawing.Size(203, 21);
             this.cmbWebsite.TabIndex = 1;
             this.cmbWebsite.SelectedIndexChanged += new System.EventHandler(this.cmbWebsite_SelectedIndexChanged);
             // 
@@ -624,7 +640,7 @@
             this.grdWebroles.ShowFriendlyNames = true;
             this.grdWebroles.ShowIdColumn = false;
             this.grdWebroles.ShowIndexColumn = false;
-            this.grdWebroles.Size = new System.Drawing.Size(398, 30);
+            this.grdWebroles.Size = new System.Drawing.Size(431, 30);
             this.grdWebroles.TabIndex = 0;
             this.grdWebroles.SelectionChanged += new System.EventHandler(this.grdWebroles_SelectionChanged);
             // 
@@ -633,9 +649,9 @@
             this.cmbItemEntity.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.cmbItemEntity.FormattingEnabled = true;
-            this.cmbItemEntity.Location = new System.Drawing.Point(98, 93);
+            this.cmbItemEntity.Location = new System.Drawing.Point(98, 105);
             this.cmbItemEntity.Name = "cmbItemEntity";
-            this.cmbItemEntity.Size = new System.Drawing.Size(432, 21);
+            this.cmbItemEntity.Size = new System.Drawing.Size(465, 21);
             this.cmbItemEntity.TabIndex = 24;
             this.cmbItemEntity.SelectedIndexChanged += new System.EventHandler(this.cmbItemEntity_SelectedIndexChanged);
             // 
@@ -643,7 +659,7 @@
             // 
             this.xrmColumnBool6.AutoSize = true;
             this.xrmColumnBool6.Column = "adx_appendto";
-            this.xrmColumnBool6.Location = new System.Drawing.Point(418, 182);
+            this.xrmColumnBool6.Location = new System.Drawing.Point(418, 202);
             this.xrmColumnBool6.Name = "xrmColumnBool6";
             this.xrmColumnBool6.RecordHost = this.xrmPermission;
             this.xrmColumnBool6.ShowMetadataLabels = false;
@@ -664,7 +680,7 @@
             // 
             this.xrmColumnBool5.AutoSize = true;
             this.xrmColumnBool5.Column = "adx_append";
-            this.xrmColumnBool5.Location = new System.Drawing.Point(349, 182);
+            this.xrmColumnBool5.Location = new System.Drawing.Point(349, 202);
             this.xrmColumnBool5.Name = "xrmColumnBool5";
             this.xrmColumnBool5.RecordHost = this.xrmPermission;
             this.xrmColumnBool5.ShowMetadataLabels = false;
@@ -677,7 +693,7 @@
             // 
             this.xrmColumnBool4.AutoSize = true;
             this.xrmColumnBool4.Column = "adx_delete";
-            this.xrmColumnBool4.Location = new System.Drawing.Point(286, 182);
+            this.xrmColumnBool4.Location = new System.Drawing.Point(286, 202);
             this.xrmColumnBool4.Name = "xrmColumnBool4";
             this.xrmColumnBool4.RecordHost = this.xrmPermission;
             this.xrmColumnBool4.ShowMetadataLabels = false;
@@ -690,7 +706,7 @@
             // 
             this.xrmColumnBool3.AutoSize = true;
             this.xrmColumnBool3.Column = "adx_write";
-            this.xrmColumnBool3.Location = new System.Drawing.Point(219, 182);
+            this.xrmColumnBool3.Location = new System.Drawing.Point(219, 202);
             this.xrmColumnBool3.Name = "xrmColumnBool3";
             this.xrmColumnBool3.RecordHost = this.xrmPermission;
             this.xrmColumnBool3.ShowMetadataLabels = false;
@@ -703,7 +719,7 @@
             // 
             this.xrmColumnBool2.AutoSize = true;
             this.xrmColumnBool2.Column = "adx_create";
-            this.xrmColumnBool2.Location = new System.Drawing.Point(156, 182);
+            this.xrmColumnBool2.Location = new System.Drawing.Point(156, 202);
             this.xrmColumnBool2.Name = "xrmColumnBool2";
             this.xrmColumnBool2.RecordHost = this.xrmPermission;
             this.xrmColumnBool2.ShowMetadataLabels = false;
@@ -716,7 +732,7 @@
             // 
             this.xrmColumnBool1.AutoSize = true;
             this.xrmColumnBool1.Column = "adx_read";
-            this.xrmColumnBool1.Location = new System.Drawing.Point(98, 182);
+            this.xrmColumnBool1.Location = new System.Drawing.Point(98, 202);
             this.xrmColumnBool1.Name = "xrmColumnBool1";
             this.xrmColumnBool1.RecordHost = this.xrmPermission;
             this.xrmColumnBool1.ShowMetadataLabels = false;
@@ -735,7 +751,7 @@
             this.txtItemName.Location = new System.Drawing.Point(98, 13);
             this.txtItemName.Name = "txtItemName";
             this.txtItemName.RecordHost = this.xrmPermission;
-            this.txtItemName.Size = new System.Drawing.Size(432, 20);
+            this.txtItemName.Size = new System.Drawing.Size(465, 20);
             this.txtItemName.TabIndex = 0;
             // 
             // txtItemEntity
@@ -746,11 +762,11 @@
             this.txtItemEntity.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtItemEntity.Column = "adx_entitylogicalname";
             this.txtItemEntity.DisplayFormat = "";
-            this.txtItemEntity.Location = new System.Drawing.Point(102, 116);
+            this.txtItemEntity.Location = new System.Drawing.Point(102, 128);
             this.txtItemEntity.Name = "txtItemEntity";
             this.txtItemEntity.ReadOnly = true;
             this.txtItemEntity.RecordHost = this.xrmPermission;
-            this.txtItemEntity.Size = new System.Drawing.Size(428, 13);
+            this.txtItemEntity.Size = new System.Drawing.Size(461, 13);
             this.txtItemEntity.TabIndex = 2;
             // 
             // txtItemRelationship
@@ -761,11 +777,11 @@
             this.txtItemRelationship.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.txtItemRelationship.Column = "";
             this.txtItemRelationship.DisplayFormat = "";
-            this.txtItemRelationship.Location = new System.Drawing.Point(102, 158);
+            this.txtItemRelationship.Location = new System.Drawing.Point(102, 174);
             this.txtItemRelationship.Name = "txtItemRelationship";
             this.txtItemRelationship.ReadOnly = true;
             this.txtItemRelationship.RecordHost = this.xrmPermission;
-            this.txtItemRelationship.Size = new System.Drawing.Size(427, 13);
+            this.txtItemRelationship.Size = new System.Drawing.Size(460, 13);
             this.txtItemRelationship.TabIndex = 8;
             // 
             // cmbItemScope
@@ -775,11 +791,11 @@
             this.cmbItemScope.BackColor = System.Drawing.SystemColors.Window;
             this.cmbItemScope.Column = "adx_scope";
             this.cmbItemScope.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbItemScope.Location = new System.Drawing.Point(98, 39);
+            this.cmbItemScope.Location = new System.Drawing.Point(98, 43);
             this.cmbItemScope.Name = "cmbItemScope";
             this.cmbItemScope.RecordHost = this.xrmPermission;
             this.cmbItemScope.ShowValue = false;
-            this.cmbItemScope.Size = new System.Drawing.Size(432, 21);
+            this.cmbItemScope.Size = new System.Drawing.Size(465, 21);
             this.cmbItemScope.TabIndex = 4;
             this.cmbItemScope.SelectedIndexChanged += new System.EventHandler(this.cmbItemScope_SelectedIndexChanged);
             // 
@@ -792,11 +808,11 @@
             this.cmbItemParent.DisplayFormat = "";
             this.cmbItemParent.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbItemParent.Filter = null;
-            this.cmbItemParent.Location = new System.Drawing.Point(98, 66);
+            this.cmbItemParent.Location = new System.Drawing.Point(98, 74);
             this.cmbItemParent.Name = "cmbItemParent";
             this.cmbItemParent.RecordHost = this.xrmPermission;
             this.cmbItemParent.Service = null;
-            this.cmbItemParent.Size = new System.Drawing.Size(432, 21);
+            this.cmbItemParent.Size = new System.Drawing.Size(465, 21);
             this.cmbItemParent.TabIndex = 6;
             this.cmbItemParent.SelectedIndexChanged += new System.EventHandler(this.cmbItemParent_SelectedIndexChanged);
             // 
@@ -808,7 +824,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "EPMControl";
             this.PluginIcon = ((System.Drawing.Icon)(resources.GetObject("$this.PluginIcon")));
-            this.Size = new System.Drawing.Size(983, 556);
+            this.Size = new System.Drawing.Size(983, 621);
             this.TabIcon = ((System.Drawing.Image)(resources.GetObject("$this.TabIcon")));
             this.Load += new System.EventHandler(this.EPMControl_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -858,7 +874,6 @@
         private System.Windows.Forms.RadioButton rbTreeRels;
         private System.Windows.Forms.RadioButton rbTreeNames;
         private Helpers.Controls.XRMRecordHost xrmPermission;
-        private System.Windows.Forms.Button btnItemSave;
         private System.Windows.Forms.Button btnItemUndo;
         private Helpers.Controls.XRMColumnBool xrmColumnBool6;
         private Helpers.Controls.XRMColumnBool xrmColumnBool5;
@@ -878,8 +893,6 @@
         private System.Windows.Forms.Label lblNoParent;
         private System.Windows.Forms.Panel panWebroles;
         private System.Windows.Forms.Panel panWebroleButtons;
-        private System.Windows.Forms.Button btnWebroleRemove;
-        private System.Windows.Forms.Button btnWebroleAdd;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.CheckBox chkShowDebug;
         private System.Windows.Forms.Button btnRefresh;
@@ -889,5 +902,8 @@
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnNewChild;
         private System.Windows.Forms.Button btnNew;
+        private System.Windows.Forms.Button btnWebroleRemove;
+        private System.Windows.Forms.Button btnWebroleAdd;
+        private System.Windows.Forms.Button btnItemSave;
     }
 }

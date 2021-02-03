@@ -96,8 +96,6 @@ namespace Rappen.XTB.EPM
 
         private void CreateNewPermission(Entity parent)
         {
-            btnItemSave.Text = "Create";
-            btnItemUndo.Text = "Cancel";
             xrmPermission.SuspendLayout();
             xrmPermission.Record = new Entity(Entitypermission.EntityName);
             xrmPermission.SetValue(Entitypermission.WebsiteId, cmbWebsite.SelectedRecord.ToEntityReference());
@@ -540,8 +538,6 @@ namespace Rappen.XTB.EPM
             xrmPermission.Record = permissionitem?.Entity;
             if (xrmPermission.Record != null)
             {
-                btnItemSave.Text = "Save";
-                btnItemUndo.Text = "Undo";
                 cmbItemParent.Filter = new FilterExpression()
                 {
                     Conditions = { new ConditionExpression(Entitypermission.PrimaryKey, ConditionOperator.NotEqual, xrmPermission.Record.Id) }
@@ -706,7 +702,7 @@ namespace Rappen.XTB.EPM
                                 FindNodeByRecordId(tvPermissions.Nodes.OfType<TreeNode>(), parentref.Id) is TreeNode parentnode &&
                                 node.Parent != parentnode)
                             {
-                                node.Parent.Nodes.Remove(node);
+                                node.Parent?.Nodes.Remove(node);
                                 parentnode.Nodes.Add(node);
                             }
                         }
