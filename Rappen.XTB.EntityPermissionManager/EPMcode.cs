@@ -694,6 +694,7 @@ namespace Rappen.XTB.EPM
                         {
                             tvPermissions.Nodes.Add(node);
                         }
+                        tvPermissions.SelectedNode = node;
                     }
                     else
                     {
@@ -709,7 +710,9 @@ namespace Rappen.XTB.EPM
                                 parentnode.Nodes.Add(node);
                             }
                         }
+                        tvPermissions.SelectedNode = node;
                     }
+                    UpdateWebroleButtons();
                     LogPendingChanges();
                 })
             });

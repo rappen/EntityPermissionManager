@@ -159,7 +159,7 @@ namespace Rappen.XTB.EPM
             UpdateWebroleButtons();
         }
 
-        private void lblAbout_Click(object sender, EventArgs e)
+        private void btnAbout_Click(object sender, EventArgs e)
         {
             ShowAboutDialog();
         }
