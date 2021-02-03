@@ -335,6 +335,26 @@ namespace Rappen.XTB.EPM
             return null;
         }
 
+        private string GetRelationshipName1M(OneToManyRelationshipMetadata r)
+        {
+            var refingentity = new EntityMetadataItem(Service, r.ReferencingEntity, true);
+            var refingattr = new AttributeMetadataItem(Service, r.ReferencingEntity, r.ReferencingAttribute, true);
+            return $"1:M {refingentity?.DisplayName ?? r.ReferencingEntity} - {refingattr?.DisplayName ?? r.ReferencingAttribute}";
+        }
+
+        private string GetRelationshipNameM1(OneToManyRelationshipMetadata r)
+        {
+            var reffedentity = new EntityMetadataItem(Service, r.ReferencedEntity, true);
+            var refingattr = new AttributeMetadataItem(Service, r.ReferencingEntity, r.ReferencingAttribute, true);
+            return $"M:1 {refingattr?.DisplayName ?? r.ReferencingAttribute} - {reffedentity?.DisplayName ?? r.ReferencedEntity}";
+        }
+
+        private string GetRelationshipNameMM(ManyToManyRelationshipMetadata r, string toname)
+        {
+            var reffedentity = new EntityMetadataItem(Service, r.Entity1LogicalName != toname ? r.Entity1LogicalName : r.Entity2LogicalName, true);
+            return $"M:M {reffedentity?.DisplayName ?? (r.Entity1LogicalName != toname ? r.Entity1LogicalName : r.Entity2LogicalName)}";
+        }
+
         private Scope GetScope()
         {
             if (xrmPermission[Entitypermission.Scope] is OptionSetValue scope)
@@ -356,6 +376,7 @@ namespace Rappen.XTB.EPM
 
         private void HandleWorkAsync<T>(RunWorkerCompletedEventArgs args, Action<T> nextMethod)
         {
+            Enabled = true;
             if (args.Error != null)
             {
                 MessageBox.Show(args.Error.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -372,6 +393,7 @@ namespace Rappen.XTB.EPM
 
         private void LoadEntities()
         {
+            Enabled = false;
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Loading tables",
@@ -390,8 +412,7 @@ namespace Rappen.XTB.EPM
 
         private void LoadPermissions()
         {
-            btnNew.Enabled = cmbWebsite.SelectedRecord != null;
-            btnRefresh.Enabled = cmbWebsite.SelectedRecord != null;
+            xrmPermission.Record = null;
             tvPermissions.Nodes.Clear();
             if (cmbWebsite.SelectedRecord == null)
             {
@@ -407,7 +428,7 @@ namespace Rappen.XTB.EPM
                 var wr = query.AddLink("adx_entitypermission_webrole", "adx_entitypermissionid", "adx_entitypermissionid");
                 wr.LinkCriteria.AddCondition("adx_webroleid", ConditionOperator.Equal, webroleid);
             }
-
+            Enabled = false;
             WorkAsync(new WorkAsyncInfo
             {
                 Message = "Loading Entity Permissions",
@@ -464,6 +485,7 @@ namespace Rappen.XTB.EPM
                     {
                         cmbWebsite.SelectedIndex = 0;
                     }
+                    Enabled = true;
                 })
             });
         }
@@ -525,6 +547,7 @@ namespace Rappen.XTB.EPM
             if (!cmbItemParent.Visible)
             {
                 cmbItemParent.SelectedItem = null;
+                cmbItemParent.SelectedIndex = -1;
             }
             txtItemRelationship.Column = GetRelationshipColumn() ?? "not a valid column";
             PopulatePermissionEntities();
@@ -616,16 +639,15 @@ namespace Rappen.XTB.EPM
             }
             var fromname = fromentity.Metadata.LogicalName;
             var toname = toentity.Metadata.LogicalName;
+
             var rel1m = toentity.Metadata.OneToManyRelationships.Where(r => r.ReferencingEntity.Equals(fromname));
             var relm1 = toentity.Metadata.ManyToOneRelationships.Where(r => r.ReferencedEntity.Equals(fromname));
             var relmm = toentity.Metadata.ManyToManyRelationships.Where(r =>
                 (r.Entity1LogicalName.Equals(fromname) && r.Entity2LogicalName.Equals(toname)) ||
                 (r.Entity1LogicalName.Equals(toname) && r.Entity2LogicalName.Equals(fromname)));
-            var rels = rel1m.Select(r => new RelationshipItem(r, $"1:M {r.ReferencingEntity} {r.ReferencingAttribute}"))
-                .Concat(relm1.Select(r => new RelationshipItem(r, $"M:1 {r.ReferencingAttribute} {r.ReferencedEntity}")))
-                .Concat(relmm.Select(r => new RelationshipItem(r, $"M:M {(r.Entity1LogicalName != toname ? r.Entity1LogicalName : r.Entity2LogicalName)}")));
-
-            // Kommer hit massor med gånger när bara en post valts.
+            var rels = rel1m.Select(r => new RelationshipItem(r, GetRelationshipName1M(r)))
+                .Concat(relm1.Select(r => new RelationshipItem(r, GetRelationshipNameM1(r))))
+                .Concat(relmm.Select(r => new RelationshipItem(r, GetRelationshipNameMM(r, toname))));
 
             var relationship = xrmPermission[GetRelationshipColumn()] as string;
             cmbItemRelationship.DataSource = rels.ToList();
@@ -659,6 +681,7 @@ namespace Rappen.XTB.EPM
             tvPermissions.Nodes.AddRange(GetChildPermissions(null).ToArray());
             GetChildNodeDetails(tvPermissions.Nodes);
             //tvPermissions.ExpandAll();
+            Enabled = true;
         }
 
         private void SavePermissionItem()
